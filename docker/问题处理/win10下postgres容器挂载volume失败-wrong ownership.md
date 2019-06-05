@@ -86,3 +86,23 @@ $ docker-compose up -d postgres-svc
 Creating volume "bootstrapmb-downloader-pyasync_testing-pgdata" with default driver
 Creating bootstrapmb-downloader-pyasync_postgres-svc_1 ... done
 ```
+
+但是这种做法也不是完美的. 除了数据目录, 也许我们还想挂载其他的目录, 但是这是不能与`volumes`挂载卷同时使用的.
+
+```yml
+version: '3'
+services:
+  postgres-svc:
+    image: postgres:11
+    ports:
+    - "5432:5432"
+    ## win下挂载路径可能会出错
+    volumes:
+      - testing-pgdata:/var/lib/postgresql/data
+      ## 初始化脚本目录
+      - ./initdb:/docker-entrypoint-initdb.d
+volumes:
+  testing-pgdata:
+```
+
+如果通过`volumes`挂载了数据卷, 又通过原生的方法额外挂载了初始化脚本目录, 那么脚本是不会执行的. 这一点需要注意.
