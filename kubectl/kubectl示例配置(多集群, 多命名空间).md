@@ -50,9 +50,7 @@ users:
 按照概念大小来看, Cluster > Context > Namespace.
 
 - Cluster是物理集群, 每一项都需要一个`apiserver`的http接口表示
-
 - Context表示工作环境, 作用上相当于`develope`, `test`, `product`这种.
-
 - Namespace则可以用于划分业务, 不同业务可以隔离, 不会通过service暴露的接口直接通信, 但仍有办法通过dns解析得到其他命名空间的服务路径.
 
 注意: namespace并不是属于context的, 它们并不是包含关系, 而是绑定关系, 一个namespace可以绑定在**context1**上, 也可以绑定到**context2**上.

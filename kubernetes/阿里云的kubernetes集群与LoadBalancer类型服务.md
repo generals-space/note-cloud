@@ -13,7 +13,6 @@
 标准kubernetes概念中service的类型有
 
 1. `ClusterIP`
-
 2. `LoadBalancer`
 
 在一个`service`配置中, 如果设置了`type`为`LoadBalancer`, 阿里云会在创建此`service`的同时, 还会创建一个公网的SLB, 且公网IP随机.

@@ -12,7 +12,7 @@
 
 首先按照参考文章1和2阿里云提供的文档, 把ingress实例先创建起来, 再回来查看比较官方的文档.
 
-> 写在前面: 失败了, ingress创建完成后访问地址返回404, 提交工单给阿里云, 回复说集群版本(1.9.7)太低, `nginx-ingress-controller`组件不支持. 参考文章1和2根本没提到过`ingress-controller`, 当支持人员询问这个组件的版本时我蒙了一下. 好在文档下方有参考文章3的链接, `nginx-ingress-controller`是一个存在于`kube-system`命名空间下的pod对象, 使用`describe`命令可以查看ta的详细信息.
+> 写在前面: 本文的尝试最终还是失败了, ingress创建完成后访问地址返回404, 提交工单给阿里云, 回复说集群版本(1.9.7)太低, `nginx-ingress-controller`组件不支持. 参考文章1和2根本没提到过`ingress-controller`, 当支持人员询问这个组件的版本时我蒙了一下. 好在文档下方有参考文章3的链接, `nginx-ingress-controller`是一个存在于`kube-system`命名空间下的pod对象, 使用`describe`命令可以查看ta的详细信息.
 
 ```yml
 apiVersion: v1
