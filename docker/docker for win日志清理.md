@@ -31,7 +31,7 @@ chroot /host
 我们只需要在启动容器时将根目录挂载到容器内部, 就可以查看到VM的文件系统了.
 
 ```
-docker run -it --rm -v /:/host alpine /bin/sh
+docker run -it --name vmhost -v /:/host generals/alpine /bin/sh
 / # cd /host
 /host # ls
 C           bin         d           etc         host_mnt    media       opt         proc        run         sendtohost  sys         usr
@@ -42,3 +42,19 @@ D           c           dev         home        lib         mnt         port    
 ```
 
 然后再使用`docker logs`就会发现日志已经被清空了.
+
+如果真的想进入`MobyLinuxVM`, 只要执行上面命令的第2条就可以了
+
+这样执行ps时就可以看到所有容器正在的进程.
+
+```
+$ docker run -it --name vmhost --net=host --ipc=host --uts=host --pid=host --security-opt=seccomp=unconfined --privileged -v /:/host generals/alpine /bin/sh
+/ # ps -ef
+PID   USER     TIME  COMMAND
+    1 root      0:02 /sbin/init text
+    2 root      0:00 [kthreadd]
+    3 root      0:04 [ksoftirqd/0]
+    5 root      0:00 [kworker/0:0H]
+    7 root      0:04 [rcu_sched]
+    8 root      0:00 [rcu_bh]
+```
