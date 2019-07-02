@@ -1,9 +1,8 @@
-# Kubernetes-PersistentVolume持久卷
+# kuber-PV持久卷
 
 参考文章
 
 1. [Kubernetes对象之PersistentVolume，StorageClass和PersistentVolumeClaim](https://www.jianshu.com/p/99e610067bc8)
-
     - 对pv和pvc的概念解释的比较浅显易懂
     - 对PV的访问模式(accessModes)和回收策略(persistentVolumeReclaimPolicy)有很清晰的解释
 

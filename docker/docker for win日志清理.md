@@ -43,7 +43,7 @@ D           c           dev         home        lib         mnt         port    
 
 然后再使用`docker logs`就会发现日志已经被清空了.
 
-如果真的想进入`MobyLinuxVM`, 只要执行上面命令的第2条就可以了
+如果真的想进入`MobyLinuxVM`, 只要执行上面命令的第2条就可以了.
 
 这样执行ps时就可以看到所有容器正在的进程.
 

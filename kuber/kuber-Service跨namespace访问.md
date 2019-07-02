@@ -1,4 +1,4 @@
-# Kubernetes-service跨namespace访问
+# kuber-Service跨namespace访问
 
 参考文章
 

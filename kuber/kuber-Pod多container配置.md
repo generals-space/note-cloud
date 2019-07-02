@@ -1,4 +1,4 @@
-# Kubernetes-Pod多container配置
+# kuber-Pod多container配置
 
 参考文章
 

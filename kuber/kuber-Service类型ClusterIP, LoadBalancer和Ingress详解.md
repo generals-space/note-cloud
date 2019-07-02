@@ -1,4 +1,4 @@
-# Kubernetes-service类型ClusterIP, LoadBalancer和Ingress详解
+# kuber-Service类型ClusterIP, LoadBalancer和Ingress详解
 
 参考文章
 

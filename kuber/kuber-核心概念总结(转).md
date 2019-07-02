@@ -1,4 +1,4 @@
-# Kubernetes核心概念总结
+# kuber-核心概念总结(转)
 
 原文链接
 
@@ -38,12 +38,12 @@ Master节点上面主要由四个模块组成: `APIServer`、`scheduler`、`cont
 
 ### 2.1 基本操作
 
-|操作类型|方法|
-|:-:|:-|
-|创建| `kubectl create -f xxx.yaml` |
-|查询| `kubectl get pod Pod名称` <br/> `kubectl describe pod Pod名称` |
-|删除| `kubectl delete pod Pod名称` |
-|更新| `kubectl replace /path/to/yourNewYaml.yaml` |
+| 操作类型 | 方法                                                           |
+| :------: | :------------------------------------------------------------- |
+|   创建   | `kubectl create -f xxx.yaml`                                   |
+|   查询   | `kubectl get pod Pod名称` <br/> `kubectl describe pod Pod名称` |
+|   删除   | `kubectl delete pod Pod名称`                                   |
+|   更新   | `kubectl replace /path/to/yourNewYaml.yaml`                    |
 
 ### 2.2 Pod与容器
 
@@ -56,9 +56,7 @@ Master节点上面主要由四个模块组成: `APIServer`、`scheduler`、`cont
 在kubernetes中, 镜像的下载策略为: 
 
 - `Always`: 每次都下载最新的镜像
-
 - `Never`: 只使用本地镜像, 从不下载
-
 - `IfNotPresent`: 只有当本地没有的时候才下载镜像
 
 Pod被分配到Node之后会根据镜像下载策略进行镜像下载, 可以根据自身集群的特点来决定采用何种下载策略. 无论何种策略, 都要确保Node上有正确的镜像可用. 
@@ -68,15 +66,10 @@ Pod被分配到Node之后会根据镜像下载策略进行镜像下载, 可以�
 通过yaml文件, 可以在Pod中设置: 
 
 1. 启动命令, 如: `spec.containers.command`
-
 2. 环境变量, 如: `spec.containers.env.name/value`
-
 3. 端口桥接, 如: `spec.containers.ports.containerPort/protocol/hostIP/hostPort`（使用`hostPort`时需要注意端口冲突的问题, 不过Kubernetes在调度Pod的时候会检查宿主机端口是否冲突, 比如当两个Pod均要求绑定宿主机的80端口, Kubernetes将会将这两个Pod分别调度到不同的机器上）;
-
-4. Host网络, 一些特殊场景下, 容器必须要以host方式进行网络设置（如接收物理机网络才能够接收到的组播流）, 在Pod中也支持host网络的设置, 如: `spec.hostNetwork=true`；
-
+4. Host网络, 一些特殊场景下, 容器必须要以host方式进行网络设置（如接收物理机网络才能够接收到的组播流）, 在Pod中也支持host网络的设置, 如: `spec.hostNetwork=true`; 
 5. 数据持久化, 如: `spec.containers.volumeMounts.mountPath`;
-
 6. 重启策略, 当Pod中的容器终止退出后, 重启容器的策略. 这里的所谓Pod的重启, 实际上的做法是容器的重建, 之前容器中的数据将会丢失, 如果需要持久化数据, 那么需要使用数据卷进行持久化设置. Pod支持三种重启策略: 
     - Always（默认策略, 当容器终止退出后, 总是重启容器）
     - OnFailure（当容器终止且异常退出时, 重启）
@@ -127,13 +120,9 @@ containers:
 Label的定义是任一的, 但是Label必须具有可标识性, 比如设置Pod的应用名称和版本号等. 另外Lable是不具有唯一性的, 为了更准确的标识一个Pod, 应该为Pod设置多个维度的label. 如下: 
 
 - "release" : "stable", "release" : "canary"
-
 - "environment" : "dev", "environment" : "qa", "environment" : "production"
-
 - "tier" : "frontend", "tier" : "backend", "tier" : "cache"
-
 - "partition" : "customerA", "partition" : "customerB"
-
 - "track" : "daily", "track" : "weekly"
 
 举例, 当你在`RC`的yaml文件中定义了该RC的`selector`中的`label`为`app:my-web`, 那么这个RC就会去关注`Pod.metadata.labeks`中label为app:my-web的Pod. 修改了对应Pod的Label, 就会使Pod脱离RC的控制. 同样, 在RC运行正常的时候, 若试图继续创建同样Label的Pod, 是创建不出来的. 因为RC认为副本数已经正常了, 再多起的话会被RC删掉的. 
@@ -176,7 +165,7 @@ $ kubectl rolling-update my-rcName-v1 -f my-rcName-v2-rc.yaml --update-period=10
 
 ### 3.4 新一代副本控制器replica set
 
-这里所说的`replica set`, 可以被认为 是“升级版”的`Replication Controller`. 也就是说. `replica set`也是用于保证与`label selector`匹配的pod数量维持在期望状态. 区别在于, `replica set`引入了对基于子集的`selector`查询条件, 而Replication Controller仅支持基于值相等的selecto条件查询. 这是目前从用户角度肴, 两者唯一的显著差异.  
+这里所说的`replica set`, 可以被认为 是“升级版”的`Replication Controller`. 也就是说. `replica set`也是用于保证与`label selector`匹配的pod数量维持在期望状态. 区别在于, `replica set`引入了对基于子集的`selector`查询条件, 而Replication Controller仅支持基于值相等的selecto条件查询. 这是目前从用户角度肴, 两者唯一的显著差异. 
 
 社区引入这一API的初衷是用于取代vl中的`Replication Controller`, 也就是说．当v1版本被废弃时, `Replication Controller`就完成了它的历史使命, 而由`replica set`来接管其工作. 虽然`replica set`可以被单独使用, 但是目前它多被Deployment用于进行pod的创建、更新与删除. Deployment在滚动更新等方面提供了很多非常有用的功能, 关于Deployment的更多信息, 读者们可以在后续小节中获得. 
 
@@ -252,9 +241,7 @@ No events.
 Service的虚拟IP是由Kubernetes虚拟出来的内部网络, 外部是无法寻址到的. 但是有些服务又需要被外部访问到, 例如web前段. 这时候就需要加一层网络转发, 即外网到内网的转发. Kubernetes提供了`NodePort`、`LoadBalancer`、`Ingress`三种方式. 
 
 1. `NodePort`: 在之前的Guestbook示例中, 已经延时了`NodePort`的用法. `NodePort`的原理是, Kubernetes会在每一个Node上暴露出一个端口: nodePort, 外部网络可以通过（任一Node）[NodeIP]:[NodePort]访问到后端的Service. 
-
 2. `LoadBalancer`: 在`NodePort`基础上, Kubernetes可以请求底层云平台创建一个负载均衡器, 将每个Node作为后端, 进行服务分发. 该模式需要底层云平台（例如GCE）支持. 
-
 3. `Ingress`: 是一种HTTP方式的路由转发机制, 由`Ingress Controller`和HTTP代理服务器组合而成. `Ingress Controller`实时监控Kubernetes API, 实时更新HTTP代理服务器的转发规则. HTTP代理服务器有GCE Load-Balancer、HaProxy、Nginx等开源方案. 
 
 ### 4.5 servicede 自发性机制
@@ -282,15 +269,10 @@ Kubernetes使用`iptables`和`kube-proxy`解析service的人口地址, 在中小
 Kubernetes提供了一种更加简单的更新RC和Pod的机制, 叫做Deployment. 通过在Deployment中描述你所期望的集群状态, `Deployment Controller`会将现在的集群状态在一个可控的速度下逐步更新成你所期望的集群状态. Deployment主要职责同样是为了保证pod的数量和健康, 90%的功能与`Replication Controller`完全一样, 可以看做新一代的`Replication Controller`. 但是, 它又具备了`Replication Controller`之外的新特性: 
 
 1. `RC`全部功能: Deployment继承了上面描述的`RC`的全部功能. 
-
 2. 事件和状态查看: 可以查看Deployment的升级详细进度和状态. 
-
 3. 回滚: 当升级pod镜像或者相关参数的时候发现问题, 可以使用回滚操作回滚到上一个稳定的版本或者指定的版本. 
-
 4. 版本记录: 每一次对Deployment的操作, 都能保存下来, 给予后续可能的回滚使用. 
-
 5. 暂停和启动: 对于每一次升级, 都能够随时暂停和启动. 
-
 6. 多种升级方案: 
     - Recreate: 删除所有已存在的pod, 重新创建新的; 
     - RollingUpdate: 滚动升级, 逐步替换的策略, 同时滚动升级时, 支持更多的附加参数, 例如设置最大不可用pod数量, 最小升级间隔时间等等. 
@@ -385,7 +367,7 @@ $ kubectl scale deployment nginx-deployment --replicas 10  #弹性伸缩Pod数�
 
 **关于多重升级**
 
-举例, 当你创建了一个`nginx1.7`的Deployment, 要求副本数量为5之后, `Deployment Controller`会逐步的将5个1.7的Pod启动起来；当启动到3个的时候, 你又发出更新`Deployment`中Nginx到1.9的命令；这时`Deployment Controller`会立即将已启动的3个1.7Pod杀掉, 然后逐步启动1.9的Pod. Deployment Controller不会等到1.7的Pod都启动完成之后, 再依次杀掉1.7, 启动1.9. 
+举例, 当你创建了一个`nginx1.7`的Deployment, 要求副本数量为5之后, `Deployment Controller`会逐步的将5个1.7的Pod启动起来; 当启动到3个的时候, 你又发出更新`Deployment`中Nginx到1.9的命令; 这时`Deployment Controller`会立即将已启动的3个1.7Pod杀掉, 然后逐步启动1.9的Pod. Deployment Controller不会等到1.7的Pod都启动完成之后, 再依次杀掉1.7, 启动1.9. 
 
 ## 6. Volume
 
@@ -429,20 +411,16 @@ Kubernetes提供了很多类型的数据卷以集成第三方的存储系统, �
 
 理解每个存储系统是一件复杂的事情, 特别是对于普通用户来说, 有时候并不需要关心各种存储实现, 只希望能够安全可靠地存储数据. Kubernetes中提供了`Persistent Volume`和`Persistent Volume Claim`机制, 这是存储消费模式. 
 
-`Persistent Volume`是由系统管理员配置创建的一个数据卷（目前支持HostPath、GCE Persistent Disk、AWS Elastic Block Store、NFS、iSCSI、GlusterFS、RBD）, 它代表了某一类存储插件实现；
+`Persistent Volume`是由系统管理员配置创建的一个数据卷（目前支持HostPath、GCE Persistent Disk、AWS Elastic Block Store、NFS、iSCSI、GlusterFS、RBD）, 它代表了某一类存储插件实现; 
 
 而对于普通用户来说, 通过Persistent Volume Claim可请求并获得合适的Persistent Volume, 而无须感知后端的存储实现. 
 
 Persistent Volume和Persistent Volume Claim的关系其实类似于Pod和Node, Pod消费Node资源, Persistent Volume Claim则消费Persistent Volume资源. Persistent Volume和Persistent Volume Claim相互关联, 有着完整的生命周期管理: 
 
-1. 准备: 系统管理员规划或创建一批Persistent Volume；
-
-2. 绑定: 用户通过创建Persistent Volume Claim来声明存储请求, Kubernetes发现有存储请求的时候, 就去查找符合条件的Persistent Volume（最小满足策略）. 找到合适的就绑定上, 找不到就一直处于等待状态；
-
-3. 使用: 创建Pod的时候使用Persistent Volume Claim；
-
-4. 释放: 当用户删除绑定在Persistent Volume上的Persistent Volume Claim时, Persistent Volume进入释放状态, 此时Persistent Volume中还残留着上一个Persistent Volume Claim的数据, 状态还不可用；
-
+1. 准备: 系统管理员规划或创建一批Persistent Volume; 
+2. 绑定: 用户通过创建Persistent Volume Claim来声明存储请求, Kubernetes发现有存储请求的时候, 就去查找符合条件的Persistent Volume（最小满足策略）. 找到合适的就绑定上, 找不到就一直处于等待状态; 
+3. 使用: 创建Pod的时候使用Persistent Volume Claim; 
+4. 释放: 当用户删除绑定在Persistent Volume上的Persistent Volume Claim时, Persistent Volume进入释放状态, 此时Persistent Volume中还残留着上一个Persistent Volume Claim的数据, 状态还不可用; 
 5. 回收: 是否的Persistent Volume需要回收才能再次使用. 回收策略可以是人工的也可以是Kubernetes自动进行清理（仅支持NFS和HostPath）
 
 ### 6.4信息数据卷
@@ -451,15 +429,14 @@ Kubernetes中有一些数据卷, 主要用来给容器传递配置信息, 我们
 
 ## 7. Pet Sets/StatefulSet
 
-K8s在1.3版本里发布了Alpha版的`PetSet`功能. 在云原生应用的体系里, 有下面两组近义词；
+K8s在1.3版本里发布了Alpha版的`PetSet`功能. 在云原生应用的体系里, 有下面两组近义词; 
 
-1. 无状态（stateless）、牲畜（cattle）、无名（nameless）、可丢弃（disposable）；
-
+1. 无状态（stateless）、牲畜（cattle）、无名（nameless）、可丢弃（disposable）; 
 2. 有状态（stateful）、宠物（pet）、有名（having name）、不可丢弃（non-disposable）
 
-RC和RS主要是控制提供无状态服务的, 其所控制的Pod的名字是随机设置的, 一个Pod出故障了就被丢弃掉, 在另一个地方重启一个新的Pod, 名字变了、名字和启动在哪儿都不重要, 重要的只是Pod总数；而PetSet是用来控制有状态服务, PetSet中的每个Pod的名字都是事先确定的, 不能更改. PetSet中Pod的名字的作用, 是用来关联与该Pod对应的状态. 
+RC和RS主要是控制提供无状态服务的, 其所控制的Pod的名字是随机设置的, 一个Pod出故障了就被丢弃掉, 在另一个地方重启一个新的Pod, 名字变了、名字和启动在哪儿都不重要, 重要的只是Pod总数; 而PetSet是用来控制有状态服务, PetSet中的每个Pod的名字都是事先确定的, 不能更改. PetSet中Pod的名字的作用, 是用来关联与该Pod对应的状态. 
 
-对于RC和RS中的Pod, 一般不挂载存储或者挂载共享存储, 保存的是所有Pod共享的状态, Pod像牲畜一样没有分别；对于PetSet中的Pod, 每个Pod挂载自己独立的存储, 如果一个Pod出现故障, 从其他节点启动一个同样名字的Pod, 要挂在上原来Pod的存储继续以它的状态提供服务. 
+对于RC和RS中的Pod, 一般不挂载存储或者挂载共享存储, 保存的是所有Pod共享的状态, Pod像牲畜一样没有分别; 对于PetSet中的Pod, 每个Pod挂载自己独立的存储, 如果一个Pod出现故障, 从其他节点启动一个同样名字的Pod, 要挂在上原来Pod的存储继续以它的状态提供服务. 
 
 适合于PetSet的业务包括数据库服务MySQL和PostgreSQL, 集群化管理服务Zookeeper、etcd等有状态服务. PetSet的另一种典型应用场景是作为一种比普通容器更稳定可靠的模拟虚拟机的机制. 传统的虚拟机正是一种有状态的宠物, 运维人员需要不断地维护它, 容器刚开始流行时, 我们用容器来模拟虚拟机使用, 所有状态都保存在容器里, 而这已被证明是非常不安全、不可靠的. 使用PetSet, Pod仍然可以通过漂移到不同节点提供高可用, 而存储也可以通过外挂的存储来提供高可靠性, PetSet做的只是将确定的Pod与确定的存储关联起来保证状态的连续性. 
 
@@ -471,7 +448,7 @@ ConfigMap包含了一系列的键值对, 用于存储被Pod或者系统组件（
 
 ## 9. Horizontal Pod Autoscaler
 
-自动扩展作为一个长久的议题, 一直为人们津津乐道. 系统能够根据负载的变化对计算资源的分配进行自动的扩增或者收缩, 无疑是一个非常吸引人的特征, 它能够最大可能地减少费用或者其他代价（如电力损耗）. 自动扩展主要分为两种, 其一为水平扩展, 针对于实例数目的增减；其二为垂直扩展, 即单个实例可以使用的资源的增减. Horizontal Pod Autoscaler（HPA）属于前者. 
+自动扩展作为一个长久的议题, 一直为人们津津乐道. 系统能够根据负载的变化对计算资源的分配进行自动的扩增或者收缩, 无疑是一个非常吸引人的特征, 它能够最大可能地减少费用或者其他代价（如电力损耗）. 自动扩展主要分为两种, 其一为水平扩展, 针对于实例数目的增减; 其二为垂直扩展, 即单个实例可以使用的资源的增减. Horizontal Pod Autoscaler（HPA）属于前者. 
 
 ### 9.1 Horizontal Pod Autoscaler如何工作
 

@@ -1,4 +1,4 @@
-# kubernetes的资源管理
+# kuber-资源限制
 
 参考文章
 

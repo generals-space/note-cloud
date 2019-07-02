@@ -1,4 +1,4 @@
-# kubernetes-本地镜像缓存imagePullPolicy
+# kuber-imagePullPolicy本地镜像缓存
 
 参考文章
 
@@ -15,7 +15,5 @@ spec:
 `imagePullPolicy`可选值: 
 
 1. `IfNotPresent`: 默认, 如果本地已经有该镜像, 不再重新pull.
-
 2. `Never`: 直接不再去拉取镜像了, 使用本地的; 如果本地不存在就报异常了.
-
 3. `Always`: 每次都尝试从远程pull镜像.

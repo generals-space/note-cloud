@@ -1,4 +1,4 @@
-# Kubernetes-PersistentVolume持久卷(二)-挂载NFS
+# kuber-PV持久卷(二)-挂载NFS
 
 参考文章
 
