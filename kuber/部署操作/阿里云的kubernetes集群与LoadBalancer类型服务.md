@@ -12,8 +12,11 @@
 
 标准kubernetes概念中service的类型有
 
-1. `ClusterIP`
-2. `LoadBalancer`
+1. `ClusterIP`: 只能在集群内部访问(通过service名称), 如果要暴露给公网访问, 需要配合使用Ingress对象.
+2. `NodePort`: 将会在kube-proxy服务所在的节点上(基本是所有节点...Master和Worker)"创建"一个30000-32767端口, 访问节点上的此端口就相当于访问pod内部的服务. 
+    - nodePort不一定真正创建, 工作在在iptables模式的kube-proxy服务使用转发链完成此操作, 用netstat/ss是看不到listening状态的端口的.
+3. `LoadBalancer`: 这种类型的Service需要云厂商支持, 自建集群无法创建, 因为没有办法为此service实例赋予externalIP.
+    - 实际上, 像GCE, 阿里云, ta们的LoadBalancer就是绑定了SLB实例的NodePort类型的service而已, 由公有云的SLB代理service开放给公网.
 
 在一个`service`配置中, 如果设置了`type`为`LoadBalancer`, 阿里云会在创建此`service`的同时, 还会创建一个公网的SLB, 且公网IP随机.
 
