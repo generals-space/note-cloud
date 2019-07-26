@@ -11,3 +11,6 @@
 3. [Kubernetes网络方案的三大类别和六个场景](https://sq.163yun.com/blog/article/223878660638527488)
     - 二层最大的缺陷是广播, 会限制节点的量级
 
+4. [华为云 - 容器网络吓人技术如何突破K8s转发性能瓶颈](https://bbs.huaweicloud.com/blogs/7cdf0680747e11e89fc57ca23e93a89f)
+5. [容器网络插件那么多，博云为什么基于OVS深度自研？](http://blog.itpub.net/69923336/viewspace-2651696/)
+
