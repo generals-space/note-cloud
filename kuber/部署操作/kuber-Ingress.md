@@ -54,6 +54,8 @@ kind: Ingress
 metadata:
   name: myingress
   annotations:
+    ## 这一句注解可以将发送到ing的/svc的请求, 转发给后端时路径转为/
+    ## 类似nginx在proxy_pass路径末尾的斜线.
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
