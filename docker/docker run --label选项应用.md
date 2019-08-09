@@ -13,17 +13,17 @@ d run -it --name mq01 --label type=middleware generals/centos7 /bin/bash
 
 在`inspect`时, 可以得到如下输出
 
-```
-            "Labels": {
-                "type": "middleware",
-                "author": "general",
-                "email": "generals.space@gmail.com",
-                "org.label-schema.build-date": "20180804",
-                "org.label-schema.license": "GPLv2",
-                "org.label-schema.name": "CentOS Base Image",
-                "org.label-schema.schema-version": "1.0",
-                "org.label-schema.vendor": "CentOS"
-            }
+```json
+"Labels": {
+    "type": "middleware",
+    "author": "general",
+    "email": "generals.space@gmail.com",
+    "org.label-schema.build-date": "20180804",
+    "org.label-schema.license": "GPLv2",
+    "org.label-schema.name": "CentOS Base Image",
+    "org.label-schema.schema-version": "1.0",
+    "org.label-schema.vendor": "CentOS"
+}
 ```
 
 可以看到, 在容器启动时添加的`type`标签与在构建镜像时的`author`, `email`同级.
