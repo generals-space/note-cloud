@@ -19,7 +19,7 @@ kubernetes版本: 1.15.10
 
 cordon/uncordon只修改node状态(`SchedulingDisabled`不可调度), 不涉及pod操作.
 
-drain首先将node设置为`SchedulingDisabled`, 之后迁移pod(先在其他node上启动新pod, 然后移除本地pod).
+而drain首先将node设置为`SchedulingDisabled`, 之后迁移pod(先在其他node上启动新pod, 然后移除本地pod).
 
 ## 删除节点
 
