@@ -54,3 +54,31 @@ users:
 - Namespace则可以用于划分业务, 不同业务可以隔离, 不会通过service暴露的接口直接通信, 但仍有办法通过dns解析得到其他命名空间的服务路径.
 
 注意: namespace并不是属于context的, 它们并不是包含关系, 而是绑定关系, 一个namespace可以绑定在**context1**上, 也可以绑定到**context2**上.
+
+## crt/key文件与base64的转换
+
+其实使用`base64`这个命令进行转换十分简单.
+
+解码时, 将`XXX-data`的base64字符串存储到文件中, 例如`basefile.txt`, 注意需要是单行.
+
+```
+base64 -D basefile.txt
+```
+
+这样就可得到解码后的内容, 一般可以看到熟悉的标记
+
+```
+-----BEGIN CERTIFICATE-----
+
+-----END CERTIFICATE-----
+```
+
+或
+
+```
+-----BEGIN RSA PRIVATE KEY-----
+
+-----END RSA PRIVATE KEY-----
+```
+
+大致上心里就有数了.

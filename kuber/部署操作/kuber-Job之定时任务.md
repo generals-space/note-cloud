@@ -6,9 +6,9 @@
 
 2. [官方文档 - Running automated tasks with cron jobs](https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/)
 
-从程序的运行形态上来区分，我们可以将Pod分为两类：长时运行服务（jboss、mysql等）和一次性任务（数据计算、测试）。RC创建的Pod都是长时运行的服务，而Job创建的Pod都是一次性任务。
+从程序的运行形态上来区分，我们可以将Pod分为两类：长时运行服务(jboss、mysql等)和一次性任务(数据计算、测试). RC创建的Pod都是长时运行的服务，而Job创建的Pod都是一次性任务. 
 
-在Job的定义中，`restartPolicy`（重启策略）只能是`Never`和`OnFailure`。Job可以控制一次性任务的Pod的完成次数（`Job.spec.completions`）和并发执行数（`Job.spec.parallelism`），当Pod成功执行指定次数后，即认为Job执行完毕。
+在Job的定义中，`restartPolicy`(重启策略)只能是`Never`和`OnFailure`. Job可以控制一次性任务的Pod的完成次数(`Job.spec.completions`)和并发执行数(`Job.spec.parallelism`)，当Pod成功执行指定次数后，即认为Job执行完毕. 
 
 网上有很多介绍关于`CronJob`的文章, 但大多数还停留在`batch/v2alpha1`的api版本上, 创建cronjob时会报如下错误.
 
@@ -41,3 +41,15 @@ spec:
             - date; echo Hello from the Kubernetes cluster
           restartPolicy: OnFailure
 ```
+
+创建的cronjob并不会立刻创建pod容器, 而是在第一次触发的时间开始创建并执行第一次任务.
+
+一个`*/30 * * * *`的job, 状态变化如下
+
+```
+wrk-job-1567591800-dc59z                  1/1     Running             0          35s    192.168.171.25    k8s-worker-7-18   <none>           <none>
+wrk-job-1567591800-dc59z                  0/1     Completed           0          65s    192.168.171.25    k8s-worker-7-18   <none>           <none>
+```
+可以看到, 30秒后pod状态变为Complete, 并不会删除.
+
+可以使用`kubectl get job`获取执行过的任务信息.
