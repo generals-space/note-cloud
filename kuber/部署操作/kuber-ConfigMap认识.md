@@ -199,8 +199,6 @@ metadata:
 
 在pod的配置文件中, 可以用configMap对象中的字段作为环境变量(env).
 
-> 官方文档中只写了pod, 我觉得service, deployment等对象的配置也是一样的道理.
-
 我们还能把配置文件读进去, 所以我们还可以把configMap当作目录一样挂载. 但是通过configMap挂载的目录都是只读的, 如果需要写权限, 请使用`hostPath`.
 
 ### 3.1 Pod配置文件中引用
@@ -227,7 +225,7 @@ spec:
               key: name
 ```
 
-直接把configMap对象作为环境变量配置文件
+2. 直接把configMap对象作为环境变量配置文件
 
 ```yml
 apiVersion: v1
@@ -243,9 +241,11 @@ spec:
           name: myconfig1
 ```
 
+按照参考文章2所说, 这种方式要求目标config map对象必须为键值类型. 即, 要么用`--from-literal=name=general`手动赋值, 要么用`--from-env-file=config.cfg`读入键值文件.
+
 ### 3.2 挂载configMap为volume卷
 
-如果把configMap作为卷挂载到容器中的某个目录下, 则该configMap的键名都会成为文件名, 而它们的值则都会成为对应文件的内容.
+如果把configMap作为卷挂载到容器中的某个目录下, 则**该configMap的键名都会成为文件名, 而它们的值则都会成为对应文件的内容**.
 
 以上面`myconfig6`对象为例. 创建`pod_configmap.yml`文件
 
