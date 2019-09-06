@@ -8,7 +8,11 @@
     - flannel组件以UDP模式实现的, 容器间跨主机通信时数据包传递的全过程(精彩)
     - 生产环境不推荐使用UDP模式的原因: 性能
 2. [Kubernetes网络方案的三大类别和六个场景](https://sq.163yun.com/blog/article/223878660638527488)
+3. [官方文档 Network Plugins](https://kubernetes.io/docs/concepts/extend-kubernetes/compute-storage-net/network-plugins/)
 
+4. [Kubernetes CNI网络插件](https://www.cnblogs.com/rexcheny/p/10960233.html)
+
+5. [Kubernetes利用CNI-bridge插件打通网络](https://blog.csdn.net/qq_36183935/article/details/90735049)
 
 参考文章1简洁易懂, ta首先描述了kuber设想中的网络架构: 
 
