@@ -9,4 +9,5 @@
 5. [14. 深入剖析k8s之网络模型与CNI网络插件](http://blog.liu-kevin.com/2019/04/22/14-shen-ru-pou-xi-k8szhi-wang-luo-mo-xing-yu-cniwang-luo-cha-jian/)
 6. [vishvananda/netlink](https://github.com/vishvananda/netlink)
 7. [[Kubernetes] Kubernetes Docker CNI 网络插件开发示例](https://blog.csdn.net/shida_csdn/article/details/79752411)
+8. [如何实现系列三：如何自己实现一个CNI插件](https://blog.spider.im/post/how-to-write-a-cni-plugin/)
 

@@ -6,6 +6,10 @@
 
 2. [官方文档 - Running automated tasks with cron jobs](https://kubernetes.io/docs/tasks/job/automated-tasks-with-cron-jobs/)
 
+3. [TTL Mechanism for Finished Jobs](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#ttl-mechanism-for-finished-jobs)
+    - `ttlSecondsAfterFinished`设置job结束后多久会自动删除.
+
+
 从程序的运行形态上来区分，我们可以将Pod分为两类：长时运行服务(jboss、mysql等)和一次性任务(数据计算、测试). RC创建的Pod都是长时运行的服务，而Job创建的Pod都是一次性任务. 
 
 在Job的定义中，`restartPolicy`(重启策略)只能是`Never`和`OnFailure`. Job可以控制一次性任务的Pod的完成次数(`Job.spec.completions`)和并发执行数(`Job.spec.parallelism`)，当Pod成功执行指定次数后，即认为Job执行完毕. 
