@@ -1,0 +1,8 @@
+## redis, database, registry的目录属主为root, 其他的为nfsnobody
+/mnt/nfsvol/harbor/redis 192.168.7.0/24(rw,sync,no_all_squash,no_root_squash)
+/mnt/nfsvol/harbor/database 192.168.7.0/24(rw,sync,no_all_squash,no_root_squash)
+/mnt/nfsvol/harbor/ca_download 192.168.7.0/24(rw,sync,no_all_squash,root_squash)
+/mnt/nfsvol/harbor/job_logs 192.168.7.0/24(rw,sync,no_all_squash,root_squash)
+/mnt/nfsvol/harbor/psc 192.168.7.0/24(rw,sync,no_all_squash,root_squash)
+/mnt/nfsvol/harbor/registry 192.168.7.0/24(rw,sync,no_all_squash,no_root_squash)
+/mnt/nfsvol/harbor/proxy_nginx 192.168.7.0/24(rw,sync,no_all_squash,root_squash)

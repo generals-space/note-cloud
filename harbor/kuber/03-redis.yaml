@@ -1,0 +1,40 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-svc
+  namespace: harbor
+spec:
+  ports:
+    - name: stardard-port
+      port: 6379
+      targetPort: 6379
+  selector:
+    name: redis-apps
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: redis
+  namespace: harbor
+  labels:
+    name: redis
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: redis-apps
+    spec:
+      containers:
+      - name: redis-app
+        image: goharbor/redis-photon:v1.8.2
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+          - name: nfs-data-vol
+            mountPath: /var/lib/redis
+      volumes:
+        - name: nfs-data-vol
+          nfs:
+            server: 192.168.7.14
+            path: /mnt/nfsvol/harbor/redis
