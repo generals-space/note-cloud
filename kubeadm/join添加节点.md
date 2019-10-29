@@ -1,5 +1,13 @@
 # join添加节点
 
+参考文章
+
+1. [Discovering what cluster CA to trust](https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-join/#discovering-what-cluster-ca-to-trust)
+2. [Steps for the first control plane node](https://kubernetes.io/docs/setup/independent/high-availability/#steps-for-the-first-control-plane-node)
+    - 其中的note是重点
+
+在 kubeadm 初始话集群成功后会返回 join 命令, 里面有 token，discovery-token-ca-cert-hash等参数, 但ta们是有过期时间的. token 的过期时间是24小时, certificate-key 过期时间是2小时.
+
 ```
 $ kubeadm token list
 TOKEN                     TTL         EXPIRES                     USAGES                   DESCRIPTION   EXTRA GROUPS

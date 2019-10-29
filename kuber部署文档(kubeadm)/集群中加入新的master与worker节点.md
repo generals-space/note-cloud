@@ -1,9 +1,6 @@
-- ##### 在 kubeadm 初始话集群成功后会返回join 命令，里面有 token，discovery-token-ca-cert-hash等参数，需要记下来。
+- ##### 
+- 
 
-```
-有关 token 的过期时间是24小时
-certificate-key 过期时间是2小时
-```
 
 - #### 如果是不记得，请执行以下命令获取
 
@@ -30,5 +27,3 @@ Flag --experimental-upload-certs has been deprecated, use --upload-certs instead
 
 参考
 
-1. https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-join/#token-based-discovery-with-ca-pinning
-2. https://kubernetes.io/docs/setup/independent/high-availability/#steps-for-the-first-control-plane-node (其中的note)
