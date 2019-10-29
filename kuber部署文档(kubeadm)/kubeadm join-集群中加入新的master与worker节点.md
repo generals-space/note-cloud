@@ -1,4 +1,4 @@
-# join添加节点
+# kubeadm join-集群中加入新的master与worker节点
 
 参考文章
 
