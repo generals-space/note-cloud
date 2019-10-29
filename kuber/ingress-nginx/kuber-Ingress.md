@@ -14,7 +14,9 @@
 > 
 > 默认的nginx-ingress-controller可监听所有namespace的ingress对象, 如果需要ta只监听指定namespace, 使用`--watch-namespace`选项.
 
-首先安装nginx-ingress-controller, 见参考文章2.
+首先安装nginx-ingress-controller, 见参考文章2. ingress-controller将作为一个pod运行在**某个worker节点**上.
+
+然后依次创建pod, service, ingress对象.
 
 ```yaml
 apiVersion: v1
@@ -26,11 +28,8 @@ metadata:
 spec:
   containers:
   - name: nginx-pod
-    image: centos:7
-    command: ["tail", "-f", "/etc/profile"]
+    image: nginx
 ```
-
-注意: 需要进入容器手动安装nginx并启动.
 
 ```yaml
 apiVersion: v1

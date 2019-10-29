@@ -1,0 +1,16 @@
+apiVersion: kubeadm.k8s.io/v1beta1
+kind: ClusterConfiguration
+kubernetesVersion: v1.16.2
+imageRepository: registry.cn-hangzhou.aliyuncs.com/google_containers
+controlPlaneEndpoint: "k8s-server-lb:8443"
+
+networking:
+  podSubnet: "10.254.0.0/16"
+
+---
+apiVersion: kubeproxy.config.k8s.io/v1alpha1
+kind: KubeProxyConfiguration
+ipvs:
+  minSyncPeriod: 1s
+  syncPeriod: 10s
+mode: ipvs

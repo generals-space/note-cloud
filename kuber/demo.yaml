@@ -7,14 +7,17 @@ metadata:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-pod
+  ## deploy 生成的 pod 的名称也是 nginx-deploy-xxx
+  name: nginx-deploy
   labels:
-    app: nginx-pod
+    app: nginx-deploy
   namespace: general-test
 spec:
   replicas: 1
   selector:
     matchLabels:
+      ## 这里的 label 是与下面的 template -> metadata -> label 匹配的,
+      ## 表示一种管理关系
       app: nginx-pod
   template:
     metadata:
@@ -39,10 +42,11 @@ spec:
     - port: 80
       name: http
       targetPort: 80
-      nodePort: 30080
   selector:
+    ## 注意: service 的 selector 需要指定的是 
+    ## Deployment -> spec -> template -> labels,
+    ## 而不是 Deployment -> metadata -> lables.
     app: nginx-pod
-  type: NodePort
 
 ---
 apiVersion: extensions/v1beta1
