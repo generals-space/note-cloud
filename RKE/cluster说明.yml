@@ -8,7 +8,7 @@ nodes:
     user: ubuntu
     ## rke 通过 ssh 登录各节点, 有些沙壁情况是, 不同节点要使用的key不同
     ssh_key_path: /root/.ssh/id_rsa
-    port: 2222
+    port: 22
     hostname_override: km01
   - address: 192.168.0.214
     role:
