@@ -1,0 +1,15 @@
+apiVersion: kubeadm.k8s.io/v1beta1
+kind: ClusterConfiguration
+kubernetesVersion: v1.13.4
+imageRepository: registry.cn-hangzhou.aliyuncs.com/google_containers
+
+## 外部etcd集群需要添加 etcd 段落.
+etcd:
+  external:
+    endpoints:
+      - https://192.168.7.14:2379
+      - https://192.168.7.15:2379
+      - https://192.168.7.16:2379
+    caFile: /etc/etcd/ssl/ca.pem
+    certFile: /etc/etcd/ssl/etcd.pem
+    keyFile: /etc/etcd/ssl/etcd-key.pem

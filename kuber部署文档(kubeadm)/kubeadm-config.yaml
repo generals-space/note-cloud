@@ -2,6 +2,7 @@ apiVersion: kubeadm.k8s.io/v1beta1
 kind: ClusterConfiguration
 kubernetesVersion: v1.16.2
 imageRepository: registry.cn-hangzhou.aliyuncs.com/google_containers
+## 用于生成apiserver匹配的证书及kubelet配置文件的请求入口.
 controlPlaneEndpoint: "k8s-server-lb:8443"
 
 networking:

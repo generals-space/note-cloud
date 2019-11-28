@@ -10,6 +10,8 @@
     - `.Chart`表示`Chart.yaml`文件中的内容空间.
     - `.Values`同理, 表示`values.yaml`内容空间.
 
+3. [helm--chart模板文件简单语法使用](https://www.cnblogs.com/DaweiJ/articles/8779256.html)
+    - 用户级试用总结, 更易上手.
 
 go模板中有`template`指令, 作用类似于c语言中的`include`, 可以把其他模板文件中的内容加载到当前文件. 但ta不能在管道操作中使用, 比如 `{{ template "mysql.fullname" . }}` 可以理解, 但是`{{ template "mysql.fullname" | uppper }}` 就不行了.
 

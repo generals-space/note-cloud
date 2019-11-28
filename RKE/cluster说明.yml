@@ -1,0 +1,109 @@
+cluster_name: rke-kuber
+
+nodes:
+  - address: 192.168.0.211
+    role:
+      - controlplane
+      - etcd
+    user: ubuntu
+    ## rke 通过 ssh 登录各节点, 有些沙壁情况是, 不同节点要使用的key不同
+    ssh_key_path: /root/.ssh/id_rsa
+    port: 2222
+    hostname_override: km01
+  - address: 192.168.0.214
+    role:
+      - worker
+    user: ubuntu
+    ssh_key_path: /root/.ssh/id_rsa
+    hostname_override: kw01
+  - address: 192.168.0.215
+    role:
+      - worker
+    user: ubuntu
+    ssh_key_path: /root/.ssh/id_rsa
+    hostname_override: kw02
+    labels:
+      app: ingress
+
+## 如果节点上docker版本不符合要求, 会不会报错
+ignore_docker_version: false
+
+## 可以预先添加私有仓库的登录凭证, 应该是出于拉取私有镜像的目的吧.
+## private_registries: {}
+
+## 貌似rke 1.0.0 时 kubernetes_version 字段已被废弃.
+## system_images 的内容是运行了一遍 `rke config` 生成的.
+system_images:
+  etcd: rancher/coreos-etcd:v3.3.15-rancher1
+  alpine: rancher/rke-tools:v0.1.51
+  nginx_proxy: rancher/rke-tools:v0.1.51
+  cert_downloader: rancher/rke-tools:v0.1.51
+  kubernetes_services_sidecar: rancher/rke-tools:v0.1.51
+  kubedns: rancher/k8s-dns-kube-dns:1.15.0
+  dnsmasq: rancher/k8s-dns-dnsmasq-nanny:1.15.0
+  kubedns_sidecar: rancher/k8s-dns-sidecar:1.15.0
+  kubedns_autoscaler: rancher/cluster-proportional-autoscaler:1.7.1
+  coredns: rancher/coredns-coredns:1.6.2
+  coredns_autoscaler: rancher/cluster-proportional-autoscaler:1.7.1
+  kubernetes: rancher/hyperkube:v1.16.3-rancher1
+  flannel: rancher/coreos-flannel:v0.11.0-rancher1
+  flannel_cni: rancher/flannel-cni:v0.3.0-rancher5
+  calico_node: rancher/calico-node:v3.8.1
+  calico_cni: rancher/calico-cni:v3.8.1
+  calico_controllers: rancher/calico-kube-controllers:v3.8.1
+  calico_ctl: ""
+  calico_flexvol: rancher/calico-pod2daemon-flexvol:v3.8.1
+  canal_node: rancher/calico-node:v3.8.1
+  canal_cni: rancher/calico-cni:v3.8.1
+  canal_flannel: rancher/coreos-flannel:v0.11.0
+  canal_flexvol: rancher/calico-pod2daemon-flexvol:v3.8.1
+  weave_node: weaveworks/weave-kube:2.5.2
+  weave_cni: weaveworks/weave-npc:2.5.2
+  pod_infra_container: rancher/pause:3.1
+  ingress: rancher/nginx-ingress-controller:nginx-0.25.1-rancher1
+  ingress_backend: rancher/nginx-ingress-controller-defaultbackend:1.5-rancher1
+  metrics_server: rancher/metrics-server:v0.3.4
+  windows_pod_infra_container: rancher/kubelet-pause:v0.1.3
+
+services:
+  ## 外部 etcd 集群需要添加 etcd 段落, 格式可见官方文档
+  ## etcd: {}
+
+  ## apiserver 的启动参数吧...
+  kube-api:
+    # IP range for any services created on Kubernetes
+    # This must match the service_cluster_ip_range in kube-controller
+    service_cluster_ip_range: 10.43.0.0/16
+    pod_security_policy: false
+    # Add additional arguments to the kubernetes API server
+    # This WILL OVERRIDE any existing defaults
+    extra_args:
+      # log等级
+      v: 4
+  kube-controller:
+    cluster_cidr: 10.42.0.0/16
+    service_cluster_ip_range: 10.43.0.0/16
+  kubelet:
+    cluster_domain: k8s-server-lb
+    fail_swap_on: true
+    extra_args:
+      ## 设置 pod 数量上限, 默认为 110.
+      max-pods: 250
+
+authorization:
+  ## 可选认证方式只有两种: rbac, none. none表示没有认证
+  mode: rbac
+
+network:
+  ## 可选网络插件: canal, calico, flannel
+  plugin: calico
+dns:
+  ## 可选DNS插件: coredns, kube-dns
+  provider: coredns
+
+## 可自动部署 ingress controller
+ingress:
+  ## 当前 provider 可选值: nginx, none.
+  provider: nginx
+  node_selector:
+    app: ingress
