@@ -7,25 +7,25 @@
 ```yml
 apiVersion: v1
 clusters:
-  - cluster:
-      certificate-authority-data: // 这里是base64加密过的字符串
-      server: https://106.14.49.2:6443
-  name: kubernetes
-  - cluster:
-      certificate-authority: /Users/general/.minikube/ca.crt
-      server: https://192.168.64.32:8443
-  name: minikube
+  - name: kubernetes
+    cluster:
+        certificate-authority-data: // 这里是base64加密过的字符串
+        server: https://106.14.49.2:6443
+  - name: minikube
+    cluster:
+        certificate-authority: /Users/general/.minikube/ca.crt
+        server: https://192.168.64.32:8443
 
 contexts:
-  - context:
+  - name: aliyun
+    context:
       cluster: kubernetes
       namespace: lora-app
       user: kubernetes-admin
-    name: aliyun
-  - context:
+  - name: minikube
+    context:
       cluster: minikube
       user: minikube
-    name: minikube
 
 current-context: aliyun
 kind: Config
@@ -37,8 +37,9 @@ users:
       client-key-data: // 这里是base64加密过的字符串
   - name: minikube
     user:
-      client-certificate: /Users/general/.minikube/client.crt // 也可以写文件路径
-      client-key: /Users/general/.minikube/client.key // 也可以写文件路径
+      client-certificate: /Users/general/.minikube/client.crt // 可以写文件路径
+      client-key: /Users/general/.minikube/client.key // 可以写文件路径
+      ## client-key: minikube/client.key // 也可以写相对路径(相对于`~/.kube`)
 ```
 
 上述配置文件包含了两个集群(Cluster): `kubernetes(运行在阿里云)`和`minikube(运行在本地)`.
