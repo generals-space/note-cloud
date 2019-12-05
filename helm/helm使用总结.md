@@ -28,3 +28,5 @@ https://hub.helm.sh/charts/stable/prometheus-re...      3.2.0           1.0.4   
 1. `stable`:     https://kubernetes-charts.storage.googleapis.com
 2. `bitnami`:    https://charts.bitnami.com/bitnami
 3. `aliyuncs`:   https://apphub.aliyuncs.com
+
+> `helm repo add stable https://kubernetes-charts.storage.googleapis.com`即可添加新的源.
