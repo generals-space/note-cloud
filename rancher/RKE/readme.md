@@ -32,3 +32,6 @@ usermod -aG docker ubuntu
 1. `kube_config_cluster`: `kubectl`配置文件.
 2. `cluster.rkestate`: 包含整个集群所有的配置, 包括所有组件的证书和密钥, 比前者内容要丰富得多.
 
+## reset集群
+
+`rke`有一个`remove`命令, 在`cluster.yml`所在目录下执行`rke remove`即可.

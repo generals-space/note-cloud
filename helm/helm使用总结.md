@@ -1,6 +1,10 @@
-[官方文档 CREATING YOUR OWN CHARTS](https://helm.sh/docs/intro/using_helm/#creating-your-own-charts)
+# helm使用总结
+
+参考文章
+
+1. [官方文档 CREATING YOUR OWN CHARTS](https://helm.sh/docs/intro/using_helm/#creating-your-own-charts)
     - 创建新的chart工程(`helm create`)及错误检查(`helm lint`), 打包操作(`helm package`)等
-[Helm v3.0.0 安装和使用](https://blog.csdn.net/twingao/article/details/103218363)
+2. [Helm v3.0.0 安装和使用](https://blog.csdn.net/twingao/article/details/103218363)
     - 个人的使用记录, 给出了3个常用chart源.
 
 ## 关于多个源的pull/install操作.
