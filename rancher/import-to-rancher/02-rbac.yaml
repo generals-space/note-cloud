@@ -1,0 +1,85 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: proxy-clusterrole-kubeapiserver
+rules:
+- apiGroups: [""]
+  resources:
+  - nodes/metrics
+  - nodes/proxy
+  - nodes/stats
+  - nodes/log
+  - nodes/spec
+  verbs: ["get", "list", "watch", "create"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: proxy-role-binding-kubernetes-master
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: proxy-clusterrole-kubeapiserver
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: kube-apiserver
+
+---
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: cattle
+  namespace: cattle-system
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: cattle-admin-binding
+  namespace: cattle-system
+  labels:
+    cattle.io/creator: "norman"
+subjects:
+- kind: ServiceAccount
+  name: cattle
+  namespace: cattle-system
+roleRef:
+  kind: ClusterRole
+  name: cattle-admin
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cattle-credentials-8c84cbd
+  namespace: cattle-system
+type: Opaque
+data:
+  url: "aHR0cHM6Ly8xOTIuMTY4LjAuMTAx"
+  token: "ajY0N2w5bXRwZmg3NjVwa2JmaHN0YzlqZmo2Nm5ncGY1OTRqeDc1d3cyZG42YnJyZDJ2ZjRu"
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: cattle-admin
+  labels:
+    cattle.io/creator: "norman"
+rules:
+- apiGroups:
+  - '*'
+  resources:
+  - '*'
+  verbs:
+  - '*'
+- nonResourceURLs:
+  - '*'
+  verbs:
+  - '*'
