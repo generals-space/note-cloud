@@ -1,0 +1,71 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana
+  namespace: monitoring
+  labels:
+    app: grafana
+  annotations:
+    prometheus.io/probe: "true"
+spec:
+  selector:
+    name: grafana
+    phase: prod
+  ports:
+    - name: http
+      protocol: TCP
+      port: 3000
+---
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: grafana
+  namespace: monitoring
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      name: grafana
+      phase: prod
+  template:
+    metadata:
+      labels:
+        name: grafana
+        phase: prod
+    spec:
+      securityContext:
+        fsGroup: 472
+        runAsUser: 0
+      containers:
+        - name: grafana
+          image: harbor.tongbanjie.org/k8s/grafana:5.4.3
+          env:
+            - name: GF_AUTH_BASIC_ENABLED
+              value: "false"
+            - name: GF_AUTH_ANONYMOUS_ENABLED
+              value: "true"
+            - name: GF_AUTH_ANONYMOUS_ORG_ROLE
+              value: Viewer
+          ports:
+            - name: http
+              containerPort: 3000
+          resources:
+            requests:
+              memory: 100Mi
+              cpu: 100m
+            limits:
+              memory: 200Mi
+              cpu: 200m
+          volumeMounts:
+          - name: data
+            mountPath: /var/lib/grafana
+      volumes:
+        - name: data
+          nfs:
+            server: 192.168.7.14
+            path: /mnt/nfsvol/monitoring/grafana

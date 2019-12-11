@@ -1,0 +1,467 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  ## prometheus自定义报警规则
+  name: prometheus-rules
+  namespace: monitoring
+data:
+  etcd3.rules.yaml: |
+    groups:
+    - name: etcd3.rules
+      rules:
+      - alert: InsufficientMembers
+        expr: count(up{job="etcd"} == 0) > (count(up{job="etcd"}) / 2 - 1)
+        for: 3m
+        labels:
+          severity: High
+        annotations:
+          description: If one more etcd member goes down the cluster will be unavailable
+          summary: etcd cluster insufficient members
+      - alert: NoLeader
+        expr: etcd_server_has_leader{job="etcd"} == 0
+        for: 1m
+        labels:
+          severity: High
+        annotations:
+          description: etcd member {{ $labels.instance }} has no leader
+          summary: etcd member has no leader
+      - alert: HighNumberOfLeaderChanges
+        expr: increase(etcd_server_leader_changes_seen_total{job="etcd"}[1h]) > 3
+        labels:
+          severity: Warning
+        annotations:
+          description: etcd instance {{ $labels.instance }} has seen {{ $value }} leader
+            changes within the last hour
+          summary: a high number of leader changes within the etcd cluster are happening
+      - alert: HighNumberOfFailedHTTPRequests
+        expr: sum(rate(etcd_http_failed_total{job="etcd"}[5m])) BY (method) / sum(rate(etcd_http_received_total{job="etcd"}[5m]))
+          BY (method) > 0.05
+        for: 5m
+        labels:
+          severity: High
+        annotations:
+          description: '{{ $value }}% of requests for {{ $labels.method }} failed on etcd
+            instance {{ $labels.instance }}'
+          summary: a high number of HTTP requests are failing
+      - alert: HTTPRequestsSlow
+        expr: histogram_quantile(0.99, rate(etcd_http_successful_duration_seconds_bucket[5m]))
+          > 0.15
+        for: 3m
+        labels:
+          severity: Warning
+        annotations:
+          description: on etcd instance {{ $labels.instance }} HTTP requests to {{ $labels.method
+            }} are slow
+          summary: slow HTTP requests
+      - alert: EtcdMemberCommunicationSlow
+        expr: histogram_quantile(0.99, rate(etcd_network_peer_round_trip_time_seconds_bucket[5m]))
+          > 0.15
+        for: 3m
+        labels:
+          severity: Warning
+        annotations:
+          description: etcd instance {{ $labels.instance }} member communication with
+            {{ $labels.To }} is slow
+          summary: etcd member communication is slow
+      - alert: HighNumberOfFailedProposals
+        expr: increase(etcd_server_proposals_failed_total{job="etcd"}[1h]) > 5
+        labels:
+          severity: Warning
+        annotations:
+          description: etcd instance {{ $labels.instance }} has seen {{ $value }} proposal
+            failures within the last hour
+          summary: a high number of proposals within the etcd cluster are failing
+      - alert: HighFsyncDurations
+        expr: histogram_quantile(0.99, rate(etcd_disk_wal_fsync_duration_seconds_bucket[5m]))
+          > 0.5
+        for: 3m
+        labels:
+          severity: Warning
+        annotations:
+          description: etcd instance {{ $labels.instance }} fync durations are high
+          summary: high fsync durations
+      - alert: HighCommitDurations
+        expr: histogram_quantile(0.99, rate(etcd_disk_backend_commit_duration_seconds_bucket[5m]))
+          > 0.25
+        for: 3m
+        labels:
+          severity: Warning
+        annotations:
+          description: etcd instance {{ $labels.instance }} commit durations are high
+          summary: high commit durations
+  nodes.rules.yaml: |
+    groups:
+    - name: nodes.rules
+      rules:
+      - record: instance:node_cpu:rate:sum
+        expr: sum(rate(node_cpu{mode!="idle",mode!="iowait",mode!~"^(?:guest.*)$"}[3m]))
+          BY (instance)
+      - record: instance:node_filesystem_usage:sum
+        expr: sum((node_filesystem_size{mountpoint="/"} - node_filesystem_free{mountpoint="/"}))
+          BY (instance)
+      - record: instance:node_network_receive_bytes:rate:sum
+        expr: sum(rate(node_network_receive_bytes[3m])) BY (instance)
+      - record: instance:node_network_transmit_bytes:rate:sum
+        expr: sum(rate(node_network_transmit_bytes[3m])) BY (instance)
+      - record: instance:node_cpu:ratio
+        expr: sum(rate(node_cpu{mode!="idle"}[5m])) WITHOUT (cpu, mode) / ON(instance)
+          GROUP_LEFT() count(sum(node_cpu) BY (instance, cpu)) BY (instance)
+      - record: cluster:node_cpu:sum_rate5m
+        expr: sum(rate(node_cpu{mode!="idle"}[5m]))
+      - record: cluster:node_cpu:ratio
+        expr: cluster:node_cpu:rate5m / count(sum(node_cpu) BY (instance, cpu))
+      - alert: NodeDiskRunningFull
+        expr: predict_linear(node_filesystem_free[6h], 3600 * 24) < 0
+        for: 30m
+        labels:
+          severity: Warning
+        annotations:
+          description: device {{$labels.device}} on node {{$labels.instance}} is running
+            full within the next 24 hours (mounted at {{$labels.mountpoint}})
+      - alert: KubeNodeNotReady
+        annotations:
+          description: '{{ $labels.node }} has been unready for more than 5 minutes.'
+        expr: |
+          kube_node_status_condition{job="kube-state-metrics",condition="Ready",status="true"} == 0
+        for: 5m
+        labels:
+          severity: Warning
+      - alert: FdExhaustionClose
+        expr: predict_linear(fd_utilization[3m], 3600) > 1
+        for: 3m
+        labels:
+          severity: High
+        annotations:
+          description: '{{ $labels.job }}: {{ $labels.namespace }}/{{ $labels.pod }} instance
+            will exhaust in file/socket descriptors within the next hour'
+          summary: file descriptors soon exhausted
+      - alert: NodeMemoryUsage
+        expr: (node_memory_MemTotal - (node_memory_MemFree+node_memory_Buffers+node_memory_Cached )) / node_memory_MemTotal * 100 > 80
+        for: 1m
+        labels:
+          severity: Warning
+        annotations:
+          summary: "{{$labels.instance}}: High Memory usage detected"
+          description: "{{$labels.instance}}: Memory usage is above 80% (current value is:{{ $value }})"
+      - alert: NodeCPUUsage
+        expr: (100 - (avg by (instance) (irate(node_cpu{mode="idle"}[5m])) * 100)) > 60
+        for: 1m
+        labels:
+          severity: High
+        annotations:
+          summary: "{{$labels.instance}}: High CPU usage detected."
+          description: "{{$labels.instance}}: CPU usage is above 60% (current value is:{{ $value }})."
+  deploy.rules.yaml: |
+    groups:
+    - name: deploy-pod.rules
+      rules:
+      - alert: kube_statefulset_replicas_unavailable
+        expr: kube_statefulset_status_replicas < kube_statefulset_replicas
+        for: 5m
+        labels:
+          severity: Warning
+        annotations:
+          description: 'statefulset {{$labels.statefulset}} has {{$value}} replicas, which is less than desired'
+          summary: '{{$labels.statefulset}}: has inssuficient replicas.'
+      - alert: daemonsets_misscheduled
+        expr: kube_daemonset_status_number_misscheduled > 0
+        for: 3m
+        labels:
+          severity: Warning
+        annotations:
+          description: 'Daemonset {{$labels.daemonset}} is running where it is not supposed to run'
+          summary: 'Daemonsets not scheduled correctly'
+      - alert: daemonsets_not_scheduled
+        expr: kube_daemonset_status_desired_number_scheduled - kube_daemonset_status_current_number_scheduled > 0
+        for: 3m
+        labels:
+          severity: Warning
+        annotations:
+          description: '{{ $value }} of Daemonset {{$labels.daemonset}} scheduled which is less than desired number'
+          summary: 'Less than desired number of daemonsets scheduled'
+      - alert: deployment_replicas_unavailable
+        expr: kube_deployment_status_replicas_unavailable{deployment!~"default-http-backend-tbj-.*|nginx-ingress-controller-tbj-.*"} > 0
+        for: 3m
+        labels:
+          severity: Warning
+        annotations:
+          description: 'deployment {{$labels.deployment}} has {{$value}} replicas unavailable'
+          summary: '{{$labels.deployment}}: has inssuficient replicas.'
+      - alert: deployment_generation_mismatch
+        expr: kube_deployment_status_observed_generation{job="kube-state-metrics"} != kube_deployment_metadata_generation{job="kube-state-metrics"}
+        for: 5m
+        labels:
+          severity: High
+        annotations:
+          message: "Deployment generation for {{ $labels.namespace }}/{{ $labels.deployment}} does not match, this indicates that the Deployment has failed but has not been rolled back."
+      - alert: KubeDaemonSetNotScheduled
+        expr: kube_daemonset_status_desired_number_scheduled{job="kube-state-metrics"}
+          - kube_daemonset_status_current_number_scheduled{job="kube-state-metrics"}
+          > 0
+        for: 5m
+        labels:
+          severity: Warning
+        annotations:
+          message: '{{ $value }} Pods of DaemonSet {{ $labels.namespace }}/{{ $labels.daemonset
+            }} are not scheduled.'
+  kubelet.rules.yaml: |
+    groups:
+    - name: kubelet.rules
+      rules:
+      - alert: K8SKubeletDown
+        expr: up{job="kubelet"} == 0
+        for: 5m
+        labels:
+          severity: Warning
+        annotations:
+          description: "Node: {{$labels.kubernetes_io_hostname}} kubelet service is unreachable for 5 minutes."
+      - alert: K8SKubeletTooManyPods
+        expr: kubelet_running_pod_count > 100
+        for: 3m
+        labels:
+          severity: Warning
+        annotations:
+          description: Kubelet {{$labels.instance}} is running {{$value}} pods, close
+            to the limit of 110
+          summary: Kubelet is close to pod limit
+  kubernetes.rules.yaml: |
+    groups:
+    - name: kubernetes-absent.rules
+      rules:
+      - alert: AlertmanagerDown
+        annotations:
+          description: Alertmanager has disappeared from Prometheus target discovery.
+        expr: |
+          absent(up{job="alertmanager"} == 1)
+        for: 3m
+        labels:
+          severity: High
+      - alert: CoreDNSDown
+        annotations:
+          description: CoreDNS has disappeared from Prometheus target discovery.
+        expr: |
+          absent(up{job="kube-dns"} == 1)
+        for: 3m
+        labels:
+          severity: High
+      - alert: KubeAPIDown
+        annotations:
+          description: KubeAPI has disappeared from Prometheus target discovery.
+        expr: |
+          absent(up{job="kubernetes-apiservers"} == 1)
+        for: 3m
+        labels:
+          severity: High
+      - alert: KubeControllerManagerDown
+        annotations:
+          description: "KubeControllerManager has disappeared from node: {{$labels.instance}} of 3 minutes."
+        expr: |
+          up{job="kube-controller-manager", job="kube-controller-manager",service="kube-controller-manager"}  < 0
+        for: 3m
+        labels:
+          severity: High
+      - alert: KubeSchedulerDown
+        annotations:
+          description: "KubeScheduler has disappeared from node: {{$labels.instance}} of 3 minutes."
+        expr: |
+          up{job="kube-scheduler",job="kube-scheduler",service="kube-scheduler"} < 1
+        for: 3m
+        labels:
+          severity: High
+      - alert: KubeStateMetricsDown
+        annotations:
+          description: KubeStateMetrics has disappeared from Prometheus target discovery.
+        expr: |
+          absent(up{job="kube-state-metrics"} == 1)
+        for: 3m
+        labels:
+          severity: High
+      - alert: NodeExporterDown
+        annotations:
+          description: "NodeExporter has disappeared from node: {{$labels.instance}} of 3 minutes."
+        expr: |
+          up{job="node-exporter"} < 1
+        for: 3m
+        labels:
+          severity: High
+    - name: kubernetes-system.rules
+      rules:
+      - alert: KubeClientRestErrors
+        annotations:
+          description: Kubernetes API server client '{{ $labels.job }}/{{ $labels.instance
+            }}' is experiencing {{ printf "%0.0f" $value }}% errors.'
+        expr: |
+          (sum(rate(rest_client_requests_total{code!~"2.."}[5m])) by (instance, job)
+            /
+          sum(rate(rest_client_requests_total[5m])) by (instance, job))
+          * 100 > 1
+        for: 3m
+        labels:
+          severity: Warning
+      - alert: KubeletTooManyPods
+        annotations:
+          description: Kubelet {{ $labels.instance }} is running {{ $value }} Pods, close
+            to the limit of 20.
+        expr: kubelet_running_pod_count{job="kubelet"} > 20
+        for: 3m
+        labels:
+          severity: Warning
+      - alert: KubeClientCertificateExpiration
+        annotations:
+          description: Kubernetes API certificate is expiring in less than 7 days.
+        expr: |
+          histogram_quantile(0.01, sum by (job, le) (rate(apiserver_client_certificate_expiration_seconds_bucket{job="kubernetes-apiservers"}[5m]))) < 604800
+        labels:
+          severity: Warning
+    - name: kubernetes-resources.rules
+      rules:
+      - alert: KubeMemOvercommit
+        annotations:
+          description: Cluster has overcommitted memory resource requests for Namespaces.
+        expr: |
+          sum(kube_resourcequota{job="kube-state-metrics", type="hard", resource="requests.memory"})
+            /
+          sum(node_memory_MemTotal_bytes{job="node-exporter"})
+            > 1.5
+        for: 5m
+        labels:
+          severity: Warning
+      - alert: CPUThrottlingHigh
+        annotations:
+          description: '{{ printf "%0.0f" $value }}% throttling of CPU in namespace {{ $labels.namespace
+            }} for container {{ $labels.container_name }} in pod {{ $labels.pod_name }}.'
+        expr: 100 * sum(increase(container_cpu_cfs_throttled_periods_total{pod_name!=""}[5m]))
+          by (container_name, pod_name, namespace) / sum(increase(container_cpu_cfs_periods_total{}[5m]))
+          by (container_name, pod_name, namespace) > 60
+        for: 3m
+        labels:
+          severity: Warning
+    - name: pod_usage.rules
+      rules:
+      - alert: Pod_all_memory_usage
+        expr: (sum by (name)(container_memory_usage_bytes{image!="",name!="zealous_ride"}) / (1024^3) ) > 5
+        for: 3m
+        labels:
+          service: pod
+          severity: High
+        annotations:
+          description: 容器 {{ $labels.name }} Memory 资源利用率大于 5G , (current value is {{$value}})
+          summary: Pod Memory 负载告警
+      - alert: pod_all_network_receive_usage
+        expr: sum(irate(container_network_receive_bytes_total{container_name="POD"}[1m]))
+          BY (name) > 1024 * 1024 * 50
+        for: 3m
+        labels:
+          service: pod
+          severity: High
+        annotations:
+          description: 容器 {{ $labels.name }} network_receive 资源利用率大于 50M , (current value is {{ $value }})
+          summary: Pod network_receive 负载告警
+    - name: job_status.rules
+      rules:
+      - alert: job_status_failed
+        expr: kube_job_status_failed > 0
+        for: 3m
+        labels:
+          severity: Warning
+        annotations:
+          description: 'Job {{$labels.exported_job}} is in failed status'
+          summary: '{{$labels.exported_job}} has failed status'
+    - name: pod_status.rules
+      rules:
+      - alert: pod_phase_status_error
+        expr: kube_pod_status_phase{phase=~"Failed|Pending|Unknown"} == 1
+        for: 3m
+        labels:
+          severity: Warning
+        annotations:
+          description: 'Pod {{$labels.pod}} in namespace {{$labels.namespace}} has been in {{$labels.phase}} status for more than 3 minutes'
+          summary: 'Pod {{$labels.pod}} in namespace {{$labels.namespace}} in {{$labels.phase}} status'
+      - alert: pod_create_status_error
+        expr: kube_pod_container_status_waiting_reason{reason=~"CrashLoopBackOff|ErrImagePull|ImagePullBackOff|CreateContainerConfigError"} == 1
+        for: 3m
+        labels:
+          severity: Warning
+        annotations:
+          description: 'Pod {{$labels.pod}} in namespace {{$labels.namespace}} has an {{$labels.reason}} error for more than 3 minutes'
+          summary: 'Pod {{$labels.pod}} in namespace {{$labels.namespace}} in error status'
+      - alert: pod_container_terminated
+        expr: kube_pod_container_status_terminated_reason{reason=~"OOMKilled|Error|ContainerCannotRun"} > 0
+        for: 3m
+        labels:
+          severity: Warning
+        annotations:
+          description: 'Pod {{$labels.pod}} in namespace {{$labels.namespace}} has a container terminated for more than 3 minutes'
+          summary: 'Pod {{$labels.pod}} in namespace {{$labels.namespace}} in error status'
+    - name: endpoints.rules
+      rules:
+      - alert: KubernetesEndpointsDown
+        expr: kube_endpoint_address_not_ready > 0
+        for: 3m
+        labels:
+          severity: High
+        annotations:
+          description: 'Kubernetes service name: {{$labels.endpoint}}, namespaces: {{$labels.namespace}}, instance: {{$labels.instance}}, endpoints error!'
+  prometheus.rules.yaml: |
+    groups:
+    - name: prometheus.rules
+      rules:
+      - alert: PrometheusConfigReloadFailed
+        expr: prometheus_config_last_reload_successful == 0
+        for: 3m
+        labels:
+          severity: Warning
+        annotations:
+          description: Reloading Prometheus' configuration has failed for {{$labels.namespace}}/{{$labels.pod}}
+      - alert: PrometheusNotificationQueueRunningFull
+        expr: predict_linear(prometheus_notifications_queue_length[5m], 60 * 30) > prometheus_notifications_queue_capacity
+        for: 3m
+        labels:
+          severity: Warning
+        annotations:
+          description: Prometheus' alert notification queue is running full for {{$labels.namespace}}/{{
+            $labels.pod}}
+      - alert: PrometheusErrorSendingAlerts
+        expr: rate(prometheus_notifications_errors_total[5m]) / rate(prometheus_notifications_sent_total[5m])
+          > 0.03
+        for: 3m
+        labels:
+          severity: High
+        annotations:
+          description: Errors while sending alerts from Prometheus {{$labels.namespace}}/{{
+            $labels.pod}} to Alertmanager {{$labels.Alertmanager}}
+      - alert: PrometheusNotConnectedToAlertmanagers
+        expr: prometheus_notifications_alertmanagers_discovered < 1
+        for: 3m
+        labels:
+          severity: Warning
+        annotations:
+          description: Prometheus {{ $labels.namespace }}/{{ $labels.pod}} is not connected
+            to any Alertmanagers
+      - alert: PrometheusTSDBReloadsFailing
+        expr: increase(prometheus_tsdb_reloads_failures_total[2h]) > 0
+        for: 12h
+        labels:
+          severity: Warning
+        annotations:
+          description: '{{$labels.job}} at {{$labels.instance}} had {{$value | humanize}}
+            reload failures over the last four hours.'
+          summary: Prometheus has issues reloading data blocks from disk
+      - alert: PrometheusTSDBCompactionsFailing
+        expr: increase(prometheus_tsdb_compactions_failed_total[2h]) > 0
+        for: 12h
+        labels:
+          severity: Warning
+        annotations:
+          description: '{{$labels.job}} at {{$labels.instance}} had {{$value | humanize}}
+            compaction failures over the last four hours.'
+          summary: Prometheus has issues compacting sample blocks
+      - alert: PrometheusTSDBWALCorruptions
+        expr: tsdb_wal_corruptions_total > 0
+        for: 4h
+        labels:
+          severity: Warning
+        annotations:
+          description: '{{$labels.job}} at {{$labels.instance}} has a corrupted write-ahead
+            log (WAL).'
+          summary: Prometheus write-ahead log is corrupten

@@ -1,19 +1,31 @@
 ## 使用方法
 ## k create ns monitoring
 ## helm install prometheus -n monitoring -f /home/charts/stable.prometheus.yaml stable/prometheus
+## helm upgrade prometheus -n monitoring -f /home/charts/stable.prometheus.yaml stable/prometheus
 
 server:
   enabled: true
   name: server
   enableAdminApi: false
 
-  replicaCount: 1
   global:
     scrape_interval: 1m
     scrape_timeout: 10s
     ## How frequently to evaluate rules
     evaluation_interval: 1m
 
+  replicaCount: 1
+  statefulSet:
+    ## 如果是false则使用deployment部署, 否则用statefulSet部署.
+    enabled: false
+    ## Alertmanager headless service to use for the statefulset
+    headless:
+      servicePort: 80
+
+  service:
+    type: NodePort
+    servicePort: 80
+    nodePort: 30090
   ingress:
     enabled: false
     hosts: []
@@ -27,20 +39,6 @@ server:
     enabled: true
     storageClass: local-path
 
-  statefulSet:
-    ## 如果是false则使用deployment部署, 否则用statefulSet部署.
-    enabled: false
-
-    ## Alertmanager headless service to use for the statefulset
-    ##
-    headless:
-      servicePort: 80
-
-  service:
-    type: NodePort
-    servicePort: 80
-    nodePort: 30090
-
 ## server end ...
 
 alertmanager:
@@ -50,8 +48,9 @@ alertmanager:
     enabled: false
 
   service:
+    type: NodePort
     servicePort: 80
-    type: ClusterIP
+    nodePort: 30180
 
   persistentVolume:
     ## false会使用emptyDir
@@ -93,3 +92,30 @@ pushgateway:
   persistentVolume:
     enabled: false
 ## pushgateway end ...
+
+serverFiles:
+  prometheus.yml:
+    scrape_configs:
+      - job_name: prometheus
+        static_configs:
+          - targets:
+            - localhost:9090
+      ## job prometheus end ...
+      - job_name: kubernetes-apiservers
+        kubernetes_sd_configs:
+          - role: endpoints
+            namespaces:
+              names: 
+                - default
+        scheme: https
+        tls_config:
+          ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+        bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+        relabel_configs:
+          - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
+            action: keep
+            regex: default;kubernetes;https
+
+      ## job kubernetes-apiservers end 
+
+## serverFiles end ...
