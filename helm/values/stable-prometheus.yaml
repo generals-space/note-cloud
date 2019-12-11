@@ -1,0 +1,95 @@
+## 使用方法
+## k create ns monitoring
+## helm install prometheus -n monitoring -f /home/charts/stable.prometheus.yaml stable/prometheus
+
+server:
+  enabled: true
+  name: server
+  enableAdminApi: false
+
+  replicaCount: 1
+  global:
+    scrape_interval: 1m
+    scrape_timeout: 10s
+    ## How frequently to evaluate rules
+    evaluation_interval: 1m
+
+  ingress:
+    enabled: false
+    hosts: []
+    #   - alertmanager.domain.com
+    #   - domain.com/alertmanager
+    tls: []
+    #   - secretName: prometheus-alerts-tls
+    #     hosts:
+    #       - alertmanager.domain.com
+  persistentVolume:
+    enabled: true
+    storageClass: local-path
+
+  statefulSet:
+    ## 如果是false则使用deployment部署, 否则用statefulSet部署.
+    enabled: false
+
+    ## Alertmanager headless service to use for the statefulset
+    ##
+    headless:
+      servicePort: 80
+
+  service:
+    type: NodePort
+    servicePort: 80
+    nodePort: 30090
+
+## server end ...
+
+alertmanager:
+  enabled: true
+  replicaCount: 1
+  ingress:
+    enabled: false
+
+  service:
+    servicePort: 80
+    type: ClusterIP
+
+  persistentVolume:
+    ## false会使用emptyDir
+    enabled: true
+    storageClass: local-path
+
+## alertmanager end ...
+
+kubeStateMetrics:
+  enabled: true
+  name: kube-state-metrics
+  replicaCount: 1
+  service:
+    type: ClusterIP
+    servicePort: 80
+## kubeStateMetrics end ...
+
+nodeExporter:
+  enabled: true
+  name: node-exporter
+  hostNetwork: true
+  hostPID: true
+
+  service:
+    type: ClusterIP
+    hostPort: 9100
+    servicePort: 9100
+## nodeExporter end ...
+
+pushgateway:
+  enabled: true
+  name: pushgateway
+  replicaCount: 1
+  service:
+    type: ClusterIP
+    servicePort: 9091
+  ingress:
+    enabled: false
+  persistentVolume:
+    enabled: false
+## pushgateway end ...
