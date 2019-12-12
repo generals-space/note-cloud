@@ -46,6 +46,7 @@ spec:
     ## 注意: service 的 selector 需要指定的是 
     ## Deployment -> spec -> template -> labels,
     ## 而不是 Deployment -> metadata -> lables.
+    ## 可以说, Service与Deployment最终指向的目标都是Pod资源.
     app: nginx-pod
 
 ---

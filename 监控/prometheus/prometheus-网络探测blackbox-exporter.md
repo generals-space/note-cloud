@@ -3,7 +3,7 @@
 参考文章
 
 1. [网络探测：Blackbox Exporter](https://yunlzheng.gitbook.io/prometheus-book/part-ii-prometheus-jin-jie/exporter/commonly-eporter-usage/install_blackbox_exporter)
-    - 介绍了blackbox_exporter可执行文件的配置及使用方法.
+    - 介绍了`blackbox_exporter`可执行文件的配置及使用方法.
 2. [对Ingress和Service进行网络探测](https://yunlzheng.gitbook.io/prometheus-book/part-iii-prometheus-shi-zhan/readmd/use-prometheus-monitor-kubernetes#dui-ingress-he-service-jin-hang-wang-luo-tan-ce)
     - 介绍了在kubernetes中通过`blackbox_exporter`自动发现service和ingress资源及监控的方法.
 
