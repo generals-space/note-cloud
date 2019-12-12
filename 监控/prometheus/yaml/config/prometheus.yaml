@@ -90,6 +90,7 @@ scrape_configs:
       - __meta_kubernetes_service_label_component
       regex: kube-scheduler
   ## job kube-scheduler end ...
+
   - job_name: 'kubelet'
     kubernetes_sd_configs:
     - role: node
@@ -105,6 +106,7 @@ scrape_configs:
       target_label: __metrics_path__
       replacement: /api/v1/nodes/${1}/proxy/metrics
   ## job kubelet end ...
+
   - job_name: 'kubernetes-cadvisor'
     kubernetes_sd_configs:
     - role: node
@@ -120,6 +122,7 @@ scrape_configs:
       target_label: __metrics_path__
       replacement: /api/v1/nodes/${1}/proxy/metrics/cadvisor
   ## job kubernetes cadvisor end ...
+
   - job_name: 'kubernetes-service'
     metrics_path: /probe
     params:
@@ -146,14 +149,3 @@ scrape_configs:
     - action: drop
       source_labels: [__meta_kubernetes_service_name]
       regex: (kube-dns)|(ingress-nginx-tbj-system)
-  ## Example scrape config for pods
-  #
-  # The relabeling allows the actual pod scrape endpoint to be configured via the
-  # following annotations:
-  #
-  # * `prometheus.io/scrape`: Only scrape pods that have a value of `true`
-  # * `prometheus.io/path`: If the metrics path is not `/metrics` override this.
-  # * `prometheus.io/port`: Scrape the pod on the indicated port instead of the
-  # pod's declared ports (default is a port-free target if none are declared).
-  #
-

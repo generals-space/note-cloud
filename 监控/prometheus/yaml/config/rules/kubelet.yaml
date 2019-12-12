@@ -1,0 +1,18 @@
+groups:
+  - name: kubelet.rules
+    rules:
+      - alert: K8SKubeletDown
+        expr: up{job="kubelet"} == 0
+        for: 5m
+        labels:
+          severity: Warning
+        annotations:
+          description: "Node: {{$labels.kubernetes_io_hostname}} kubelet service is unreachable for 5 minutes."
+      - alert: K8SKubeletTooManyPods
+        expr: kubelet_running_pod_count > 100
+        for: 3m
+        labels:
+          severity: Warning
+        annotations:
+          description: Kubelet {{$labels.instance}} is running {{$value}} pods, close to the limit of 110
+          summary: Kubelet is close to pod limit

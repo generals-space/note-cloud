@@ -64,8 +64,10 @@ relabel_configs:
 
 与`replace`操作相比, `keep`, `drop`只需要`source_labels`字段, 无需`target_label`.
 
-- keep: 删除regex与连接的source_labels不匹配的目标; 
-- drop: 删除regex与连接的source_labels匹配的目标. 可以作为过滤器, 过滤一下同命名空间下的同类型资源(监控的5种模式, ep, node那种).
+- keep: 删除`source_labels`中列表举出的`label`值与`regex`表达式不匹配的job结果; 
+- drop: 删除`source_labels`中列表举出的`label`值与`regex`表达式匹配的job结果. 
+
+可以作为过滤器使用, 过滤一下同命名空间下的同类型资源(监控的5种模式, ep, node那种).
 
 ### 2.3 labelmap/labelkeep/labeldrop
 

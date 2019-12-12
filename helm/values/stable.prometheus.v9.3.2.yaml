@@ -21,7 +21,11 @@ server:
     ## Alertmanager headless service to use for the statefulset
     headless:
       servicePort: 80
-
+  extraArgs:
+    ## 非常重要, 开启热更新支持, 有了这个参数之后, prometheus.yml 配置文件只要更新了, 
+    ## 通过执行http://localhost:9090/-/reload就会立即生效, 所以一定要加上这个参数.
+    web.enable-lifecycle: true
+    web.enable-admin-api: true
   service:
     type: NodePort
     servicePort: 80
@@ -95,6 +99,7 @@ pushgateway:
 
 serverFiles:
   prometheus.yml:
+    ## prometheus抓取规则
     scrape_configs:
       - job_name: prometheus
         static_configs:
@@ -112,10 +117,77 @@ serverFiles:
           ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
         bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
         relabel_configs:
-          - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
+          - source_labels: 
+              - __meta_kubernetes_namespace
+              - __meta_kubernetes_service_name
+              - __meta_kubernetes_endpoint_port_name
             action: keep
             regex: default;kubernetes;https
-
       ## job kubernetes-apiservers end 
 
+      - job_name: 'kubernetes-services'
+      ## 使用自动服务发现监控service需要部署 blackbox-exporter 服务.
+      ## 见: https://yunlzheng.gitbook.io/prometheus-book/part-iii-prometheus-shi-zhan/readmd/use-prometheus-monitor-kubernetes#dui-ingress-he-service-jin-hang-wang-luo-tan-ce
+        metrics_path: /probe
+        params:
+          module: [http_2xx]
+        kubernetes_sd_configs:
+          - role: service
+        relabel_configs:
+          ## `__address__`原为服务发现时获取到的service对象地址, 
+          ## 这里将赋值给获取监控数据的请求参数`__param_target`.
+          - source_labels: [__address__]
+            target_label: __param_target
+          - target_label: __address__
+            replacement: blackbox-exporter.monitoring.svc.cluster.local:9115
+          ## `__param_target`指定了`blackbox_exporter`要探测的目标,
+          ## 这里把发现到的service对象中的instance属性值作为目标, 以实现动态检测.
+          - source_labels: [__param_target]
+            target_label: instance
+          - action: labelmap
+            regex: __meta_kubernetes_service_label_(.+)
+          - source_labels: [__meta_kubernetes_namespace]
+            target_label: kubernetes_namespace
+          - source_labels: [__meta_kubernetes_service_name]
+            target_label: kubernetes_name
+      ## job kubernetes-services end ...
+
+  ## 告警规则
+  ## Ref: https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/
+  alerts: 
+    groups:
+      - name: Instances
+        rules:
+          - alert: InstanceDown
+            expr: up == 0
+            for: 5m
+            labels:
+              severity: page
+            annotations:
+              description: '{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 5 minutes.'
+              summary: 'Instance {{ $labels.instance }} down'
+        ## rules end ...
+
+    ## groups end ...
+
 ## serverFiles end ...
+
+## alertmanager报警规则
+alertmanagerFiles:
+  alertmanager.yml:
+    global: {}
+      # slack_api_url: ''
+
+    receivers:
+      - name: default-receiver
+        # slack_configs:
+        #  - channel: '@you'
+        #    send_resolved: true
+
+    route:
+      group_wait: 10s
+      group_interval: 5m
+      receiver: default-receiver
+      repeat_interval: 3h
+
+## alertmanagerFiles end ...
