@@ -159,9 +159,9 @@ probe_success 0
 groups:
 - name: example
   rules:
-   - alert: ProbeFailing
-     expr: up{job="blackbox"} == 0 or probe_success{job="blackbox"} == 0
-     for: 10m
+    - alert: ProbeFailing
+      expr: up{job="blackbox"} == 0 or probe_success{job="blackbox"} == 0
+      for: 10m
 ```
 
 在`up`本身为0, 或是连续探测失败10m后发出告警.

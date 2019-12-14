@@ -106,6 +106,7 @@ serverFiles:
           - targets:
             - localhost:9090
       ## job prometheus end ...
+
       - job_name: kubernetes-apiservers
         kubernetes_sd_configs:
           - role: endpoints
@@ -125,9 +126,9 @@ serverFiles:
             regex: default;kubernetes;https
       ## job kubernetes-apiservers end 
 
-      - job_name: 'kubernetes-services'
-      ## 使用自动服务发现监控service需要部署 blackbox-exporter 服务.
-      ## 见: https://yunlzheng.gitbook.io/prometheus-book/part-iii-prometheus-shi-zhan/readmd/use-prometheus-monitor-kubernetes#dui-ingress-he-service-jin-hang-wang-luo-tan-ce
+      - job_name: kubernetes-services
+        ## 使用自动服务发现监控service需要部署 blackbox-exporter 服务.
+        ## 见: https://yunlzheng.gitbook.io/prometheus-book/part-iii-prometheus-shi-zhan/readmd/use-prometheus-monitor-kubernetes#dui-ingress-he-service-jin-hang-wang-luo-tan-ce
         metrics_path: /probe
         params:
           module: [http_2xx]
@@ -151,6 +152,7 @@ serverFiles:
           - source_labels: [__meta_kubernetes_service_name]
             target_label: kubernetes_name
       ## job kubernetes-services end ...
+    ## alert end ...
 
   ## 告警规则
   ## Ref: https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/
@@ -166,28 +168,69 @@ serverFiles:
             annotations:
               description: '{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 5 minutes.'
               summary: 'Instance {{ $labels.instance }} down'
-        ## rules end ...
+      ## rules end ...
+
+      - name: general-service
+        rules:
+          - alert: ProbeFailing
+            expr: up {job = 'kubernetes-services'} == 0 or probe_success {job = 'kubernetes-services'} == 0
+            for: 5m
+            labels: 
+              serverity: Warning
+      ## rules end ...
 
     ## groups end ...
-
+  ## alerts end ...
 ## serverFiles end ...
 
 ## alertmanager报警规则
 alertmanagerFiles:
   alertmanager.yml:
-    global: {}
-      # slack_api_url: ''
+    global: 
+      ## global 一般用来配置邮件发送方(smtp_xxx等), 微信企业版接口认证, webhook的客户端配置(账号密码)等.
 
+      ## 超过这个时间就会认为该告警已经被解决不再重复发送.
+      resolve_timeout: 30m
+
+      ## 邮箱smtp服务器代理
+      smtp_smarthost: smtp.qq.com:465
+      ## 发送方的邮件地址, smtp服务器以此验证与授权码是否相符
+      smtp_auth_username: sender_addr@qq.com
+      ## 邮箱密码, 如果是使用qq, 163等, 这里可能需要填写授权码.
+      smtp_auth_password: xxxxxxxxx
+      ## 邮件发送方的邮箱地址, 也是 email_configs.from 的默认取值.
+      smtp_from: sender_addr@qq.com
+      ## qq邮箱一般填false
+      smtp_require_tls: false
+
+      ## 微信告警配置
+      ## wechat_api_corp_id: "企业微信账号唯一ID"
+      ## wechat_api_secret: "自定义应用的密钥"
     receivers:
       - name: default-receiver
-        # slack_configs:
-        #  - channel: '@you'
-        #    send_resolved: true
+        email_configs:
+          ## email_configs中各字段都可以在global块中找到全局配置作为默认值.
+          ## 邮件接收方地址, 如果是企业邮箱, 可以通过分组达到群发的目的.
+          - to: receiver_addr@qq.com
 
     route:
-      group_wait: 10s
-      group_interval: 5m
       receiver: default-receiver
-      repeat_interval: 3h
+      ## 最初(即第一次)等待多久时间发送一组警报的通知
+      group_wait: 10s
+      ## 在发送新警报前的等待时间
+      group_interval: 5m
+      ## 发送警报的周期
+      repeat_interval: 1m
+    ## 自定义通知模板(邮件/微信等)路径, 可使用通配符.
+    templates: 
+      - /etc/config/email_subject.tmpl
+
+  ## alertmanager.yml end ...
+
+  ## 自定义模板
+  email_subject.tmpl: |
+    {{ define "email.custome.subject" -}}
+    [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ .GroupLabels.SortedPairs.Values | join " " }} {{ if gt (len .CommonLabels) (len .GroupLabels) }}({{ with .CommonLabels.Remove .GroupLabels.Names }}{{ .Values | join " " }}{{ end }}){{ end }}
+    {{- end}}
 
 ## alertmanagerFiles end ...
