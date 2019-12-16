@@ -27,7 +27,7 @@ Error querying BIRD: unable to connect to BIRDv6 socket: dial unix /var/run/bird
 
 使用ps查看bird进程
 
-```
+```console
 $ ps -ef | grep bird
  8750 root      0:00 runsv bird
  8751 root      0:00 runsv bird6
@@ -54,7 +54,7 @@ $ ps -ef | grep bird
 
 重新部署后可正常执行
 
-```calico
+```console
 $ calicoctl node status
 Calico process is running.
 
@@ -69,3 +69,6 @@ IPv4 BGP status
 IPv6 BGP status
 No IPv6 peers found.
 ```
+
+> `calico node status`显示是的各邻居节点的信息, 由于此时calicoctl容器被调度在`172.32.0.104`, 所以上述结果没有显示当前所在节点.
+
