@@ -10,6 +10,8 @@
     - 告警的处理方式配置手册(发送媒介(邮件, 微信等), 目标配置, 通知模板等)
 4. [AlertManager警报通知 E-mail 微信 模板](https://www.cnblogs.com/elvi/p/11444278.html)
     - 微信告警配置及自定义模板方法
+5. [alertmanager配置文件说明](https://www.cnblogs.com/zhaojiedi1992/p/zhaojiedi_liunx_65_prometheus_alertmanager_conf.html)
+    - `global.resolve_timeout`的解释
 
 用于prometheus的rules告警规则配置如下
 
@@ -48,8 +50,13 @@ alert-manager的配置如下
 
 ```yaml
 global: 
-  ## 超过这个时间就会认为该告警已经被解决不再重复发送.
-  resolve_timeout: 30m
+  ## global 一般用来配置邮件发送方(smtp_xxx等), 微信企业版接口认证, webhook的客户端配置(账号密码)等.
+
+  ## 当prometheus发现故障已经解除后并不会立刻发送恢复通知, 
+  ## 而是需要再等待`resolve_time`时间进行确认.
+  ## 所以在已经修复故障之后, 最多需要等待`global.resolve_timeout`+`receivers.email_configs.send_resolved`的时间.
+  ## 但事实并非如此...实际上这个值好像不会影响恢复通知的发送.
+  resolve_timeout: 5m
   ## 一般用来配置邮件发送方(smtp_xxx等), 微信企业版接口认证, webhook的客户端配置(账号密码)等.
   ## 邮箱smtp服务器代理
   smtp_smarthost: smtp.qq.com:465
@@ -67,6 +74,12 @@ receivers:
       ## email_configs中各字段都可以在global块中找到全局配置作为默认值.
       ## 邮件接收方地址, 如果是企业邮箱, 可以通过分组达到群发的目的.
       - to: receiver_addr@qq.com
+        ## 故障恢复后是否通知.
+        ## 注意: 故障恢复通知需要在`group_interval`时间前确实有警告发生, 
+        ## 且之后`group_interval`时间内没有再发生, 才会发送.
+        ## (否则alert-manager重启一次启不是要给所有规则都发一次恢复邮件?)
+        ## 但也不是立刻发送通知, 而是需要再继续观察`global.resolve_timeout`进行确认.
+        send_resolved: true
 route:
   receiver: default-receiver
   ## 告警邮件(或是其他类型的通知)发送的频率, 这里是3m一封.
@@ -84,6 +97,8 @@ route:
 ![](https://gitee.com/generals-space/gitimg/raw/master/4b065788e07425f657ed45e5875bc0d6.jpg)
 
 > 注意: 邮件内容中的Labels与上面prometheus Alert页面表格中的`Labels`完全相同.
+
+> 默认故障恢复不会有通知信息, 可以通过设置`receivers.email_configs.send_resolved`为true添加. 另外, 虽然官方文档有提到`resolve_timeout`的作用, 但好像并没有生效.
 
 ## FAQ
 
