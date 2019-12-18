@@ -21,7 +21,7 @@ users:
 
 指定`-h`选项可以查看到如下帮助信息
 
-```
+```console
 $ kubectl config set-credentials -h
 
 Sets a user entry in kubeconfig
