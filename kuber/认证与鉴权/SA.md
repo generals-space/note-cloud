@@ -17,7 +17,7 @@ NAME      SECRETS   AGE
 default   1         18d
 ```
 
-另外, 每一个pod都必须设置SA, 如果部署文件中没有写明, 则默认使用ta所在ns的名为`default`的SA. 而且pod在启动时都会挂载包含该`SA`相关信息的`volume`, 位置在pod内部的`/var/run/secrets/kubernetes.io/serviceaccount`. 
+另外, 每一个pod都必须设置SA, 如果部署文件中没有写明, 则默认使用ta所在ns的名为`default`的SA. 而且pod在启动时都会挂载包含该`SA`相关信息的`volume`, 位置在pod内部的`/var/run/secrets/kubernetes.io/serviceaccount`, 目录中的文件为对应secret对象中的数据字段, 且其中的内容已经经过base64解密, 无需额外操作.
 
 ```console
 $ pwd
