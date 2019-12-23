@@ -23,6 +23,7 @@ metadata:
   ## name值好像是`spec.names.plural+spec.group`?
   name: foos.samplecontroller.k8s.io
 spec:
+  ## CRD工程中, CRD资源可能不只一种, 但group应当是同一个.
   group: samplecontroller.k8s.io
   version: v1alpha1
   names:
@@ -32,7 +33,9 @@ spec:
   scope: Namespaced
 ```
 
-首先要创建一个CRD工程目录, 这里假设CRD名为`PodGroup`. 需要注意的是, 貌似使用`code-generator`的项目只能位于`$GOPATH/src`? 所以目前只能先这么做...
+## 示例步骤
+
+我们首先要创建一个CRD工程目录, 这里假设CRD名为`PodGroup`. 需要注意的是, 貌似使用`code-generator`的项目只能位于`$GOPATH/src`? 所以目前只能先这么做...
 
 ```console
 $ mkdir $GOPATH/src/podgroup
@@ -42,16 +45,16 @@ $ mkdir $GOPATH/src/podgroup
 
 然后预创建3个文件, 这3个文件在同一个目录下, 路径为`$GOPATH/src/podgroup/pkg/apis/${group}/${version}/`. 
 
-这里的`group`与上面的`group`不是同一个, 上面的`group`为CRD.yaml中的`spec.group`的值(比较长), 而这里路径中的`group`不一定非要是这个值, ta可以是`spec.names.shortNames`数组中的一个值(可以认为是CRD名称的缩写).
+这里的`group`与上面的`group`不是同一个, 上面的`group`为yaml部署文件中的`spec.group`的全名, 而这里路径中的`group`, 是去除后面的组织名称部分, 即`testgroup`. kuber官方声明的CRD, 一般以`k8s.io`结尾, coreos声明的CRD都以`coreos.com`结尾. 之后我们将这个变量称为`groupShortName`, 其实ta也可以是`spec.names.shortNames`数组中的其中一个.
 
-> 我觉得这个路径中的变量`group`不应该叫`group`, 而应该叫`crdName`, 因为之后与`version`配合使用的, 都是这个`crdName`的值. 谁知道网上的文章为什么都这么叫...
+```console
+$ mkdir -p $GOPATH/src/podgroup/pkg/apis/testgroup/v1/
+$ touch $GOPATH/src/podgroup/pkg/apis/testgroup/v1/doc.go
+$ touch $GOPATH/src/podgroup/pkg/apis/testgroup/v1/register.go
+$ touch $GOPATH/src/podgroup/pkg/apis/testgroup/v1/types.go
+```
 
-```
-$ mkdir -p $GOPATH/src/podgroup/pkg/apis/podg/v1/
-$ touch $GOPATH/src/podgroup/pkg/apis/podg/v1/doc.go
-$ touch $GOPATH/src/podgroup/pkg/apis/podg/v1/register.go
-$ touch $GOPATH/src/podgroup/pkg/apis/podg/v1/types.go
-```
+> 之所以路径中填写的是`groupShortName`, 是因为一个CRD工程中不可能只有一种自定义资源, `types.go`文件中可以写很多, 所以放在以group为名的目录下, 才比较合理.
 
 文件的内容就不在这里贴了, 可以见当前目录的`podgroup`目录.
 
@@ -64,9 +67,9 @@ $ touch $GOPATH/src/podgroup/pkg/apis/podg/v1/types.go
 然后执行如下命令
 
 ```console
-$ $GOPATH/src/k8s.io/code-generator/generate-groups.sh all podgroup/pkg/client podgroup/pkg/apis podg:v1
+$ $GOPATH/src/k8s.io/code-generator/generate-groups.sh all podgroup/pkg/client podgroup/pkg/apis testgroup:v1
 ```
 
-执行命令时所在的目录没有强制要求, 另外, `podg:v1`, 对应了`podgroup`项目中的`pkg/apis/podg/v1`目录, 如果两者不一致, 会报`Error: Failed making a parser: unable to add directory "podgroup/xxx": unable to import "podgroup/xxx": cannot find package "podgroup/xxx"`.
+执行命令时所在的目录没有强制要求, 另外, `testgroup:v1`, 对应了`podgroup`项目中的`pkg/apis/testgroup/v1`目录, 如果两者不一致, 会报`Error: Failed making a parser: unable to add directory "podgroup/xxx": unable to import "podgroup/xxx": cannot find package "podgroup/xxx"`.
 
 然后可正常生成代码.
