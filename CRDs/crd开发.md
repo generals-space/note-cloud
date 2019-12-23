@@ -1,0 +1,72 @@
+# crd开发
+
+参考文章
+
+1. [Kubernetes Deep Dive: Code Generation for CustomResources](https://blog.openshift.com/kubernetes-deep-dive-code-generation-customresources/)
+    - `code-generator`项目的`readme.md`中提到的参考文档, 不过不建议用于入门.
+2. [k8s代码自动生成过程的解析(Code-Generator)](http://blog.xbblfz.site/2018/09/19/k8s%E4%BB%A3%E7%A0%81%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E8%BF%87%E7%A8%8B%E7%9A%84%E8%A7%A3%E6%9E%90/)
+    - 参考文章1的中文版, 可以稍微读一下.
+3. [Kubernetes CRD 系列：Client-Go 的使用](https://liqiang.io/post/kubernetes-all-about-crd-part03-usage-for-client-go-d831d52e#CRD%20%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%20Typed%20Client)
+    - 讲解了`Dynamic Client`和`Typed Clients`两种client对象, 及创建CRD工程时使用`Typed Clients`的原因.
+    - 此作者的各文章都非常有深度, 值得一看(不过结构, 内容什么的不太容易理解, 只能作为一个引路人)
+4. [使用 code-generator 为 CustomResources 生成代码](https://blog.tianfeiyu.com/2019/08/06/code_generator/)
+    - CRD工程的创建步骤及实例.
+    - 介绍了`code-generator`中各生成器的作用及使用场景.
+    - 执行`generate-groups.sh`生成代码时的4个参数的作用.
+
+如下是`sample-controller`中的crd部署文件.
+
+```yaml
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  ## name值好像是`spec.names.plural+spec.group`?
+  name: foos.samplecontroller.k8s.io
+spec:
+  group: samplecontroller.k8s.io
+  version: v1alpha1
+  names:
+    kind: Foo
+    ## plugral(复数)
+    plural: foos
+  scope: Namespaced
+```
+
+首先要创建一个CRD工程目录, 这里假设CRD名为`PodGroup`. 需要注意的是, 貌似使用`code-generator`的项目只能位于`$GOPATH/src`? 所以目前只能先这么做...
+
+```console
+$ mkdir $GOPATH/src/podgroup
+```
+
+然后按照参考文章3和4中所说, 确定`group`与`version`两个变量的值. 理论上来说, 这两个值可以是随机取的. 这里将`group`定为`testgroup.k8s.io`, `version`定为`v1`. 
+
+然后预创建3个文件, 这3个文件在同一个目录下, 路径为`$GOPATH/src/podgroup/pkg/apis/${group}/${version}/`. 
+
+这里的`group`与上面的`group`不是同一个, 上面的`group`为CRD.yaml中的`spec.group`的值(比较长), 而这里路径中的`group`不一定非要是这个值, ta可以是`spec.names.shortNames`数组中的一个值(可以认为是CRD名称的缩写).
+
+> 我觉得这个路径中的变量`group`不应该叫`group`, 而应该叫`crdName`, 因为之后与`version`配合使用的, 都是这个`crdName`的值. 谁知道网上的文章为什么都这么叫...
+
+```
+$ mkdir -p $GOPATH/src/podgroup/pkg/apis/podg/v1/
+$ touch $GOPATH/src/podgroup/pkg/apis/podg/v1/doc.go
+$ touch $GOPATH/src/podgroup/pkg/apis/podg/v1/register.go
+$ touch $GOPATH/src/podgroup/pkg/apis/podg/v1/types.go
+```
+
+文件的内容就不在这里贴了, 可以见当前目录的`podgroup`目录.
+
+需要注意的是`code-generator`的代码生成步骤. 
+
+网上好像都没有文章明确地讲过, 有的说需要把`code-generator`目录下的`vendor`和`hack`目录拷贝到CRD工程目录, 然后执行`vendor/k8s.io/code-generator/generate-groups.sh xxx`(但是`code-generator`的vendor根本没有ta本身的工程); 参考文章3根本就没说, 直接在当前目录就执行了`./generate-groups.sh xxx`, 这意思是先拷贝一份`code-generator`工程?
+
+首先, `generate-groups.sh`要求`code-generator`和`apimachinery`两个工程在`$GOPATH/src/k8s.io/`目录下(我们的CRD工程也要放在`$GOPATH`目录下.), `go mod`形式的依赖管理无效. 否则在执行脚本时会出现`Hit an unsupported type invalid type for invalid type`的问题.
+
+然后执行如下命令
+
+```console
+$ $GOPATH/src/k8s.io/code-generator/generate-groups.sh all podgroup/pkg/client podgroup/pkg/apis podg:v1
+```
+
+执行命令时所在的目录没有强制要求, 另外, `podg:v1`, 对应了`podgroup`项目中的`pkg/apis/podg/v1`目录, 如果两者不一致, 会报`Error: Failed making a parser: unable to add directory "podgroup/xxx": unable to import "podgroup/xxx": cannot find package "podgroup/xxx"`.
+
+然后可正常生成代码.

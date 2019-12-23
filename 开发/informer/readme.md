@@ -1,7 +1,8 @@
 参考文章
 
 1. [理解 K8S 的设计精髓之 List-Watch机制和Informer模块](https://www.jianshu.com/p/234d27d5c1c1)
-    - 关于解释Informer机制的必要性与优势的前言部分写得很好
+    - 关于解释`Informer`机制的必要性与优势的前言部分写得很好
+    - `Informer`内部运行机制, 十分有条理.
     - 值得阅读
 2. [kubernetes 中 informer 的使用](https://www.jianshu.com/p/1e2e686fe363)
     - `kubectl`, `k8s REST API`, `client-go`(`ClientSet`, `Dynamic Client`, `REST`三种方式)等多种方式访问kuber集群获取资源
