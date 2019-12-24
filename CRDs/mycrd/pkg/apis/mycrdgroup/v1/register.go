@@ -9,7 +9,7 @@ import (
 // SchemeGroupVersion is the identifier for the API which includes
 // the name of the group and the version of the API
 var SchemeGroupVersion = schema.GroupVersion{
-    Group:   "testgroup.k8s.io",
+    Group:   "mycrdgroup.k8s.io",
     Version: "v1",
 }
 
@@ -20,6 +20,7 @@ var (
     AddToScheme   = SchemeBuilder.AddToScheme
 )
 
+// Resource ...
 func Resource(resource string) schema.GroupResource {
     return SchemeGroupVersion.WithResource(resource).GroupResource()
 }
@@ -29,8 +30,8 @@ func Resource(resource string) schema.GroupResource {
 func addKnownTypes(scheme *runtime.Scheme) error {
     scheme.AddKnownTypes(
         SchemeGroupVersion,
-        &PodGroup{},
-        &PodGroupList{},
+        &MyCrd{},
+        &MyCrdList{},
     )
 
     // register the type in the scheme

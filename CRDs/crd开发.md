@@ -13,7 +13,10 @@
     - CRD工程的创建步骤及实例.
     - 介绍了`code-generator`中各生成器的作用及使用场景.
     - 执行`generate-groups.sh`生成代码时的4个参数的作用.
-5. [kubernetes/sample-apiserver工程readme - When using go 1.11 modules](https://github.com/kubernetes/sample-apiserver/#when-using-go-111-modules)
+5. [Kubernetes CRD Operator 实现指南](https://zhuanlan.zhihu.com/p/38372448)
+    - 诸多与kuber同级的编排工具: Mesos(两层式调度器架构), Sparrow(去中心化架构), Hawk(混合式调度器架构), Nomad(共享状态的调度器架构), 及ta们各自的优缺点.
+    - CRD的默认规则: name 通常是 plural 和 group 的结合; 另外, 一般来说 CRD 的作用域是 namespaced 就可以了; 还有 kind 一般采用驼峰命名法等..
+6. [kubernetes/sample-apiserver工程readme - When using go 1.11 modules](https://github.com/kubernetes/sample-apiserver/#when-using-go-111-modules)
     - `sample-apiserver` v1.17+
     - `Note, however, that if you intend to generate code then you will also need the code-generator repo to exist in an old-style location. One easy way to do this is to use the command go mod vendor to create and populate the vendor directory.`
 
@@ -23,7 +26,7 @@
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
 metadata:
-  ## name值好像是`spec.names.plural+spec.group`?
+  ## name=`spec.names.plural+spec.group`
   name: foos.samplecontroller.k8s.io
 spec:
   ## CRD工程中, CRD资源可能不只一种, 但group应当是同一个.
@@ -80,6 +83,14 @@ $ $GOPATH/src/k8s.io/code-generator/generate-groups.sh all podgroup/pkg/client p
 执行命令时所在的目录没有强制要求, 另外, `testgroup:v1`, 对应了`podgroup`项目中的`pkg/apis/testgroup/v1`目录, 如果两者不一致, 会报`Error: Failed making a parser: unable to add directory "podgroup/xxx": unable to import "podgroup/xxx": cannot find package "podgroup/xxx"`.
 
 然后可正常生成代码.
+
+```console
+$ $GOPATH/src/k8s.io/code-generator/generate-groups.sh all podgroup/pkg/client podgroup/pkg/apis testgroup:v1
+Generating deepcopy funcs
+Generating clientset for testgroup:v1 at podgroup/pkg/client/clientset
+Generating listers for testgroup:v1 at podgroup/pkg/client/listers
+Generating informers for testgroup:v1 at podgroup/pkg/client/informers
+```
 
 ## 完善补充
 
