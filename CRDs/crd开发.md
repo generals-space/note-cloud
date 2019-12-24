@@ -13,6 +13,9 @@
     - CRD工程的创建步骤及实例.
     - 介绍了`code-generator`中各生成器的作用及使用场景.
     - 执行`generate-groups.sh`生成代码时的4个参数的作用.
+5. [kubernetes/sample-apiserver工程readme - When using go 1.11 modules](https://github.com/kubernetes/sample-apiserver/#when-using-go-111-modules)
+    - `sample-apiserver` v1.17+
+    - `Note, however, that if you intend to generate code then you will also need the code-generator repo to exist in an old-style location. One easy way to do this is to use the command go mod vendor to create and populate the vendor directory.`
 
 如下是`sample-controller`中的crd部署文件.
 
@@ -33,19 +36,21 @@ spec:
   scope: Namespaced
 ```
 
-## 示例步骤
+## 准备步骤
 
-我们首先要创建一个CRD工程目录, 这里假设CRD名为`PodGroup`. 需要注意的是, 貌似使用`code-generator`的项目只能位于`$GOPATH/src`? 所以目前只能先这么做...
+我们首先要创建一个CRD工程目录, 这里假设CRD名为`PodGroup`. 需要注意的是, 貌似使用`code-generator`的项目只能位于`$GOPATH/src`, 所以目前只能先这么做, 见参考文章5.
 
 ```console
 $ mkdir $GOPATH/src/podgroup
 ```
 
-然后按照参考文章3和4中所说, 确定`group`与`version`两个变量的值. 理论上来说, 这两个值可以是随机取的. 这里将`group`定为`testgroup.k8s.io`, `version`定为`v1`. 
+按照参考文章3和4中所说, 确定`group`与`version`两个变量的值. 理论上来说, 这两个值可以是随机取的. 这里将`group`定为`testgroup.k8s.io`, `version`定为`v1`. 
 
 然后预创建3个文件, 这3个文件在同一个目录下, 路径为`$GOPATH/src/podgroup/pkg/apis/${group}/${version}/`. 
 
-这里的`group`与上面的`group`不是同一个, 上面的`group`为yaml部署文件中的`spec.group`的全名, 而这里路径中的`group`, 是去除后面的组织名称部分, 即`testgroup`. kuber官方声明的CRD, 一般以`k8s.io`结尾, coreos声明的CRD都以`coreos.com`结尾. 之后我们将这个变量称为`groupShortName`, 其实ta也可以是`spec.names.shortNames`数组中的其中一个.
+这里的`group`与上面的`group`不是同一个, 上面的`group`为yaml部署文件中的`spec.group`的全名, 而这里路径中的`group`, 是去除后面的组织名称部分, 即`testgroup`. 之后我们将这个变量称为`groupShortName`, 其实ta也可以是`spec.names.shortNames`数组中的其中一个.
+
+> kuber官方声明的CRD的`group`名称, 一般以`k8s.io`结尾, coreos声明的CRD的`group`都以`coreos.com`结尾.
 
 ```console
 $ mkdir -p $GOPATH/src/podgroup/pkg/apis/testgroup/v1/
@@ -54,9 +59,11 @@ $ touch $GOPATH/src/podgroup/pkg/apis/testgroup/v1/register.go
 $ touch $GOPATH/src/podgroup/pkg/apis/testgroup/v1/types.go
 ```
 
-> 之所以路径中填写的是`groupShortName`, 是因为一个CRD工程中不可能只有一种自定义资源, `types.go`文件中可以写很多, 所以放在以group为名的目录下, 才比较合理.
+> 之所以路径中填写的是`groupShortName`, 是因为一个CRD工程中不可能只有一种自定义资源, `types.go`文件中可以写很多, 所以放在以`groupShortName`为名的目录下, 才比较合理.
 
 文件的内容就不在这里贴了, 可以见当前目录的`podgroup`目录.
+
+## 代码生成
 
 需要注意的是`code-generator`的代码生成步骤. 
 
@@ -73,3 +80,13 @@ $ $GOPATH/src/k8s.io/code-generator/generate-groups.sh all podgroup/pkg/client p
 执行命令时所在的目录没有强制要求, 另外, `testgroup:v1`, 对应了`podgroup`项目中的`pkg/apis/testgroup/v1`目录, 如果两者不一致, 会报`Error: Failed making a parser: unable to add directory "podgroup/xxx": unable to import "podgroup/xxx": cannot find package "podgroup/xxx"`.
 
 然后可正常生成代码.
+
+## 完善补充
+
+生成代码后(生成的代码树结构网上一大堆), 需要补充其他文件.
+
+首先是先把工程目录从`GOPATH`下移出, 并创建`go.mod`文件进行`go modules`初始化.
+
+然后创建`pkg/signals/signal.go`文件.
+
+再创建根目录下的`main.go`和`controller.go`.
