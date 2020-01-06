@@ -9,7 +9,6 @@
 2. [KUBERNETES存储之PERSISTENT VOLUMES简介](https://www.cnblogs.com/styshoo/p/6731425.html)
 
 3. [Configure a Pod to Use a PersistentVolume for Storage](https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/)
-
     - kubernetes官方文档
 
 `PV`在kubernetes中是一种资源, 而不是基础设施. 就是你可以向kubernetes集群申请一个指定大小的存储卷, 不过要事先将可用的物理路径告知集群, 集群会代为分配(希望我没有理解错). 

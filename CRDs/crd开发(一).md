@@ -18,7 +18,10 @@
     - CRD的默认规则: name 通常是 plural 和 group 的结合; 另外, 一般来说 CRD 的作用域是 namespaced 就可以了; 还有 kind 一般采用驼峰命名法等..
 6. [kubernetes/sample-apiserver工程readme - When using go 1.11 modules](https://github.com/kubernetes/sample-apiserver/#when-using-go-111-modules)
     - `sample-apiserver` v1.17+
+    - 使用`code-generator`时无法使用`go mod`创建工程
     - `Note, however, that if you intend to generate code then you will also need the code-generator repo to exist in an old-style location. One easy way to do this is to use the command go mod vendor to create and populate the vendor directory.`
+7. [k8s自定义controller三部曲之一:创建CRD（Custom Resource Definition）](https://blog.csdn.net/boling_cavalry/article/details/88917818)
+    - 示例工程不错, 给出了`code-generator`生成代码后, 额外的`main.go`, `controller.go`和`signal.go`等文件的编写方法.
 
 如下是`sample-controller`中的crd部署文件.
 
@@ -48,6 +51,8 @@ $ mkdir $GOPATH/src/podgroup
 ```
 
 按照参考文章3和4中所说, 确定`group`与`version`两个变量的值. 理论上来说, 这两个值可以是随机取的. 这里将`group`定为`testgroup.k8s.io`, `version`定为`v1`. 
+
+> 还记得RBAC中`Role/ClusterRole`的权限列表中有`apiGroups`字段么? 没错, `apiGroups`就是这里的`group`字段, 每个`group`下拥有一种或多种资源.
 
 然后预创建3个文件, 这3个文件在同一个目录下, 路径为`$GOPATH/src/podgroup/pkg/apis/${group}/${version}/`. 
 

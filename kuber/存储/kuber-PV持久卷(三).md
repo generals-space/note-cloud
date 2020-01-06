@@ -47,7 +47,6 @@ spec:
     path: /tmp/pv1
     type: Directory
 
-
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:

@@ -1,5 +1,5 @@
 ## Human-readable name易于识别的名称
-name: xd-k8s-master-43-101
+name: k8s-master-43-101
 
 ## 客户端(etcdctl, curl等)的访问地址
 listen-client-urls: https://172.16.43.101:2379,http://127.0.0.1:2379
@@ -28,7 +28,7 @@ initial-cluster-state: new
 ## 集群初始化时各节点统一的token, 各节点的配置相同, 防止多个集群时发生混乱.
 initial-cluster-token: etcd-cluster-0
 ## 集群初始化时各节点成员列表, 注意格式.
-initial-cluster: xd-k8s-master-43-101=https://172.16.43.101:2380,xd-k8s-master-43-102=https://172.16.43.102:2380,xd-k8s-master-43-103=https://172.16.43.103:2380
+initial-cluster: k8s-master-43-101=https://172.16.43.101:2380,k8s-master-43-102=https://172.16.43.102:2380,k8s-master-43-103=https://172.16.43.103:2380
 
 data-dir: /var/lib/etcd
 
