@@ -12,7 +12,5 @@ dd if=/dev/zero of=/tmp/ddfile bs=1M count=10240
 
 ## 2. IO限制
 
-docker容器默认的空间是10G,如果想指定默认容器的大小（在启动容器的时候指定），可以在docker配置文件里通过dm.basesize参数指定，比如
-docker -d --storage-opt dm.basesize=20G
-是指定默认的大小为20G
+docker容器默认的空间是10G,如果想指定默认容器的大小（在启动容器的时候指定），可以在docker配置文件里通过dm.basesize参数指定，比如`docker -d --storage-opt dm.basesize=20G`指定默认的大小为20G.
 
