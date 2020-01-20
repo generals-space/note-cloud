@@ -44,3 +44,5 @@ docker run -it --privileged --name centos7 generals/centos7 /bin/bash
 ```
 net.ipv4.tcp_max_syn_backlog = 1024
 ```
+
+> 修改的内核参数无法保留在容器中, 所以容器重启后要重新执行内核参数的生效操作.
