@@ -6,6 +6,7 @@
     - 介绍了cgroup相关命令的使用方法: cgcreate, cgset, cgexec等.
 2. [第 3 章 使用 LIBCGROUP 工具](https://access.redhat.com/documentation/zh-cn/red_hat_enterprise_linux/7/html/resource_management_guide/chap-using_libcgroup_tools)
     - cgXXX工具族的使用方法: cgcreate, cgset, cgget, cgexec, cgclassify等.
+3. [cgroup实现cpu绑定和资源使用比例限制](https://blog.51cto.com/emulator/1945735)
 
 ## 1. cgroup的增删改查
 
