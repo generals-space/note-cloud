@@ -37,9 +37,8 @@ func onDelete(obj interface{}) {
 }
 
 func main() {
-	var kubeconfig string
 	home := homedir.HomeDir()
-	kubeconfig = filepath.Join(home, ".kube", "config")
+	kubeconfig := filepath.Join(home, ".kube", "config")
 	config, err := clientcmd.BuildConfigFromFlags("", kubeconfig)
 	if err != nil {
 		panic(err)
