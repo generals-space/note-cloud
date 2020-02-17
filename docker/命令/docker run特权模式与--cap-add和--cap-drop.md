@@ -1,4 +1,4 @@
-# docker特权模式与--cap-add和--cap-drop
+# docker run特权模式与--cap-add和--cap-drop
 
 参考文章
 

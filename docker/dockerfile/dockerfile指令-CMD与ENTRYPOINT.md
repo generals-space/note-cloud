@@ -1,4 +1,4 @@
-# Dockerfile指令-CMD与ENTRYPOINT
+# dockerfile指令-CMD与ENTRYPOINT
 
 参考文章
 
