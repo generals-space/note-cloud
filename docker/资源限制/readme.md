@@ -1,7 +1,7 @@
 [Linux:如何限制进程的CPU使用率?](https://www.techforgeek.info/how_to_limit_cpu_usage.html)
 [Linux的公平调度（CFS）原理 - kummer话你知](https://www.jianshu.com/p/673c9e4817a8)
     - linux调度算法的演进过程: O(n) -> O(1) -> CFS
-    - CFS的运行原理
+    - CFS的运行原理 - 红黑树
 2. [docker cgroup技术之cpu和cpuset](https://www.cnblogs.com/charlieroro/p/10281469.html)
     - 介绍了cgroup中的cpu, cpuset两个子系统各自的作用及两个子系统中比较重要的几个参数的含义和使用方法
 1. [DOCKER基础技术：LINUX CGROUP](https://coolshell.cn/articles/17049.html)

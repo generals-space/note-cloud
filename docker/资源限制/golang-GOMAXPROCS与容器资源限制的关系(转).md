@@ -179,7 +179,9 @@ spec:
 
 ## 5. 结果分析
 
-`Kubernetes`与`docker --cpus`一样, 都是利用[CFS Bandwith Control(完全公平调度)](https://www.kernel.org/doc/Documentation/scheduler/sched-bwc.txt)来对`CPU`进行资源使用的限制的. 以使用 `Docker`运行时的`Kubernetes`为例, 当用户利用`.spec.containers[].resources.limit.cpu`来限制`CPU`的`hard limit`时, 其背后的行为是向`Docker`容器中加入了`HostConfig.CpuPeriod`和`HostConfig.CpuQuota`(使用`docker inspect 容器ID`可以查到`HostConfig`字段). 最后`cpu,cpuacct`两个cgroup下的值`cpu.cfs_period_us`和`cpu.cfs_quota_us`被修改. 
+`Kubernetes`与`docker --cpus`一样, 都是利用[CFS Bandwith Control(完全公平调度)](https://www.kernel.org/doc/Documentation/scheduler/sched-bwc.txt)来对`CPU`进行资源使用的限制的. 
+
+以使用 `Docker`运行时的`Kubernetes`为例, 当用户利用`.spec.containers[].resources.limit.cpu`来限制`CPU`的`hard limit`时, 其背后的行为是向`Docker`容器中加入了`HostConfig.CpuPeriod`和`HostConfig.CpuQuota`(使用`docker inspect 容器ID`可以查到`HostConfig`字段), 最后`cpu,cpuacct`两个cgroup下的值`cpu.cfs_period_us`和`cpu.cfs_quota_us`被修改. 
 
 `CFS Bandwith Control`原本是为了解决`CPU Share`不能做`hard limit`的问题的, 但它同样造成了新的问题, 系统调用`sched_getaffinity()`并不感知它对进程的限制. 这也使得运行在`Kubernetes`中的`Go`程序的运行时始终会认为自己可以使用宿主机上的所有`CPU`, 进而创建了相同数量的`P`. 而当其`GOMAXPROCS`被手动地设置为限制后的值后, 其在`CPU`密集的任务上的表现得到了很大程度的提高. 
 
