@@ -12,6 +12,9 @@
         2. `/etc/cni/net.d/`目录下增加CNI插件的配置文件
         3. `/opt/cni/bin`目录下存在CNI可执行文件
     - 介绍了`plugins`工程中的各种插件, 按照其功能分为3类: `main`, `ipam`和`meta`, 并分别介绍ta们工作的具体流程.
+3. [Flannel是如何工作的](https://cloud.tencent.com/developer/article/1096997)
+    - vxlan, hostgw, udp才是有真正使用场景的网络模型, 其他都是实验性的, 不建议上生产.
+    - [containernetworking/plugins/plugins/meta/flannel/README.md](https://github.com/containernetworking/plugins/blob/master/plugins/meta/flannel/README.md)工程才是真正的cni插件.
 
 CNI: 容器网络接口.
 
@@ -69,10 +72,10 @@ CNI: 容器网络接口.
 |    192.168.0.201/24  |  eht0  |  |                      |  |  eht0  |  192.168.0.202/24    |
 |                      +----┬---+  |                      |  +----┬---+                      |
 +---------------------------|------+                      +-------|--------------------------+
-                               |        +------------------+         |                             
-                               └───────>|  192.168.0.1/24  |<────────┘                             
-                                        |       路由器      |
-                                        +------------------+
+                            |        +------------------+         |                             
+                            └───────>|  192.168.0.1/24  |<────────┘                             
+                                     +------------------+
+                                           网关/路由器
 ```
 
 flannel提供了几个网络模型, 通过NAT, 路由等方式, 以实现Pod与Pod之间, Pod与宿主机之间能够通信.
