@@ -14,10 +14,6 @@
 4. [Kubernetes CNI网络插件](https://www.cnblogs.com/rexcheny/p/10960233.html)
 
 5. [Kubernetes利用CNI-bridge插件打通网络](https://blog.csdn.net/qq_36183935/article/details/90735049)
-6. [Flannel是如何工作的](https://cloud.tencent.com/developer/article/1096997)
-    - vxlan, hostgw, udp才是有真正使用场景的网络模型, 其他都是实验性的, 不建议上生产.
-    - [containernetworking/plugins/plugins/meta/flannel/README.md](https://github.com/containernetworking/plugins/blob/master/plugins/meta/flannel/README.md)工程才是真正的cni插件.
-
 
 参考文章1简洁易懂, ta首先描述了kuber设想中的网络架构: 
 
