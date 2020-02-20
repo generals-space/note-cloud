@@ -15,6 +15,8 @@
 3. [Flannel是如何工作的](https://cloud.tencent.com/developer/article/1096997)
     - vxlan, hostgw, udp才是有真正使用场景的网络模型, 其他都是实验性的, 不建议上生产.
     - [containernetworking/plugins/plugins/meta/flannel/README.md](https://github.com/containernetworking/plugins/blob/master/plugins/meta/flannel/README.md)工程才是真正的cni插件.
+4. [K8S 网络插件（CNI）超过 10Gbit/s 的基准测试结果](https://zhuanlan.zhihu.com/p/53296042)
+    - CNI性能测试结果, 分析和建议...不过好像没说方法?
 
 CNI: 容器网络接口.
 
@@ -47,7 +49,7 @@ CNI: 容器网络接口.
 1. [coreos/flannel](https://github.com/generals-space/flannel) (下称`coreos/flannel`)
 2. [containernetworking/plugins](https://github.com/containernetworking/plugins)中的子项目, 位于`plugins/meta/flannel`. (下称`cni/flannel`)
 
-后者才是真正的CNI插件(你为发现`/opt/cni/bin`目录下还有一个`flannel`).
+后者才是真正的CNI插件(你为发现`/opt/cni/bin`目录下还有一个`flannel`), 见参考文章3.
 
 按照上面给出的CNI工作流程, `cni/flannel`看起来只做了两件事: 连接宿主机与Pod, 为Pod赋予IP(当然不是像说得这么简单, 不过大概就是这个流程).
 

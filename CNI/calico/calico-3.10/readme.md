@@ -1,5 +1,3 @@
-
-
 参考文章
 
 1. [Configuring calico/node](https://docs.projectcalico.org/v3.10/reference/node/configuration#ip-setting)
@@ -12,9 +10,9 @@
 
 **重要** CIDR网段的配置在 04-ds.yaml 中, 部署前需要先修改04-ds中的`CALICO_IPV4POOL_CIDR`作为集群内部pod网段.
 
-04-ds类似于flannel, 在每个节点上都有运行. 06-deploy将会部署一个calico-kube-controllers容器(master节点).
+`04-ds`类似于`flannel`, 在每个节点上都有运行. `06-deploy`将会部署一个`calico-kube-controllers`容器(master节点).
 
-另外, calico默认使用ipip的网络模型, 如果要使用BGP模型, 则需要修改04-ds文件中的`CALICO_IPV4POOL_IPIP`为`Never`(`Off`也可以, 默认为`Always`).
+另外, calico默认使用`ipip`的网络模型, 如果要使用`BGP`模型, 则需要修改`04-ds`文件中的`CALICO_IPV4POOL_IPIP`为`Never`(`Off`也可以, 默认为`Always`).
 
 ## 网络模型
 
@@ -25,7 +23,7 @@ vxlan: 由`CALICO_IPV4POOL_VXLAN`控制, 可选值: `Always`, `CrossSubnet`, `Ne
 
 `CALICO_IPV4POOL_IPIP`和`CALICO_IPV4POOL_VXLAN`是不能共存的. 如果前者的值不为Never, 那么后者就不应再赋值, 同理, 如果后者的值不为Never, 那么前者就不应再赋值.
 
-> 按照参考文章4中所说, `CrossSubnet`应该是bgp&ipip的混合方案, **同子网的节点间路由采用bgp, 跨子网的节点间路由采用ipip**.
+> 按照参考文章4中所说, `CrossSubnet`应该是`bgp&ipip`的混合方案, **同子网的节点间路由采用bgp, 跨子网的节点间路由采用ipip**.
 
 默认为ipip, 当vxlan被设置为Never, 且ipip也为Never时, calico将采用BGP模型.
 

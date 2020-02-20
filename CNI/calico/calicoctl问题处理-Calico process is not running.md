@@ -9,9 +9,9 @@ $ calicoctl node status
 Calico process is not running.
 ```
 
-按照参考文章1中的说法, calicoctl在执行的时候会检测`bird`, `bird6`进程. 
+按照参考文章1中的说法, `calicoctl`在执行的时候会检测`bird`, `bird6`进程. 
 
-看了下calicoctl的官方部署文件, 只写了`hostNetwork: true`, 尝试将添加`hostPID: true`, 然后就可以了.
+看了下`calicoctl`的官方部署文件, 只写了`hostNetwork: true`, 尝试将添加`hostPID: true`, 然后就可以了.
 
 但又出现了如下错误
 
@@ -70,5 +70,5 @@ IPv6 BGP status
 No IPv6 peers found.
 ```
 
-> `calico node status`显示是的各邻居节点的信息, 由于此时calicoctl容器被调度在`172.32.0.104`, 所以上述结果没有显示当前所在节点.
+> `calico node status`显示是的各邻居节点的信息, 由于此时`calicoctl`容器被调度在`172.32.0.104`, 所以上述结果没有显示当前所在节点.
 
