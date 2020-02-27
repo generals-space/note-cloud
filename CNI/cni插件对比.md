@@ -19,3 +19,11 @@
         1. BGP (`Underlay L3`)
         2. ipip (`Overlay L3`)
 
+
+Calico BGP
+
+- 优点: 
+    1. L3 Underlay, 不需要overlay的报文封装, 性能更好;
+    2. 通过iptables实现网络策略;
+- 缺点: 
+    1. 网络规模受限;

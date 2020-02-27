@@ -1,19 +1,16 @@
-# calico
+进入到calico-node容器, 查看其中启动的进程.
 
-参考文章
+```console
+$ ps -ef
+UID         PID   PPID  C STIME TTY          TIME CMD
+root          1      0  0 04:20 ?        00:00:00 /usr/bin/runsvdir -P /etc/service/enabled
+root         47      1  0 04:20 ?        00:00:00 runsv felix
+root         48      1  0 04:20 ?        00:00:00 runsv bird
+root         49      1  0 04:20 ?        00:00:00 runsv bird6
+root         50      1  0 04:20 ?        00:00:00 runsv confd
+root         51     47 10 04:20 ?        00:05:25 calico-node -felix
+root         52     50  0 04:20 ?        00:00:02 calico-node -confd
+root        136     48  0 04:20 ?        00:00:02 bird -R -s /var/run/calico/bird.ctl -d -c /etc/calico/confd/config/bird.cfg
+root        137     49  0 04:20 ?        00:00:02 bird6 -R -s /var/run/calico/bird6.ctl -d -c /etc/calico/confd/config/bird6.cfg
+```
 
-1. [Calico网络模型](https://www.cnblogs.com/menkeyi/p/11364977.html)
-    - calico网络模型, 讲解很详细
-    - 容器跨主机通信的转发流程
-    - felix: 路由配置组件; bird: 路由广播组件(BGP Speaker)
-    - ipip网络模型的目标.
-2. [Calico网络方案](https://www.cnblogs.com/netonline/p/9720279.html)
-    - 文章末尾给出的calico与flannel各模型网络的对比很值得一看.
-3. [calico网络策略](https://yq.aliyun.com/articles/674020)
-    - `calico`不同于`flannel`, 不需要为每个node分配子网段, 所以只需要考虑pod的数量;
-    - 宿主机上默认初始会创建一个掩码位为26的子网网段, 当pod超过这个值后, 可以从其他可用子网中取值, 并不是固定的.
-4. [docker 容器网络方案：calico 网络模型](https://cizixs.com/2017/10/19/docker-calico-network/)
-
-ipip网络模型是为了解决集群中各节点不在同一网段的问题. 一般情况下集群中的节点都在同一局域网, 但也有可能为了做冗余和灾备, 节点位于不同地点的机房, 此时应该是可以通过外网IP实现集群通信的. 但是BGP模型无法在这种类型的网络中通过三层路由完成, 所以ipip出现了.
-
-按照参考文章2末尾所说, calico的ipip与flannel的vxlan/udp一样是overlay的解决方案. 另外也提到, calico的BGP与flannel的host-gw, 都要求集群各节点在相同子网网段中, 也在参考文章1中找到了答案.
