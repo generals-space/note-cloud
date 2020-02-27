@@ -21,11 +21,9 @@
 
 ## 使用
 
-calicoctl get node: 查看集群中的节点信息
+`calicoctl get node`: 查看集群中的节点信息
 
 `calicoctl get ippool`: 查看集群中pod网段范围(这个值应该是在`calico-node`的daemonset的部署文件中, 由`CALICO_IPV4POOL_CIDR`字段定义的, 而且应该是与集群的apiserver对pod网段配置是相同的). 与`kubectl get ippool`结果相同, 通过calicoctl对ippool的CURD操作应该与kubectl的功能是相同的.
 
-
-
-calicoctl node status: 显示邻居节点的信息
+`calicoctl node status`: 显示邻居节点的信息
 

@@ -16,6 +16,7 @@
     - calico引入的各组件(`libnetwork-plugin`, `BIRD`, `confd`, `felix`, `etcd`等)及ta们各自的功能.
     - `libnetwork-plugin`是用于与原生docker配合使用的网络插件, 实现的是docker的网络接口. 但kuber集群需要的是CNI插件, 按照readme文档中所说, calico还有一个`cni-plugin`工程, 这才是kuber集群部署需要的.
     - `BIRD`用于宿主机节点间的路由信息的传递, 可以理解为`gossip`, 每创建一个Pod, 就会生成一条到达此Pod的路由.
+    - 各组件在容器内部的配置文件目录位置.
     - calico的优点与缺点
 
 calico的BGP与flannel的host-gw一样, 是L3的underlay方案.
