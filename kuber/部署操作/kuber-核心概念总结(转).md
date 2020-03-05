@@ -167,7 +167,7 @@ $ kubectl rolling-update my-rcName-v1 -f my-rcName-v2-rc.yaml --update-period=10
 
 这里所说的`replica set`, 可以被认为 是“升级版”的`Replication Controller`. 也就是说. `replica set`也是用于保证与`label selector`匹配的pod数量维持在期望状态. 区别在于, `replica set`引入了对基于子集的`selector`查询条件, 而Replication Controller仅支持基于值相等的selecto条件查询. 这是目前从用户角度肴, 两者唯一的显著差异. 
 
-社区引入这一API的初衷是用于取代vl中的`Replication Controller`, 也就是说．当v1版本被废弃时, `Replication Controller`就完成了它的历史使命, 而由`replica set`来接管其工作. 虽然`replica set`可以被单独使用, 但是目前它多被Deployment用于进行pod的创建、更新与删除. Deployment在滚动更新等方面提供了很多非常有用的功能, 关于Deployment的更多信息, 读者们可以在后续小节中获得. 
+社区引入这一API的初衷是用于取代vl中的`Replication Controller`, 也就是说. 当v1版本被废弃时, `Replication Controller`就完成了它的历史使命, 而由`replica set`来接管其工作. 虽然`replica set`可以被单独使用, 但是目前它多被Deployment用于进行pod的创建、更新与删除. Deployment在滚动更新等方面提供了很多非常有用的功能, 关于Deployment的更多信息, 读者们可以在后续小节中获得. 
 
 ## 4. Service
 
@@ -250,7 +250,7 @@ Kubernetes中有一个很重要的服务自发现特性. 一旦一个service被�
 
 **环境变量方式**
 
-Kubernetes创建Pod时会自动添加所有可用的service环境变量到该Pod中, 如有需要．这些环境变量就被注入Pod内的容器里. 需要注意的是, 环境变量的注入只发送在Pod创建时, 且不会被自动更新. 这个特点暗含了service和访问该service的Pod的创建时间的先后顺序, 即任何想要访问service的pod都需要在service已经存在后创建, 否则与service相关的环境变量就无法注入该Pod的容器中, 这样先创建的容器就无法发现后创建的service. 
+Kubernetes创建Pod时会自动添加所有可用的service环境变量到该Pod中, 如有需要. 这些环境变量就被注入Pod内的容器里. 需要注意的是, 环境变量的注入只发送在Pod创建时, 且不会被自动更新. 这个特点暗含了service和访问该service的Pod的创建时间的先后顺序, 即任何想要访问service的pod都需要在service已经存在后创建, 否则与service相关的环境变量就无法注入该Pod的容器中, 这样先创建的容器就无法发现后创建的service. 
 
 **DNS方式**
 
@@ -456,4 +456,6 @@ Horizontal Pod Autoscaler的操作对象是Replication Controller、ReplicaSet�
 
 ### 9.2 Horizontal Pod Autoscaler的决策策略
 
-在HPA Controller检测到CPU的实际使用量之后, 会求出当前的CPU使用率(实际使用量与pod 请求量的比率). 然后, HPA Controller会通过调整副本数量使得CPU使用率尽量向期望值靠近．另外, 考虑到自动扩展的决策可能需要一段时间才会生效, 甚至在短时间内会引入一些噪声． 例如当pod所需要的CPU负荷过大, 从而运行一个新的pod进行分流, 在创建的过程中, 系统的CPU使用量可能会有一个攀升的过程. 所以, 在每一次作出决策后的一段时间内, 将不再进行扩展决策. 对于ScaleUp而言, 这个时间段为3分钟, Scaledown为5分钟. 再者HPA Controller允许一定范围内的CPU使用量的不稳定, 也就是说, 只有当aVg(CurrentPodConsumption／Target低于0.9或者高于1.1时才进行实例调整, 这也是出于维护系统稳定性的考虑. 
+在HPA Controller检测到CPU的实际使用量之后, 会求出当前的CPU使用率(实际使用量与pod 请求量的比率). 然后, HPA Controller会通过调整副本数量使得CPU使用率尽量向期望值靠近. 另外, 考虑到自动扩展的决策可能需要一段时间才会生效, 甚至在短时间内会引入一些噪声. 
+
+例如当pod所需要的CPU负荷过大, 从而运行一个新的pod进行分流, 在创建的过程中, 系统的CPU使用量可能会有一个攀升的过程. 所以, 在每一次作出决策后的一段时间内, 将不再进行扩展决策. 对于ScaleUp而言, 这个时间段为3分钟, Scaledown为5分钟. 再者HPA Controller允许一定范围内的CPU使用量的不稳定, 也就是说, 只有当aVg(CurrentPodConsumption／Target低于0.9或者高于1.1时才进行实例调整, 这也是出于维护系统稳定性的考虑. 
