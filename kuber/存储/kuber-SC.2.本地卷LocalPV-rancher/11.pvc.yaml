@@ -5,6 +5,7 @@ metadata:
   name: local-pvc
 spec:
   accessModes:
+  ## 只接受ReadWriteOnce模式, ReadWriteMany会无法创建PV.
   - ReadWriteOnce
   resources:
     requests:

@@ -1,0 +1,25 @@
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority: certs.d/kuber.centos7/ca.crt
+    server: https://k8s-server-lb:8443
+  name: kuber
+contexts:
+- context:
+    cluster: kuber
+    namespace: default
+    user: kuber-admin
+  name: kube-def
+- context:
+    cluster: kuber
+    namespace: kube-system
+    user: kuber-admin
+  name: kube-sys
+current-context: kube-def
+kind: Config
+preferences: {}
+users:
+- name: kuber-admin
+  user:
+    client-certificate: certs.d/kuber.centos7/client.crt
+    client-key: certs.d/kuber.centos7/client.key

@@ -1,0 +1,8 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: nfs-storage
+## provisioner 字段可以自行修改, 但必须要与deployment中的环境变量`PROVISIONER_NAME`保持一致.
+provisioner: nfs-provisioner
+parameters:
+  archiveOnDelete: "false"

@@ -39,3 +39,44 @@ $ kubeadm init phase upload-certs --upload-certs
 ```
 kubeadm join k8s-master-7-13:8443 --token fw6ywo.1sfp61ddwlg1we27     --discovery-token-ca-cert-hash sha256:52cab6e89be9881e2e423149ecb00e610619ba0fd85f2eccc3137adffa77bb04 --certificate-key 70f399e275cabef0bb2794ea76303da0220574f59e994e755378a359edb5a233
 ```
+
+## 问题处理
+
+```
+$ kubeadm token list
+failed to create API client configuration from kubeconfig: invalid configuration: [unable to read client-cert certs.d/kuber.centos7/client.crt for kuber-admin due to open certs.d/kuber.centos7/client.crt: no such file or directory, unable to read client-key certs.d/kuber.centos7/client.key for kuber-admin due to open certs.d/kuber.centos7/client.key: no such file or directory, unable to read certificate-authority certs.d/kuber.centos7/ca.crt for kuber due to open certs.d/kuber.centos7/ca.crt: no such file or directory]
+To see the stack trace of this error execute with --v=5 or higher
+```
+
+场景描述
+
+单节点集群想添加两个worker节点, 按照上述步骤执行发现出错了. 看这报错是因为我把`kubectl`的配置文件更改了的缘故. 我把base64加密的证书字符串放到单独的文件中了, 配置文件类似如下
+
+```yaml
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority: certs.d/kuber.centos7/ca.crt
+    server: https://k8s-server-lb:8443
+  name: kuber
+contexts:
+- context:
+    cluster: kuber
+    namespace: default
+    user: kuber-admin
+  name: kube-def
+current-context: kube-def
+kind: Config
+preferences: {}
+users:
+- name: kuber-admin
+  user:
+    client-certificate: certs.d/kuber.centos7/client.crt
+    client-key: certs.d/kuber.centos7/client.key
+```
+
+而且上面的报错是因为在kubectl配置文件中的证书路径写的是相对路径, ta找不到这些证书.
+
+解决办法
+
+要么把证书路径写成绝对路径, 要么在`~/.kube/`目录下执行`kubeadm命令`.

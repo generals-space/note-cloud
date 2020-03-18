@@ -1,0 +1,90 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: redis-app
+spec:
+  ## headless service名称
+  serviceName: "redis-service"
+  selector:
+    matchLabels:
+      app: redis
+      appCluster: redis-cluster
+  replicas: 6
+  template:
+    metadata:
+      labels:
+        app: redis
+        appCluster: redis-cluster
+    spec:
+      terminationGracePeriodSeconds: 20
+      ## ## pod的反亲和性定义, 告诉调度器尽量不要调度到包含app标签为redis的节点上.
+      ## ## 已经存在redis的node上尽量不要再分配redis pod了.
+      ## affinity:
+      ##   podAntiAffinity:
+      ##     ## 我觉得最难理解的就是这个字段了.
+      ##     ## 应该是在调度期间遵循这个规定, 在运行期间就不用关心的意思吧?
+      ##     preferredDuringSchedulingIgnoredDuringExecution:
+      ##     - weight: 100
+      ##       podAffinityTerm:
+      ##         labelSelector:
+      ##           matchExpressions:
+      ##           - key: app
+      ##             operator: In
+      ##             values:
+      ##             - redis
+      ##         topologyKey: kubernetes.io/hostname
+      containers:
+      - name: redis
+        image: redis
+        # command: redis-server /etc/redis/redis.conf --protected-mode no
+        command:
+        - redis-server
+        args:
+        - /etc/redis/redis.conf
+        #允许外网访问
+        - --protected-mode
+        ## 这个参数需要用引号包裹, 否则会被kuber解析成布尔类型, redis在启动时会出错.
+        - "no"
+        resources:
+          requests:
+            # m代表千分之,相当于0.1 个cpu资源
+            cpu: 100m
+            # 内存100m大小
+            memory: 100Mi
+        ports:
+        - name: redis
+          containerPort: 6379
+          protocol: TCP
+        - name: cluster
+          containerPort: 16379
+          protocol: TCP
+        volumeMounts:
+        #挂载configmap生成的文件
+        - name: redis-conf
+          mountPath: /etc/redis
+        - name: redis-data
+          mountPath: /var/lib/redis
+      volumes:
+      #引用configMap
+      - name: redis-conf
+        configMap:
+          name: redis-conf
+          items:
+          - key: redis.conf
+            path: redis.conf
+  ## pvc持久卷声明模板, 只有statefulset需要声明这样的模板, daemonset与deployment则不需要.
+  ## 这里生成的pvc将会和pod一样被加上0, 1, 2等后缀.
+  ## 内容上其实与PVC资源的部署文件相同.
+  volumeClaimTemplates:
+  - metadata:
+      ## 生成的每个Pod都会绑定一个独立的PVC资源
+      name: redis-data
+    spec:
+      accessModes:
+      - ReadWriteMany
+      resources:
+        requests:
+          storage: 200M
+      ## 指定storage class
+      ## storageClassName: local-path
+      storageClassName: nfs-storage
