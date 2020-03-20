@@ -35,7 +35,7 @@ spec:
       ##         topologyKey: kubernetes.io/hostname
       containers:
       - name: redis
-        image: redis
+        image: redis:5.0
         # command: redis-server /etc/redis/redis.conf --protected-mode no
         command:
         - redis-server
