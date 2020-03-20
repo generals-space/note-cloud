@@ -1,4 +1,4 @@
-# 阿里云的kubernetes集群LoadBalancer类型service对象与SLB对象
+# 阿里云的kuber集群与LoadBalancer Service
 
 <!--
 <!date!>: 2018-12-25

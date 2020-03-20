@@ -10,6 +10,8 @@
 4. [Kubernetes资源对象：StatefulSet](https://blog.csdn.net/fly910905/article/details/102092570)
     - 应用场景: 稳定的持久化存储, 稳定的网络标识, 有序部署与有序收缩.
     - 更新策略, 解释了`.spec.updateStrategy.rollingUpdate.partition`的作用
+5. [Kubernetes指南 StatefulSet](https://feisky.gitbooks.io/kubernetes/concepts/statefulset.html)
+  - 给出了更新策略中的`partition`和管理策略中的`parallel`的使用示例.
 
 对于redis, mysql这种有状态的服务,我们使用`statefulset`方式为首选. 我们这边主要就是介绍`statefulset`这种方式, `statefulset`的设计原理模型:
 
