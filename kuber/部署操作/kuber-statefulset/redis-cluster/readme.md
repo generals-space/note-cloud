@@ -3,9 +3,9 @@
 1. [Kubernetes 通过statefulset部署redis cluster集群](https://www.cnblogs.com/kuku0223/p/10906003.html)
     - statefulset+NFS存储部署redis-cluster集群示例
 
-rancher的local-path不支持`readWriteMany`访问模式, 所以这里我们使用`nfs-provisioner`存储.
+rancher的`local-path`不支持`readWriteMany`访问模式, 所以这里我们使用`nfs-provisioner`存储.
 
-在statefulset创建的pod资源全部启动后, 需要使用`redis-trib`进行部署, 参考文章中的示例命令使用`dig`查找各redis实例的IP, 效果如下
+在`statefulset`创建的pod资源全部启动后, 需要使用`redis-trib`进行部署, 参考文章中的示例命令使用`dig`查找各redis实例的IP, 效果如下
 
 ```console
 $ dig +short redis-app-0.redis-service.default.svc.cluster.local
@@ -260,5 +260,4 @@ ed5201befc4d2c474b71ee4ddccec2575271f95b 10.254.0.197:6379@16379 master - 0 1584
 ```
 
 现在再看`730e815556b1e0debbc0f825960fc8977f548f4d`, 可以看到这上面的slot范围为: `0-998`, `5461-6461`, `10923-11921`.
-
 

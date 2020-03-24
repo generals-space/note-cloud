@@ -1,4 +1,4 @@
-# kuber-CRD自定义资源类型(二)
+# kuber-CRD.2
 
 参考文章
 

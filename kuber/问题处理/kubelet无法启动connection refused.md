@@ -43,3 +43,10 @@ nginx: [emerg] host not found in upstream "k8s-master-02:6443" in /etc/nginx/ngi
 ```
 
 因为这个问题, nginx pod没能启动, 8443端口也就没能监听, kubelet就连接不上apiserver. 把`k8s-master-02`和`k8s-master-03`删掉, 重启nginx pod就行了.
+
+------
+
+2020-03-21 更新
+
+有次部署时, 将集群从1.17.2降到1.16.2, 把`kubelet`, `kubectl`和`kubeadm`都卸掉, 然后安装1.16.2版本的, 就出现了这样的错误, 是因为没有再次执行`systemctl enable kubelet`和`systemctl restart kubelet`, 卸载重装后需要重新执行这两条命令.
+

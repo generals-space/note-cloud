@@ -40,6 +40,8 @@ $ kubeadm init phase upload-certs --upload-certs
 kubeadm join k8s-master-7-13:8443 --token fw6ywo.1sfp61ddwlg1we27     --discovery-token-ca-cert-hash sha256:52cab6e89be9881e2e423149ecb00e610619ba0fd85f2eccc3137adffa77bb04 --certificate-key 70f399e275cabef0bb2794ea76303da0220574f59e994e755378a359edb5a233
 ```
 
+> 注意: 新加的master节点注意拷贝ControlPlane的`/etc/kubernetes`目录下的各个证书.
+
 ## 问题处理
 
 ```
