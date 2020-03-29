@@ -30,7 +30,7 @@ kuber中RBAC的运行原理
 
 ------
 
-在参考文章2中, 由于`Role`和`RoleBinding`资源都是建立在`kube-system`空间下, 所以与之绑定的`User`只拥有`kube-system`的权限, 而没有`default`的权限. 如果需要角色获取多个ns的权限, 可以使用`ClusterRole`和`ClusterRoleBinding`.
+在参考文章2中, 由于`Role`和`RoleBinding`资源都是建立在`kube-system`空间下, 所以与之绑定的`User`只拥有`kube-system`的权限, 而没有`default`空间的权限. 如果需要角色获取多个ns的权限, 可以使用`ClusterRole`和`ClusterRoleBinding`.
 
 在`Role/ClusterRole`的声明中, 权限规则的定义不仅需要指明资源类型, 还需要指定其所属的`apiGroup`. 如下示例
 

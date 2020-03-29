@@ -6,12 +6,11 @@
     - `docker stop`与`docker kill`的信号机制
     - 用golang编写的信号的接收与处理的示例代码
     - CMD指令 列表与字符串两种形式的区别
-
 2. [Sending and Trapping Signals](http://mywiki.wooledge.org/SignalTrap)
     - bash内置命令trap实现信号的捕获与处理
     - trap, sleep, wait
 
-docker与docker-compose都没有类似钩子一样的机制, 无法让容器在启动后/停止前执行指定脚本以完成某种操作, 只有kubernetes中有.
+`docker`与`docker-compose`都没有类似钩子一样的机制, 无法让容器在启动后/停止前执行指定脚本以完成某种操作, 只有kubernetes中有.
 
 但如果的确有这样的需求, 可以通过docker的`stop`/`kill`子命令实现. 这需要在docker的`CMD`/`ENTRYPOINT`启动命令所运行的进程中捕获信号, 然后做相应的处理. 具体原理可以见参考文章1.
 

@@ -12,11 +12,11 @@ pod文件参考
 apiVersion: v1
 kind: Pod
 metadata:
-    name: webapp
+  name: webapp
 spec:
-    containers:
-        - name: nginx
-          image: daocloud.io/nginx
+  containers:
+  - name: nginx
+    image: nginx
 ```
 
 创建pod
