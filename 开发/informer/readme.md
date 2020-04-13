@@ -13,7 +13,7 @@
 
 ## 执行流程
 
-Etcd存储集群的数据信息, apiserver作为统一入口, 任何对数据的操作都必须经过 apiserver. 客户端(kubelet/scheduler/controller-manager)通过 list-watch 监听 apiserver 中资源(pod/rs/rc等等)的 create, update 和 delete 事件, 并针对事件类型调用相应的事件处理函数. 
+Etcd存储集群的数据信息, apiserver作为统一入口, 任何对数据的操作都必须经过 apiserver. 客户端(kubelet/scheduler/controller-manager)通过 list-watch 监听 apiserver 中资源(pod/rs/rc等等)的 CURD 事件, 并针对事件类型调用相应的事件处理函数. 
 
 list-watch有两部分组成, 分别是`list`和`watch`. `list`非常好理解, 就是调用资源的list API罗列资源, 基于HTTP短链接实现; `watch`则是调用资源的watch API监听资源变更事件, 基于HTTP长链接实现(http1.1的`chunked`).
 

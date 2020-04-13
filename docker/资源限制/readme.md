@@ -14,4 +14,10 @@
 
 CGroup: Control Group
 
-`/sys/fs/cgroup`目录应该是安装`libcgroup`工具后出现的, 其下有各种控制器subsystem(cpu, memory, blk等). 每种subsystem下可以存储的是该subsystem所有可选选项, 以及所有设置了此subsystem下cgroup的subsystem名称, 各特定的subsystem下是各该subsystem本身的设置值.
+`/sys/fs/cgroup`目录应该是安装`libcgroup`工具后出现的, 其下有各种控制器subsystem(cpu, memory, blk等). 
+
+每种subsystem下可以存储的是该subsystem所有可选选项(cpu下的`cfs_period_us`, `shares`这种), 以及所有设置了此subsystem下cgroup的subsystem名称, 各特定的subsystem下是各该subsystem本身的设置值.
+
+`docker`, `kubelet`的`cgroup driver`的可选值都为`systemd`与`cgroupfs`.
+
+`dockerd`使用的 cgroup driver 默认为`cgroupfs`.

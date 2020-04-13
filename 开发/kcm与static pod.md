@@ -8,7 +8,7 @@
 
 kubernetes版本: v1.16.2(1主2从)
 
-在研究kube-controller-manager源码的时候, 希望通过`go run main.go`执行测试程序. 不过由于分布式资源锁的存在, 只有成功获得锁的实例才能继续执行, 所以需要将主节点上运行着的controller-manager的pod删除. 
+在研究`kube-controller-manager`源码的时候, 希望通过`go run main.go`执行测试程序. 不过由于分布式资源锁的存在, 只有成功获得锁的实例才能继续执行, 所以需要将主节点上运行着的`controller-manager`的pod删除. 
 
 但删除后总是会重启, 而且pod输出的yaml文件没有Reference块, 也没有发现该ns下对应的deployment, daemonset, statefulset, rs, rc等相关的对象.
 

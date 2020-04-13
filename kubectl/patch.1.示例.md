@@ -71,3 +71,6 @@ patch子命令没有直接使用`-f`等选项指定读取哪个文件, 但是可
 ```
 k patch ds test-ds --patch "$(cat patch-file.yaml)"
 ```
+
+> 虽然`patch`不支持从文件读入更改内容, 但是`kubectl`还有一个子命令`replace`可以实现, 看名字就知道, ta的替换类型是全部替换...
+

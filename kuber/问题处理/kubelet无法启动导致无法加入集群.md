@@ -19,6 +19,8 @@ docker版本: 19.03.4
 }
 ```
 
+> `dockerd`使用的 cgroup driver 默认为`cgroupfs`.
+
 但在建好集群且正常运行近一个月后的某一天, 节点突然全都失去了联系(之前我把3主2从的集群删了两个主节点, 变成了1主2从), 发现worker节点的kubelet无法启动了, 这也导致无法用`kubeadm join`重新加入集群. 在日志里发现如下错误
 
 > kubelet[60808]: F1130 16:27:12.805286   60808 server.go:271] failed to run Kubelet: failed to create kubelet: misconfiguration: kubelet cgroup driver: "cgroupfs" is different from docker cgroup driver: "systemd"
