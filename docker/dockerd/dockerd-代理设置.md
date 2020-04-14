@@ -13,3 +13,6 @@ Environment=HTTP_PROXY=http://172.32.100.1:6060
 Environment=HTTPS_PROXY=http://172.32.100.1:6060
 Environment=NO_PROXY=localhost,127.0.0.1,m1empwb1.mirror.aliyuncs.com,registry.cn-hangzhou.aliyuncs.com,daocloud.io
 ```
+
+> 可以在`/etc/docker/daemon.json`文件中设置国内的镜像源.
+

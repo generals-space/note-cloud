@@ -49,11 +49,8 @@
 可以使用`-p`参数显式将一个或者一组端口从容器里绑定到宿主机上, 而不仅仅是提供一个端口. 注意这里是 **小写的p**, 不是大写. 因为该配置依赖于宿主机器, 所以Dockerfile里没有对应的指令, 这是运行时才可用的配置. -p参数有几种不同的格式：
 
 - 宿主机IP:宿主机端口:docker容器端口
-
 - 宿主机IP::docker容器端口
-
 - 宿主机端口:docker容器端口
-
 - docker容器端口
 
 实际中, 可以忽略ip或者hostPort, 但是必须要指定需要暴露的`containerPort(容器端口)`. 另外, 所有这些发布的规则都默认为tcp. 如果需要udp, 需要在最后加以指定, 比如`-p 1234:1234/udp`. 如果只是用命令`docker run -p 8080:3000 my-image`运行一个简单的应用程序, 那么容器里运行在3000端口的服务在宿主机的8080端口也就可用了. 端口不需要一样, 但是 **在多个容器都暴露端口时, 必须注意避免端口冲突**.
@@ -89,7 +86,7 @@ e18a76da06b3af7708792765745466ed485a69afaedfd7e561cf3645d1aa7149
 
 还是使用上文的`no-exposed-ports`镜像, 在运行时添加`-p`参数, 但是不添加任何`expose`规则. 在`config.ExposedPorts`里重新查看`--expose`参数或者`EXPOSE`指令的结果.
 
-```
+```console
 $ docker run -d --name no-exposed-ports-with-p-flag -p 8888:8888 no-exposed-ports
 c876e590cfafa734f42a42872881e68479387dc2039b55bceba3a11afd8f17ca
 $ docker port no-exposed-ports-with-p-flag
