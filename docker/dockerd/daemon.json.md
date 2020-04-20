@@ -2,6 +2,7 @@
 {
     "data-root": "/opt/docker",
     "registry-mirrors": [
+        "https://hub-mirror.c.163.com", 
         "https://registry.docker-cn.com", 
         "https://docker.mirrors.ustc.edu.cn"
     ]
