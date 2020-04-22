@@ -56,7 +56,7 @@ $ mkdir $GOPATH/src/podgroup
 
 然后预创建3个文件, 这3个文件在同一个目录下, 路径为`$GOPATH/src/podgroup/pkg/apis/${group}/${version}/`. 
 
-这里的`group`与上面的`group`不是同一个, 上面的`group`为yaml部署文件中的`spec.group`的全名, 而这里路径中的`group`, 是去除后面的组织名称部分, 即`testgroup`. 之后我们将这个变量称为`groupShortName`, 其实ta也可以是`spec.names.shortNames`数组中的其中一个.
+这里的`group`与上面的`group`不是同一个, 上面的`group`为`CustomResourceDefinition` yaml部署文件中的`spec.group`的全名, 而这里路径中的`group`, 是去除后面的组织名称部分, 即`testgroup`. 之后我们将这个变量称为`groupShortName`, 其实ta也可以是`spec.names.shortNames`数组中的其中一个.
 
 > kuber官方声明的CRD的`group`名称, 一般以`k8s.io`结尾, coreos声明的CRD的`group`都以`coreos.com`结尾.
 
@@ -67,15 +67,15 @@ $ touch $GOPATH/src/podgroup/pkg/apis/testgroup/v1/register.go
 $ touch $GOPATH/src/podgroup/pkg/apis/testgroup/v1/types.go
 ```
 
-> 之所以路径中填写的是`groupShortName`, 是因为一个CRD工程中不可能只有一种自定义资源, `types.go`文件中可以写很多, 所以放在以`groupShortName`为名的目录下, 才比较合理.
+> 之所以路径中填写的是`groupShortName`, 是因为一个CRD工程中可能不只有一种自定义资源, `types.go`文件中可以写很多, 所以放在以`groupShortName`为名的目录下, 才比较合理.
 
-文件的内容就不在这里贴了, 可以见当前目录的`podgroup`目录.
+文件的内容就不在这里贴了, 可以见`PodGroup`项目的`pkg/apis`目录. 除了具体的类型定义, 其他的像`import`的内容, `+genclient`和`+k8s`这种编译标记, 都拷贝过去.
 
 ## 代码生成
 
 需要注意的是`code-generator`的代码生成步骤. 
 
-网上好像都没有文章明确地讲过, 有的说需要把`code-generator`目录下的`vendor`和`hack`目录拷贝到CRD工程目录, 然后执行`vendor/k8s.io/code-generator/generate-groups.sh xxx`(但是`code-generator`的vendor根本没有ta本身的工程); 参考文章3根本就没说, 直接在当前目录就执行了`./generate-groups.sh xxx`, 这意思是先拷贝一份`code-generator`工程?
+网上好像都没有文章明确地讲过具体步骤, 有的说需要把`code-generator`目录下的`vendor`和`hack`目录拷贝到CRD工程目录, 然后执行`vendor/k8s.io/code-generator/generate-groups.sh xxx`(但是`code-generator`的vendor根本没有ta本身的工程); 参考文章3根本就没说, 直接在当前目录就执行了`./generate-groups.sh xxx`, 这意思是先拷贝一份`code-generator`工程?
 
 首先, `generate-groups.sh`要求`code-generator`和`apimachinery`两个工程在`$GOPATH/src/k8s.io/`目录下(我们的CRD工程也要放在`$GOPATH`目录下.), `go mod`形式的依赖管理无效. 否则在执行脚本时会出现`Hit an unsupported type invalid type for invalid type`的问题.
 
@@ -106,3 +106,5 @@ Generating informers for testgroup:v1 at podgroup/pkg/client/informers
 然后创建`pkg/signals/signal.go`文件.
 
 再创建根目录下的`main.go`和`controller.go`.
+
+另外, 代码生成完成后, 对`PodGroup{}`及`PodGroupList{}`的成员进行修改就不再需要重新生成了.
