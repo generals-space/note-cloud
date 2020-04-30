@@ -8,6 +8,7 @@
     - `kubectl`, `k8s REST API`, `client-go`(`ClientSet`, `Dynamic Client`, `REST`三种方式)等多种方式访问kuber集群获取资源
     - `kubectl get pod -v=9`
     - `Informer`示例demo, 添加注释的代码可见`informer.go.1`文件.
+    - `Informer`各组件的作用: `Reflector`, `DeltaIFIFO`, `LocalStore`, `WorkQueue`
 
 `informer`存在的意义就是, 在kuber集群各组件在与apiserver进行通信时添加一个中间缓存层, 减轻apiserver的负载压力. `informer`内置缓存功能, 可保证与apiserver查询到的数据保持一致.
 

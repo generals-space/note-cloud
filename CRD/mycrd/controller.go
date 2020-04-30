@@ -125,6 +125,8 @@ func (c *Controller) processNextWorkItem() bool {
 	}
 
 	// We wrap this block in a func so we can defer c.workqueue.Done.
+	// 把下面的操作包裹在了一个 func 中, 主要就是为了在函数结束时调用这个 defer
+	// 其实完全可以不需要用函数形式的.
 	err := func(obj interface{}) error {
 		defer c.workqueue.Done(obj)
 		var key string

@@ -14,6 +14,7 @@
     - 介绍了`code-generator`中各生成器的作用及使用场景.
     - 执行`generate-groups.sh`生成代码时的4个参数的作用.
 5. [Kubernetes CRD Operator 实现指南](https://zhuanlan.zhihu.com/p/38372448)
+    - kuber 并不是完美的
     - 诸多与kuber同级的编排工具: Mesos(两层式调度器架构), Sparrow(去中心化架构), Hawk(混合式调度器架构), Nomad(共享状态的调度器架构), 及ta们各自的优缺点.
     - CRD的默认规则: name 通常是 plural 和 group 的结合; 另外, 一般来说 CRD 的作用域是 namespaced 就可以了; 还有 kind 一般采用驼峰命名法等..
 6. [kubernetes/sample-apiserver工程readme - When using go 1.11 modules](https://github.com/kubernetes/sample-apiserver/#when-using-go-111-modules)
@@ -73,11 +74,42 @@ $ touch $GOPATH/src/podgroup/pkg/apis/testgroup/v1/types.go
 
 ## 代码生成
 
+- code-generator: tag v0.17.0
+- apimachinery: tag v0.17.0
+
 需要注意的是`code-generator`的代码生成步骤. 
 
-网上好像都没有文章明确地讲过具体步骤, 有的说需要把`code-generator`目录下的`vendor`和`hack`目录拷贝到CRD工程目录, 然后执行`vendor/k8s.io/code-generator/generate-groups.sh xxx`(但是`code-generator`的vendor根本没有ta本身的工程); 参考文章3根本就没说, 直接在当前目录就执行了`./generate-groups.sh xxx`, 这意思是先拷贝一份`code-generator`工程?
+> 网上好像都没有文章明确地讲过具体步骤, 有的说需要把`code-generator`目录下的`vendor`和`hack`目录拷贝到CRD工程目录, 然后执行`vendor/k8s.io/code-generator/generate-groups.sh xxx`(但是`code-generator`的vendor根本没有ta本身的工程); 参考文章3根本就没提, 直接在当前目录就执行了`./generate-groups.sh xxx`, 这意思是先拷贝一份`code-generator`工程?
 
-首先, `generate-groups.sh`要求`code-generator`和`apimachinery`两个工程在`$GOPATH/src/k8s.io/`目录下(我们的CRD工程也要放在`$GOPATH`目录下.), `go mod`形式的依赖管理无效. 否则在执行脚本时会出现`Hit an unsupported type invalid type for invalid type`的问题.
+首先, `generate-groups.sh`要求`code-generator`和`apimachinery`两个工程在`$GOPATH/src/k8s.io/`目录下(我们的CRD工程也要放在`$GOPATH`目录下.), `go mod`形式的依赖管理无效(放在CRD工程的`vendor`目录中根本没用). 否则在执行脚本时会出现`Hit an unsupported type invalid type for invalid type`的问题.
+
+> 使用`GO111MODULE=off go get -v`或是直接使用`git clone`都行, 不过需要注意将两个工程的分支切换到`tag v0.17.0`, 然后使用`go mod vendor`安装ta们两个各自的依赖.
+
+```bash
+mkdir -p $GOPATH/src/k8s.io
+cd $GOPATH/src/k8s.io/
+
+git clone https://github.com/kubernetes/code-generator.git
+cd code-generator
+git checkout -b v0.17.0 v0.17.0
+go mod vendor
+cd ..
+
+git clone https://github.com/kubernetes/apimachinery.git
+cd apimachinery
+git checkout -b v0.17.0 v0.17.0
+go mod vendor
+cd ..
+```
+
+注意: `apimachinery`必须要在GOPATH目录下, 否则在生成过程中可能出现如下报错.
+
+```
+Generating deepcopy funcs
+F0421 10:09:13.896524   30295 deepcopy.go:885] Hit an unsupported type invalid type for invalid type, from github.com/generals-space/crd-ipkeeper/pkg/apis/ipkeeper/v1.StaticIPs
+```
+
+------
 
 然后执行如下命令
 
@@ -107,4 +139,4 @@ Generating informers for testgroup:v1 at podgroup/pkg/client/informers
 
 再创建根目录下的`main.go`和`controller.go`.
 
-另外, 代码生成完成后, 对`PodGroup{}`及`PodGroupList{}`的成员进行修改就不再需要重新生成了.
+另外, 代码生成完成后, 对`PodGroup{}`及`PodGroupList{}`的成员进行修改就不再需要重新生成了. 不过如果要新增与`PodGroup{}`同级别的CRD资源, 仍然需要重新生成.

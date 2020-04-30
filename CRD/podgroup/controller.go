@@ -77,7 +77,7 @@ func NewController(
 			oldPodGroup := old.(*testgroupv1.PodGroup)
 			newPodGroup := new.(*testgroupv1.PodGroup)
 			if oldPodGroup.ResourceVersion == newPodGroup.ResourceVersion {
-                //版本一致，就表示没有实际更新的操作，立即返回
+                //版本一致, 就表示没有实际更新的操作, 立即返回
 				return
 			}
 			controller.enqueuePodGroup(new)
@@ -93,7 +93,7 @@ func (c *Controller) Run(threadiness int, stopCh <-chan struct{}) error {
 	defer runtime.HandleCrash()
 	defer c.workqueue.ShutDown()
 
-	glog.Info("开始controller业务，开始一次缓存数据同步")
+	glog.Info("开始controller业务, 开始一次缓存数据同步")
 	if ok := cache.WaitForCacheSync(stopCh, c.podGroupSynced); !ok {
 		return fmt.Errorf("failed to wait for caches to sync")
 	}
@@ -117,9 +117,7 @@ func (c *Controller) runWorker() {
 
 // 取数据处理
 func (c *Controller) processNextWorkItem() bool {
-
 	obj, shutdown := c.workqueue.Get()
-
 	if shutdown {
 		return false
 	}
@@ -165,26 +163,23 @@ func (c *Controller) syncHandler(key string) error {
 	// 从缓存中取对象
 	podGroup, err := c.podGroupLister.PodGroups(namespace).Get(name)
 	if err != nil {
-		// 如果PodGroup对象被删除了，就会走到这里，所以应该在这里加入执行
+		// 如果PodGroup对象被删除了, 就会走到这里, 所以应该在这里加入执行
 		if errors.IsNotFound(err) {
-			glog.Infof("PodGroup对象被删除，请在这里执行实际的删除业务: %s/%s ...", namespace, name)
-
+			glog.Infof("PodGroup对象被删除, 请在这里执行实际的删除业务: %s/%s ...", namespace, name)
 			return nil
 		}
-
 		runtime.HandleError(fmt.Errorf("failed to list podGroup by: %s/%s", namespace, name))
-
 		return err
 	}
 
 	glog.Infof("这里是podGroup对象的期望状态: %#v ...", podGroup)
-	glog.Infof("实际状态是从业务层面得到的，此处应该去的实际状态，与期望状态做对比，并根据差异做出响应(新增或者删除)")
+	glog.Infof("实际状态是从业务层面得到的, 此处应该去的实际状态, 与期望状态做对比, 并根据差异做出响应(新增或者删除)")
 
 	c.recorder.Event(podGroup, corev1.EventTypeNormal, SuccessSynced, MessageResourceSynced)
 	return nil
 }
 
-// 数据先放入缓存，再入队列
+// 数据先放入缓存, 再入队列
 func (c *Controller) enqueuePodGroup(obj interface{}) {
 	var key string
 	var err error

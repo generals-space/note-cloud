@@ -32,11 +32,14 @@ var onlyOneSignalHandler = make(chan struct{})
 func SetupSignalHandler() (stopCh <-chan struct{}) {
 	close(onlyOneSignalHandler) // panics when called twice
 
+	// 几乎所有 informer 相关的方法都需要一个 struct 类型的 chan 为参数,
+	// 做为结束通知的通道.
 	stop := make(chan struct{})
 	c := make(chan os.Signal, 2)
 	signal.Notify(c, shutdownSignals...)
 	go func() {
 		<-c
+		// 关闭 stop 会使 informerFactory 等统统结束运行.
 		close(stop)
 		<-c
 		os.Exit(1) // second signal. Exit directly.

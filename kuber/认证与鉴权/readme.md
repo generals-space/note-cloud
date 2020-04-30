@@ -46,4 +46,4 @@ rules:
   verbs: ["get", "watch", "list"]
 ```
 
-当前版本支持的资源及对应的apiGroup可以直接通过`k api-resources`命令查看. 也可以查阅参考文章4中给出的API手册, 更加完善且全面.
+> 当前版本支持的资源及对应的`apiGroup`可以直接通过`k api-resources`命令查看. 也可以查阅参考文章4中给出的API手册, 更加完善且全面.
