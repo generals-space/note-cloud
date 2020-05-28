@@ -8,11 +8,11 @@
     - 关闭ipip网络的方法.
 4. [Calico网络方案](https://www.cnblogs.com/netonline/p/9720279.html)
 
-**重要** CIDR网段的配置在 04-ds.yaml 中, 部署前需要先修改04-ds中的`CALICO_IPV4POOL_CIDR`作为集群内部pod网段.
+**CIDR网段的配置在 04-ds.yaml 中, 部署前需要先修改04-ds中的`CALICO_IPV4POOL_CIDR`作为集群内部pod网段.**
 
 `04-ds`类似于`flannel`, 在每个节点上都有运行. `06-deploy`将会部署一个`calico-kube-controllers`容器(master节点).
 
-另外, calico默认使用`ipip`的网络模型, 如果要使用`BGP`模型, 则需要修改`04-ds`文件中的`CALICO_IPV4POOL_IPIP`为`Never`(`Off`也可以, 默认为`Always`).
+另外, **calico默认使用`ipip`的网络模型**, 如果要使用`BGP`模型, 则需要修改`04-ds`文件中的`CALICO_IPV4POOL_IPIP`为`Never`(`Off`也可以, 默认为`Always`).
 
 ## 网络模型
 

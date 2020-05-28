@@ -1,0 +1,9 @@
+## 构建方法 docker build --no-cache=true -f dockerfile -t flex-nfs .
+FROM busybox
+WORKDIR .
+
+# TODO Change to your desired driver.
+COPY ./nfs /nfs
+
+COPY deploy.sh /deploy.sh
+CMD /bin/sh /deploy.sh

@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: centos7-nfs
+  namespace: default
+spec:
+  containers:
+  - name: centos7-nfs
+    image: registry.cn-hangzhou.aliyuncs.com/generals-space/centos7
+    imagePullPolicy: IfNotPresent
+    command: ["tail", "-f", "/etc/profile"]
+    volumeMounts:
+    - name: nfs-vol
+      mountPath: /data
+    ports:
+    - containerPort: 80
+  volumes:
+  - name: nfs-vol
+    flexVolume:
+      driver: "k8s/nfs"
+      fsType: "nfs"
+      options:
+        ## server 为 nfs 服务端地址, share 为 nfs 服务端的共享目录路径.
+        ## 这几个选项都在 nfs 工具中定义.
+        server: "192.168.80.10"
+        share: "/opt/nfs"

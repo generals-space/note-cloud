@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: flex-ds
+spec:
+  selector:
+    matchLabels:
+      app: flex-deploy
+  template:
+    metadata:
+      name: flex-deploy
+      labels:
+        app: flex-deploy
+    spec:
+      containers:
+        # 这是我们自己构建的镜像.
+        - image: flex-nfs
+          name: flex-deploy
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - mountPath: /flexmnt
+              name: flexvolume-mount
+      volumes:
+        - name: flexvolume-mount
+          hostPath:
+            ## 将宿主机上的 plugin 路径挂载到 Pod, 由 Pod 将 nfs 工具拷贝进去.
+            path: /usr/libexec/kubernetes/kubelet-plugins/volume/exec/
