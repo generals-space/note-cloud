@@ -3,8 +3,9 @@
 参考文章
 
 1. [docker Failed to get D-Bus connection 报错](http://welcomeweb.blog.51cto.com/10487763/1735251)
-
 2. [如何在Docker CentOS容器中使用Systemd](http://www.codesec.net/view/434721.html)
+3. [在Docker中CentOS7镜像使用systemctl命令方法](https://blog.csdn.net/liuguangrong/article/details/82464139)
+    - 构建支持 systemctl 的 centos7 基础镜像的思路
 
 ## 问题描述
 
@@ -17,10 +18,10 @@ Failed to get D-Bus connection: Operation not permitted
 
 ## 原因分析及解决方法
 
-按照参考文章1, 2所说, 这是CentOS:7镜像中的一个bug, 目前无法修复, 只能等到7.2版镜像. 这个bug的原因是因为`dbus-daemon`没能启动. 其实`systemctl`并不是不可以使用. 将你dockerfile的`CMD`或者`ENTRYPOINT`设置为`/usr/sbin/init`即可, 容器会在运行时将`dbus`等服务启动起来. 然后再执行`systemctl`命令即可运行正常.
+按照参考文章1, 2所说, 这是CentOS:7镜像中的一个bug, 目前无法修复, 只能等到7.2版镜像. 这个bug的原因是因为`dbus-daemon`没能启动. 其实`systemctl`并不是不可以使用. 将你dockerfile的`CMD`或者`ENTRYPOINT`设置为`/usr/sbin/init`即可, 容器会在运行时将`dbus`等服务启动起来. 然后再使用`exec`进入容器, 执行`systemctl`命令即可运行正常.
 
 ```shell
-docker run --privileged  -e "container=docker"  -v /sys/fs/cgroup:/sys/fs/cgroup -d docker.io/centos:7  /usr/sbin/init
+docker run -d --privileged -e "container=docker" -v /sys/fs/cgroup:/sys/fs/cgroup docker.io/centos:7 /usr/sbin/init
 ```
 
 > 注意: 上面的命令要完全执行...少一个都会被坑的很惨.

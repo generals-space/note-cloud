@@ -18,3 +18,10 @@ Environment=NO_PROXY=localhost,127.0.0.1,m1empwb1.mirror.aliyuncs.com,registry.c
 
 > 可以在`/etc/docker/daemon.json`文件中设置国内的镜像源(不过有时不好用, 还是得用这个方法).
 
+如果出现了如下错误, 还是试试`daemon.json`吧.
+
+```console
+$ d pull pandoc/core
+Using default tag: latest
+Error response from daemon: Get https://registry-1.docker.io/v2/: net/http: request canceled while waiting for connection (Client.Timeout exceeded while awaiting headers)
+```
