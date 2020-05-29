@@ -1,4 +1,4 @@
-# calico插件下为Pod指定固定IP
+# calico-为Pod指定固定IP
 
 参考文章
 

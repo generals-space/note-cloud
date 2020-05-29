@@ -27,7 +27,7 @@ The Pod "test-ds-sbj8g" is invalid: spec: Forbidden: pod updates may not change 
 还是失败了, 因为Pod资源只能修改`image`, `tolerations`等有限个字段.
 
 ```console
-$ k patch pod Pod名称 -p '{"spec":{"containers":[{"name":"centos7","image":"registry.cn-hangzhou.aliyuncs.com/generals-space/centos7:devops"}]}}'
+$ k patch pod Pod名称 -p '{"spec":{"containers":[{"name":"centos7","image":"registry.cn-hangzhou.aliyuncs.com/generals-space/centos7-devops"}]}}'
 pod/test-ds-sbj8g patched
 ```
 
@@ -42,7 +42,7 @@ pod/test-ds-sbj8g patched
 Pod未重启这个事情让我觉得挺疑惑的, 于是我又尝试如下两种方法, 更改ds部署文件中container的`image`和`env`, 结果所有Pod都重启了, 两次都是.
 
 ```
-k patch ds test-ds -p '{"spec": {"template": {"spec": {"containers": [{"name": "centos7", "image": "registry.cn-hangzhou.aliyuncs.com/generals-space/centos7:devops"}]}}}}'
+k patch ds test-ds -p '{"spec": {"template": {"spec": {"containers": [{"name": "centos7", "image": "registry.cn-hangzhou.aliyuncs.com/generals-space/centos7-devops"}]}}}}'
 
 k patch ds test-ds -p '{"spec": {"template": {"spec": {"containers": [{"name": "centos7", "env": [{"name": "newItem", "value": "hehe"}]}]}}}}'
 ```
@@ -59,7 +59,7 @@ patch子命令没有直接使用`-f`等选项指定读取哪个文件, 但是可
                 "containers": [
                 {
                     "name": centos7,
-                    "image": registry.cn-hangzhou.aliyuncs.com/generals-space/centos7:devops
+                    "image": registry.cn-hangzhou.aliyuncs.com/generals-space/centos7-devops
                 }
                 ]
             }
