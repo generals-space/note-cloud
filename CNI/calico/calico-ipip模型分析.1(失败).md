@@ -1,4 +1,4 @@
-# calico-ipip模型分析
+# calico-ipip模型分析.1(失败)
 
 参考文章
 
@@ -113,7 +113,7 @@ ip netns exec netns05 ip link set lo up
 
 由于此时`netns01`和`netns02`中的`veth13`和`veth25`没有IP地址, 因此没有生成到`netns03(10.10.10.0/24)`或`netns05(10.10.1.0/24)`的路由. `netns03`中ping不通`netns01`中的`172.16.0.1`, `netns01`中也ping不通`netns03`中的`10.10.0.2`.
 
-按照cacico本身的做法, 是使用了一个不存在的IP地址`169.254.1.1`, 并且添加了一条永久的`arp`记录指向veth pair位于宿主机的一端(对应图中的`veth13/veth14`和`veth25/veth26`设备).
+按照calico本身的做法, 是使用了一个不存在的IP地址`169.254.1.1`, 并且添加了一条永久的`arp`记录指向veth pair位于宿主机的一端(对应图中的`veth13/veth14`和`veth25/veth26`设备).
 
 这里我们简单一点.
 
@@ -148,8 +148,18 @@ ip link set tunl1 up
 ip link set tunl1 netns netns01
 ip netns exec netns01 ip r add 10.10.1.0/24 172.16.0.2 via dev tunl1
 
-
+ip tunnel add tunl2 mode ipip
+ip addr add 10.10.10.1/24 dev tunl2
+ip link set tunl2 up
+ip link set tunl2 netns netns02
+ip netns exec netns02 ip r add 10.10.1.0/24 172.16.0.2 via dev tunl2
 ```
+
+本来想构建如下结构的网络拓扑的, 结果后来发现上面创建`tunl2`时失败了...
+
+原因好像是linux中`tunnel`设备全局只能存在一个, 一个`tunnel`设备在所有`netns`中都可见, 且真是同一个. 就算`tunl1`是`ipip`, `tunl2`改成`gre`也不行, 显示`add tunnel "tunl0" failed: File exists`.
+
+唉, 放弃了, 换虚拟机来搞.
 
 ```
     +--------------+  +--------------+            +--------------+  +--------------+
