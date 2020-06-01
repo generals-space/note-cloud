@@ -1,4 +1,4 @@
-# calico网络模型-169.254.1.1的作用
+# calico网络模型-169.254.1.1的作用.0.环境构建
 
 参考文章
 
@@ -22,7 +22,7 @@ default via 169.254.1.1 dev eth0
 169.254.1.1 dev eth0 scope link
 ```
 
-我们知道, `eth0`其实就是veth pair设备位于Pod内的一端, 位于宿主机的另一端并没有像flannel那样接入到一个`bridge`网桥, 而是直接留在了宿主机本身.
+我们知道, `eth0`其实就是veth pair设备位于Pod内的一端, 而calico创建的veth pair设备, 位于宿主机的另一端并没有像flannel那样接入到一个`bridge`网桥, 而是直接留在了宿主机本身.
 
 但是`169.254.1.1`这个地址不存在于宿主机或是任何一个Pod中, 那ta是怎么用的呢?
 
@@ -38,7 +38,7 @@ default via 169.254.1.1 dev eth0
 
 ...但是总感觉, 为了节省一个bridge设备和一个IP地址, 又是写`arp`规则, 又是重写Pod内部路由的, 太亏了...
 
-## 1. 环境构建
+## 环境构建
 
 我之前做过通过添加路由规则实现跨主机的docker容器互联的实验(其实就类似flannel的`host-gw`的网络), 但是calico移除了其中的`docker0`网桥, 所以我们这里需要手动构建初始的网络拓扑, 然后再来验证为什么ta的方式"巧妙"(姑且先认为calico节省了一个IP很厉害吧...).
 
@@ -47,6 +47,11 @@ VMware虚拟机环境
 - A: 172.16.91.201/24
 - B: 172.16.91.202/24
 
+首先将两台主机上的`ip_forward`打开.
+
+```
+
+```
 
 主机`A`上执行如下命令.
 
@@ -99,31 +104,4 @@ ip netns exec netns03 ip link set lo up
                     A                                              B                
 ```
 
-但此时宿主机`A`上ping不通`netns01`, 反过来`netns01`也不ping不通主机`A`, 因为双方都没有到达对方地址的路由. 我们要解决的, 就是如何能让主机A上的`netns`, 能与主机A本身, 与主机B, 及主机B上的`netns`相互通信的问题.
-
-## 2. 实验1
-
-A
-
-```
-
-```
-
-B
-
-```
-
-```
-
-## 3. 实验2
-
-现在我们看看calico是怎么做的, 首先记得将上面实验中弄乱的实验环境恢复.
-
-```
-ip neigh add 169.254.1.1 dev veth1a lladdr ee:ee:ee:ee:ee:ee nud stale
-ip neigh add 169.254.1.1 dev veth1a lladdr ee:ee:ee:ee:ee:ee nud permanent
-```
-
-```
-ip link set addr ee:ee:ee:ee:ee:ee dev vetha1
-```
+但此时宿主机`A`上ping不通`netns01`, 反过来`netns01`也不ping不通主机`A`, 因为双方都没有到达对方地址的路由. 我们要解决的, 就是如何能让主机A上的`netns`, 能与主机A本身, 与主机B, 及主机B上的`netns`相互通信的问题. 

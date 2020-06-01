@@ -7,6 +7,8 @@
     - Pod内部默认网关`169.254.1.1`
 2. [Calico 跨子网直连POD网络](https://www.jianshu.com/p/19dca91c71ce)
 
+## 1. 第1阶段-初始网络结构
+
 A
 
 ```bash
@@ -55,48 +57,82 @@ ip netns exec netns03 ip link set lo up
     +--------------------------------+            +--------------------------------+
 ```
 
-由于宿主机A和B上此时`netns01`和`netns03`中的`vetha1`和`vethb3`没有IP地址, 因此没有生成到`netns01(10.10.10.0/24)`或`netns03(10.10.1.0/24)`的路由. `netns01`中ping不通宿主机`A`中的`172.16.91.201`, 宿主机`A`也ping不通`netns01`中的`10.10.0.2`.
+但是目前主机`A`与其上的`netns`还无法直接通信, 接下来我们按照calico的方式添加路由.
 
-按照calico本身的做法, 是使用了一个不存在的IP地址`169.254.1.1`, 并且添加了一条永久的`arp`记录指向veth pair位于宿主机的一端(对应图中的`vetha1/vetha2`和`vethb3/vethb4`设备).
-
-这里我们简单一点.
-
-```
-ip r add 10.10.0.2 dev vetha1
-ip netns exec netns01 ip r add 172.16.91.0/24 dev veth1a
-```
-
-```
-ip r add 10.10.1.2 dev vethb3
-ip netns exec netns03 ip r add 172.16.91.0/24 dev veth3b
-```
-
-这样, `netns01`和`netns01`, `netns02`和`netns03`就可以相互ping通了, 不过`netns01`没有办法ping通`netns02`中的`172.16.0.2`, `netns03`也ping不通`netns01`中的`172.16.91.201`.
-
-不过为了接下去的实验能够继续, 还是要将上面的几条先删除.
-
-### 第3阶段
-
-我们要达到的最终目标是, `netns01`中可以ping通`netns03`中的`10.10.1.2`.
-
-至于上面说的, "`netns01`没有办法ping通`netns02`中的`172.16.0.2`, `netns03`也ping不通`netns01`中的`172.16.91.201`"的情况, 是因为`netns01`与`netns02`是通过veth pair直接相连的, 与实际网络结构不相符, 这个先不用管.
+## 2. 第2阶段-路由
 
 A
 
 ```bash
-ip tunnel add tunl0 mode ipip || echo 'maybe failed but ignore'
-ip addr add 10.10.1.1/32 dev tunl0
-ip link set tunl0 up
-ip r add 10.10.1.0/24 via 172.16.91.202 dev ens33
+## 添加宿主机到 netns 的路由
+ip r add 10.10.0.2 dev vetha1
+
+## 修改 netns 内部的路由
+ip netns exec netns01 ip r del 10.10.0.0/24 dev veth1a 
+ip netns exec netns01 ip r add 169.254.1.1 dev veth1a scope link
+ip netns exec netns01 ip r add default via 169.254.1.1 dev veth1a
+
+## 修改 vetha1 的 mac 地址
+ip link set addr ee:ee:ee:ee:ee:ee dev vetha1
+
+## 在 netns 中添加永久 arp 记录, 映射 169.254.1.1 的 mac 地址
+## calico 中这条记录的标记为`stale`而非`permanent`, 但是`stale`的话, 这个条会经常发生变动,
+## 貌似是 calico 服务会定时维护这个记录, 才能保持ta的不变.
+ip netns exec netns01 ip neigh add 169.254.1.1 dev veth1a lladdr ee:ee:ee:ee:ee:ee nud permanent
+
+## 宿主机作为网关
+ip r add 10.10.1.0/24 dev ens33 via 172.16.91.202
 ```
 
 B
 
 ```bash
+## 添加宿主机到 netns 的路由
+ip r add 10.10.1.2 dev vethb3
+
+## 修改 netns 内部的路由
+ip netns exec netns03 ip r del 10.10.1.0/24 dev veth3b 
+ip netns exec netns03 ip r add 169.254.1.1 dev veth3b scope link
+ip netns exec netns03 ip r add default via 169.254.1.1 dev veth3b
+
+## 修改 vethb3 的 mac 地址
+ip link set addr ee:ee:ee:ee:ee:ee dev vethb3
+
+## 在 netns 中添加永久 arp 记录, 映射 169.254.1.1 的 mac 地址
+## calico 中这条记录的标记为`stale`而非`permanent`, 但是`stale`的话, 这个条会经常发生变动,
+## 貌似是 calico 服务会定时维护这个记录, 才能保持ta的不变.
+ip netns exec netns03 ip neigh add 169.254.1.1 dev veth3b lladdr ee:ee:ee:ee:ee:ee nud permanent
+
+## 宿主机作为网关
+ip r add 10.10.0.0/24 dev ens33 via 172.16.91.201
+```
+
+此时, `netns`与宿主机, `netns`与`netns`之间都已可以相互通信.
+
+## 3. 第3阶段-tunnel
+
+A
+
+```bash
+## 可能会出现这个问题, add tunnel "tunl0" failed: File exists, 但是没关系
 ip tunnel add tunl0 mode ipip || echo 'maybe failed but ignore'
-ip addr add 10.10.2.1/32 dev tunl0
+ip addr add 10.10.0.1/32 brd 10.10.0.1 dev tunl0
 ip link set tunl0 up
-ip r add 10.10.0.0/24 via 172.16.91.201 dev ens33
+
+ip r del 10.10.1.0/24 dev ens33 via 172.16.91.202
+ip r add 10.10.1.0/24 dev tunl0 via 172.16.91.202
+```
+
+B
+
+```bash
+## 可能会出现这个问题, add tunnel "tunl0" failed: File exists, 但是没关系
+ip tunnel add tunl0 mode ipip || echo 'maybe failed but ignore'
+ip addr add 10.10.1.1/32 brd 10.10.1.1 dev tunl0
+ip link set tunl0 up
+
+ip r del 10.10.0.0/24 dev ens33 via 172.16.91.201
+ip r add 10.10.0.0/24 dev tunl0 via 172.16.91.201
 ```
 
 ```
@@ -113,14 +149,29 @@ ip r add 10.10.0.0/24 via 172.16.91.201 dev ens33
     |  +----↓---+        +---↓----+  |            |  +----↓---+        +---↓----+  |
     |  | vetha1 |        | vetha2 |  |            |  | vethb3 |        | vethb4 |  |
     |  +--------+        +--------+  |            |  +--------+        +--------+  |
+    |                                |            |                                |
     |           +--------+           |            |           +--------+           |
     |           | tunl1  |           |            |           | tunl2  |           |
     |           +--------+           |            |           +--------+           |
-    |          10.10.10.1/24         |            |          10.10.1.1/24          |
-    |  netns01                       |            |                       netns02  |
+    |          10.10.0.1/24          |            |          10.10.1.1/24          |
+    |                                |            |                                |
     |           +--------+           |            |           +--------+           |
-    |           | veth12 |  <------------------------------>  | veth21 |           |
+    |           |  eth0  |  <------------------------------>  |  eth0  |           |
     |           +--------+           |            |           +--------+           |
-    |          172.16.91.201/24         |            |          172.16.0.2/24         |
+    |        172.16.91.201/24        |            |        172.16.91.202/24        |
     +--------------------------------+            +--------------------------------+
 ```
+
+但是在添加`ip r add 10.10.1.0/24 dev tunl0 via 172.16.91.202`这一步会出错: `RTNETLINK answers: Network is unreachable`
+
+calico所在宿主机的路由如下
+
+```
+default via 192.168.80.2 dev ens33 proto static metric 100
+172.16.36.192/26 via 192.168.80.124 dev tunl0 proto bird onlink
+```
+
+其中`172.16.36.192/26`是另一节点上 Pod 的 IP 范围, 该节点的 IP 为 `192.168.80.124`, 默认路由中的`192.168.80.2`为宿主机网络中的网关地址.
+
+我们可以看到, 到对端 Pod 的路由中, `dev`设备为`tunl0`, 但是其`proto`为`bird`. 如果上面的命令中添加了`proto bird`, 就不会再出现`Network is unreachable`的报错了. 不过目前我还不清楚`bird`的生效过程, 应该要看`bird`的源码了, 以后再说吧...
+
