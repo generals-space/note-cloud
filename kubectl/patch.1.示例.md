@@ -33,7 +33,7 @@ pod/test-ds-sbj8g patched
 
 成功了.
 
-其他资源的patch字段倒是没有字段限制.
+其他资源的 patch 字段倒是没有字段限制.
 
 ## 2. patch 后果
 

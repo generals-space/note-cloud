@@ -8,12 +8,14 @@
     - 容器跨主机通信的转发流程
     - felix: 路由配置组件; bird: 路由广播组件(BGP Speaker)
     - ipip网络模型的目标.
-2. [Calico网络方案](https://www.cnblogs.com/netonline/p/9720279.html)
+3. [趣谈网络协议 - 第31讲 | 容器网络之Calico：为高效说出善意的谎言](https://blog.csdn.net/aha_jasper/article/details/105575893)
+    - 像是参考文章1的原文
+4. [Calico网络方案](https://www.cnblogs.com/netonline/p/9720279.html)
     - 文章末尾给出的calico与flannel各模型网络的对比很值得一看.
-3. [calico网络策略](https://yq.aliyun.com/articles/674020)
+5. [calico网络策略](https://yq.aliyun.com/articles/674020)
     - `calico`不同于`flannel`, 不需要为每个node分配子网段, 所以只需要考虑pod的数量;
     - 宿主机上默认初始会创建一个掩码位为26的子网网段, 当pod超过这个值后, 可以从其他可用子网中取值, 并不是固定的.
-4. [docker 容器网络方案：calico 网络模型](https://cizixs.com/2017/10/19/docker-calico-network/)
+6. [docker 容器网络方案：calico 网络模型](https://cizixs.com/2017/10/19/docker-calico-network/)
     - calico引入的各组件(`libnetwork-plugin`, `BIRD`, `confd`, `felix`, `etcd`等)及ta们各自的功能.
     - `libnetwork-plugin`是用于与原生docker配合使用的网络插件, 实现的是docker的网络接口. 但kuber集群需要的是CNI插件, 按照readme文档中所说, calico还有一个`cni-plugin`工程, 这才是kuber集群部署需要的.
     - `BIRD`用于宿主机节点间的路由信息的传递, 可以理解为`gossip`, 每创建一个Pod, 就会生成一条到达此Pod的路由.

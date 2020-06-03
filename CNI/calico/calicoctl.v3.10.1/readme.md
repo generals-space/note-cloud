@@ -21,9 +21,18 @@
 
 ## 使用
 
-`calicoctl get node`: 查看集群中的节点信息
+`calicoctl get node [-o wide]`: 查看集群中的节点信息
+
+```console
+$ calicoctl get node -o wide
+NAME            ASN       IPV4                IPV6   
+k8s-master-01   (64512)   192.168.80.121/24          
+k8s-worker-01   (64512)   192.168.80.124/24          
+k8s-worker-02   (64512)   192.168.80.125/24          
+```
+
+> ASN: AS Number 自治系统编号
 
 `calicoctl get ippool`: 查看集群中pod网段范围(这个值应该是在`calico-node`的daemonset的部署文件中, 由`CALICO_IPV4POOL_CIDR`字段定义的, 而且应该是与集群的apiserver对pod网段配置是相同的). 与`kubectl get ippool`结果相同, 通过calicoctl对ippool的CURD操作应该与kubectl的功能是相同的.
 
 `calicoctl node status`: 显示邻居节点的信息
-
