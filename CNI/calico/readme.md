@@ -21,6 +21,7 @@
     - `BIRD`用于宿主机节点间的路由信息的传递, 可以理解为`gossip`, 每创建一个Pod, 就会生成一条到达此Pod的路由.
     - 各组件在容器内部的配置文件目录位置.
     - calico的优点与缺点
+7. [DockOne微信分享（二六二）：谐云Calico大规模场景落地实践](http://dockerone.com/article/10382)
 
 calico的BGP与flannel的host-gw一样, 是L3的underlay方案.
 

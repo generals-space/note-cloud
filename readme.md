@@ -19,3 +19,4 @@
 7. [基于jenkins,tekton等工具打造kubernetes devops平台](https://www.cnblogs.com/tylerzhou/p/10969041.html)
     - kuber高级应用场景: pod中断, deploy相对于rs的优势, pod安全策略, 动态准入控制等主题
 
+[Kubernetes Handbook——Kubernetes中文指南/云原生应用架构实践手册](https://jimmysong.io/kubernetes-handbook/)

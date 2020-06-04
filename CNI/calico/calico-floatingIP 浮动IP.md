@@ -90,3 +90,10 @@ spec:
         effect: NoSchedule
 ```
 
+## 3. 必要性
+
+上面说了, floatingIP 的应用场景非常少, 刚好想到一个 -- ICMP.
+
+常规的 service 资源对象拥有自己的 clusterIP, ping 一个 service 对象时, ICMP 请求包是到不了后端 Pod 的.
+
+而 floatingIP 就不一样了...
