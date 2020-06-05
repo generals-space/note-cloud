@@ -1,11 +1,14 @@
 ## kubeadm配置文件示例, 在`Directories`标题下, kuber.v1.17时有效的是`v1beta2`子目录
 ## https://godoc.org/k8s.io/kubernetes/cmd/kubeadm/app/apis/kubeadm#pkg-subdirectories
+
+## v1beta1 自 v1.17.0 开始被弃用.
 apiVersion: kubeadm.k8s.io/v1beta1
 kind: ClusterConfiguration
 kubernetesVersion: v1.16.2
 imageRepository: registry.cn-hangzhou.aliyuncs.com/google_containers
 ## 用于生成apiserver匹配的证书及kubelet配置文件的请求入口.
 controlPlaneEndpoint: "k8s-server-lb:8443"
+clusterName: kubernetes
 
 networking:
   ## 这两个其实都是默认值

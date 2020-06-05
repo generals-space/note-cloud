@@ -1,0 +1,55 @@
+apiVersion: kubeadm.k8s.io/v1beta2
+bootstrapTokens:
+- groups:
+  - system:bootstrappers:kubeadm:default-node-token
+  token: q8fszx.6razfduu22ouz4x2
+  ttl: 24h0m0s
+  usages:
+  - signing
+  - authentication
+kind: InitConfiguration
+localAPIEndpoint:
+  advertiseAddress: 192.168.80.121
+  bindPort: 6443
+nodeRegistration:
+  criSocket: /var/run/dockershim.sock
+  name: k8s-master-01
+  taints:
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/master
+---
+apiVersion: kubeadm.k8s.io/v1beta2
+kind: ClusterConfiguration
+kubernetesVersion: v1.17.2
+clusterName: kubernetes
+imageRepository: registry.cn-hangzhou.aliyuncs.com/google_containers
+apiServer:
+  timeoutForControlPlane: 4m0s
+certificatesDir: /etc/kubernetes/pki
+controlPlaneEndpoint: k8s-server-lb:8443
+featureGates:
+  IPv6DualStack: true
+controllerManager:
+  extraArgs:
+    cluster-cidr: 10.254.0.0/16,2019:20::/96
+    service-cluster-ip-range: 10.96.0.0/12,fec0:30::/112
+    ## node-cidr-mask-size 掩码位要比上面的 cluster-cidr 大, 否则升级/部署完成后 controller-manager 会经常崩溃重启.
+    ## Controller: Invalid --cluster-cidr, mask size of cluster CIDR must be less than or equal to --node-cidr-mask-size configured for CIDR family
+    ## 具体含义有待商讨. 注意是字符串类型
+    ## node-cidr-mask-size: "112"
+    ## ...又错, 双栈场景下  node-cidr-mask-size 字段被禁用, controller-manager 启动直接失败, 需要使用 node-cidr-mask-size-ipv6.
+    ## error starting controllers: usage of --node-cidr-mask-size is not allowed with dual-stack clusters
+    node-cidr-mask-size-ipv6: "112"
+dns:
+  type: CoreDNS
+etcd:
+  local:
+    dataDir: /var/lib/etcd
+networking:
+  dnsDomain: cluster.local
+  ## 不知道是不是 kubeadm 还是 apiserver 的限制, serviceSubnet 的掩码位小于 96 都会出错:
+  ## specified --secondary-service-cluster-ip-range is too large.
+  ## 目前来说, 112 是比较合适的.
+  podSubnet: 10.254.0.0/16,2019:20::/96
+  serviceSubnet: 10.96.0.0/12,fec0:30::/112
+scheduler: {}
