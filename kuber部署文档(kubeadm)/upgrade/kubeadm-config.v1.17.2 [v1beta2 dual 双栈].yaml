@@ -31,7 +31,7 @@ featureGates:
   IPv6DualStack: true
 controllerManager:
   extraArgs:
-    cluster-cidr: 10.254.0.0/16,2019:20::/96
+    cluster-cidr: 10.254.0.0/16,fec0:20::/96
     service-cluster-ip-range: 10.96.0.0/12,fec0:30::/112
     ## node-cidr-mask-size 掩码位要比上面的 cluster-cidr 大, 否则升级/部署完成后 controller-manager 会经常崩溃重启.
     ## Controller: Invalid --cluster-cidr, mask size of cluster CIDR must be less than or equal to --node-cidr-mask-size configured for CIDR family
@@ -50,6 +50,6 @@ networking:
   ## 不知道是不是 kubeadm 还是 apiserver 的限制, serviceSubnet 的掩码位小于 96 都会出错:
   ## specified --secondary-service-cluster-ip-range is too large.
   ## 目前来说, 112 是比较合适的.
-  podSubnet: 10.254.0.0/16,2019:20::/96
+  podSubnet: 10.254.0.0/16,fec0:20::/96
   serviceSubnet: 10.96.0.0/12,fec0:30::/112
 scheduler: {}

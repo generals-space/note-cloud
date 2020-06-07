@@ -20,6 +20,7 @@ function deproxy()
 }
 
 alias c='curl'
+alias ipp='ip -6'
 alias d='docker'
 alias dk='docker'
 alias dc='docker-compose'
@@ -37,6 +38,19 @@ function kc() {
 function ks() {
     kubectl config use-context $1
 }
+## @function:   进入容器内部, 优先尝试 bash 终端
+## @note:       alias kex='kubectl exec -it'
+## $1:          目标 Pod 名称
+function kex() {
+    ## 如果把标准输出也 null 掉, 当目标 Pod 有正常 bash 时就无法进行交互, 终端会卡死.
+    ## kubectl exec -it $1 bash 1>/dev/null 2>/dev/null
+    kubectl exec -it $1 2>/dev/null
+    if (( $? != 0 )); then
+        echo 'bash does exist, try to use sh'
+        kubectl exec -it $1 sh
+    fi
+}
+###################################################################
 ## @function: 查看目标容器的进程pid, 以便之后进入其网络空间
 ## $1:        容器名称/ID
 function dpid(){
