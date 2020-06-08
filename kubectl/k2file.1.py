@@ -4,9 +4,14 @@
 ## 解析kubectl的config文件, 生成ca.crt, client.crt和client.key三个文件.
 ## 用法: python base64_to_file.py /etc/kubernetes/admin.conf
 
+## 有个问题: curr_dir 总是获取 base64_to_file.py 脚本所在的目录, 而非执行脚本所在的目录.
+## 而使用 open() 打开并创建文件时, 如果不写绝对路径, 就会使用以脚本所在位置的相对路径.
+## 需要使用 os.getcwd() 代替, 这样得到的是执行脚本时所在的目录, 而非脚本本身所在的目录.
+
 ## python2内置yaml模块, python3则需要使用pip安装PyYAML
 import yaml
 import sys
+import os
 import base64
 
 def parse_yaml(target_file):
@@ -35,11 +40,14 @@ def parse_yaml(target_file):
 
 
 if __name__ == '__main__':
+    ## python base64_to_file.py /etc/kubernetes/admin.conf 的 argv 中不包含 `python`
     if len(sys.argv) == 3: 
         print("请指定配置文件路径")
         sys.exit(-1)
 
     target_file = ''
+    curr_dir = ''
+    ## 判断 python 版本.
     if sys.version_info < (3, 0):
         ## python2
         import os
@@ -50,6 +58,6 @@ if __name__ == '__main__':
         from pathlib import Path
         curr_dir = Path.cwd().joinpath(Path(__file__).parent)
         target_file = curr_dir.joinpath(sys.argv[1])
-
-    print(target_file)
+    print('current dir: ', curr_dir)
+    print('yaml file: ', target_file)
     parse_yaml(target_file)
