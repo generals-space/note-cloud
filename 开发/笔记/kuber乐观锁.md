@@ -1,3 +1,5 @@
+# kuber乐观锁
+
 参考文章
 
 1. [Kubernetes 请求并发控制与数据一致性（含ResourceVersion、Update、Patch简析）](https://blog.csdn.net/jackxuf/article/details/80084358)
