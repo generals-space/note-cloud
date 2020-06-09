@@ -53,6 +53,8 @@ func NewController(
 	mycrdClientset clientset.Interface,
 	myCrdInformer informers.MyCrdInformer) *Controller {
 
+	// AddToScheme() 将 CRD 的结构与 Kubernetes GroupVersionKinds 的映射添加到 Manager 的 Scheme 中
+	// 以便能够让 Controller Manager 知道 CRD 的存在
 	utilruntime.Must(mycrdscheme.AddToScheme(scheme.Scheme))
 	glog.V(4).Info("Creating event broadcaster")
 	eventBroadcaster := record.NewBroadcaster()

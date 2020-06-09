@@ -1,31 +1,10 @@
 apiVersion: kubeadm.k8s.io/v1beta2
-kind: InitConfiguration
-localAPIEndpoint:
-  advertiseAddress: 192.168.80.121
-  bindPort: 6443
-bootstrapTokens:
-- groups:
-  - system:bootstrappers:kubeadm:default-node-token
-  token: p4nt4s.nrmiqchv50irfyh0
-  ttl: 24h0m0s
-  usages:
-  - signing
-  - authentication
-nodeRegistration:
-  criSocket: /var/run/dockershim.sock
-  name: k8s-master-01
-  taints:
-  - effect: NoSchedule
-    key: node-role.kubernetes.io/master
----
-apiVersion: kubeadm.k8s.io/v1beta2
 kind: ClusterConfiguration
 kubernetesVersion: v1.16.2
-
+clusterName: kubernetes
 apiServer:
   timeoutForControlPlane: 4m0s
 certificatesDir: /etc/kubernetes/pki
-clusterName: kubernetes
 controlPlaneEndpoint: k8s-server-lb:8443
 imageRepository: registry.cn-hangzhou.aliyuncs.com/google_containers
 dns:
@@ -39,3 +18,11 @@ networking:
   serviceSubnet: 10.96.0.0/12
 controllerManager: {}
 scheduler: {}
+
+---
+apiVersion: kubeproxy.config.k8s.io/v1alpha1
+kind: KubeProxyConfiguration
+ipvs:
+  minSyncPeriod: 1s
+  syncPeriod: 10s
+mode: ipvs

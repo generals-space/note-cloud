@@ -17,6 +17,8 @@ var SchemeGroupVersion = schema.GroupVersion{
 // the scheme
 var (
     SchemeBuilder = runtime.NewSchemeBuilder(addKnownTypes)
+    // AddToScheme() 将 CRD 的结构与 Kubernetes GroupVersionKinds 的映射添加到 Manager 的 Scheme 中
+	// 以便能够让 Controller Manager 知道 CRD 的存在
     AddToScheme   = SchemeBuilder.AddToScheme
 )
 

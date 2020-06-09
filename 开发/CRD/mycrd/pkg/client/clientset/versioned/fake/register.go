@@ -41,5 +41,7 @@ var AddToScheme = localSchemeBuilder.AddToScheme
 
 func init() {
 	v1.AddToGroupVersion(scheme, schema.GroupVersion{Version: "v1"})
+	// AddToScheme() 将 CRD 的结构与 Kubernetes GroupVersionKinds 的映射添加到 Manager 的 Scheme 中
+	// 以便能够让 Controller Manager 知道 CRD 的存在
 	utilruntime.Must(AddToScheme(scheme))
 }
