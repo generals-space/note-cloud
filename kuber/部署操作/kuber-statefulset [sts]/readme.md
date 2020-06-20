@@ -7,11 +7,36 @@
     - 为什么需要 headless service 无头服务？
     - 为什么需要volumeClaimTemplate？
     - ss的几个重点: Pod管理策略, 更新策略.
-4. [Kubernetes资源对象：StatefulSet](https://blog.csdn.net/fly910905/article/details/102092570)
-    - 应用场景: 稳定的持久化存储, 稳定的网络标识, 有序部署与有序收缩.
-    - 更新策略, 解释了`.spec.updateStrategy.rollingUpdate.partition`的作用
-5. [Kubernetes指南 StatefulSet](https://feisky.gitbooks.io/kubernetes/concepts/statefulset.html)
-  - 给出了更新策略中的`partition`和管理策略中的`parallel`的使用示例.
+
+20200620更新
+
+今天终于想到 headlesss service 有什么用了...
+
+像 elasticsearch, etcd 这种分布式服务, 在集群初期 setup 时, 配置文件中就要写上集群中所有节点的IP(或是域名).
+
+比如 es
+
+```yaml
+network.host: 0.0.0.0
+http.port: 9200
+cluster.initial_master_nodes: ["es-01"]
+```
+
+再像`etcd`
+
+```yaml
+listen-peer-urls: https://172.16.43.101:2380
+initial-advertise-peer-urls: https://172.16.43.101:2380
+initial-cluster: k8s-master-43-101=https://172.16.43.101:2380,k8s-master-43-102=https://172.16.43.102:2380,k8s-master-43-103=https://172.16.43.103:2380
+```
+
+但是由于`kuber`集群的特性, Pod 是没有固定IP的, 所以配置文件里不能写IP. 但是用 Service 也不合适, 因为 Service 作为 Pod 前置的 LB, 一般是为一组后端 Pod 提供访问入口的, 而且 Service 的`selector`也没有办法区别同一组 Pod, 没有办法为每个 Pod 创建单独的 Serivce.
+
+于是有了 Statefulset. ta为每个 Pod 做一个编号, 就是为了能在这一组服务内部区别各个 Pod, 各个节点的角色不会变得混乱. 
+
+同时创建所谓的 headless service 资源, 这个 headless service 不分配 ClusterIP, 因为根本不会用到. 集群内的节点是通过`Pod名称+序号.Service名称`确定彼此进行通信的, 只要序号不变, 访问就不会出错.
+
+------
 
 对于redis, mysql这种有状态的服务,我们使用`statefulset`方式为首选. 我们这边主要就是介绍`statefulset`这种方式, `statefulset`的设计原理模型:
 
@@ -46,27 +71,3 @@ $ ping redis-service
 PING redis-service.default.svc.cluster.local (10.254.0.213) 56(84) bytes of data.
 64 bytes from redis-app-3.redis-service.default.svc.cluster.local (10.254.0.213): icmp_seq=2 ttl=64 time=0.085 ms
 ```
-
-## 更新策略
-
-`statefulset`目前支持两种策略
-
-- `OnDelete`: 当`.spec.template`更新时, 并不立即删除旧的`Pod`, 而是等待用户手动删除这些旧`Pod`后自动创建新Pod. 这是默认的更新策略, 兼容 v1.6 版本的行为.
-- `RollingUpdate`: 当`.spec.template`更新时, 自动删除旧的`Pod`并创建新`Pod`替换. 在更新时, 这些`Pod`是按逆序的方式进行, 依次删除、创建并等待`Pod`变成`Ready`状态才进行下一个`Pod`的更新. 
-
-其中`RollingUpdate`有一个`partition`选项, 只有序号大于或等于`partition`的`Pod`会在`.spec.template`更新的时候滚动更新, 而其余的`Pod`则保持不变(即便是删除后也是用以前的版本重新创建).
-
-```yaml
-spec:
-  ## headless service名称
-  serviceName: "redis-service"
-  replicas: 6
-  updateStrategy:
-    type: RollingUpdate
-    rollingUpdate:
-      partition: 4
-```
-
-> `partition`从0开始计数
-
-这样, 在更新images版本后apply, 你会发现只有`redis-app-4`和`redis-app-5`会更新, 其他的`Pod`则保持不动.
