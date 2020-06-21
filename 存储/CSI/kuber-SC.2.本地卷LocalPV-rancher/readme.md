@@ -38,12 +38,3 @@ pvc-90ab9d86-cb83-407d-823c-f7e62b9d5636
 ```
 
 需要注意的是, 使用说明中给出的yaml部署文件, sc的回收策略`reclaimPolicy`定义为`Delete`, 即绑定的PVC被删除时, 自动创建的PV也会被删除, 这样是非常危险的, 所以我将其修改为`Retain`. 这样, 在pvc被删除后, pv也会对应删除, 但是宿主机上的目录是不会被删除的.
-
-------
-
-注意: 实验用的PVC部署文件中的`accessMode`字段只能使用`ReadWriteOnce`, 如果是`ReadWriteMany`会导致PV资源无法创建. 查看`provisioner`的日志会发现如下报错.
-
-```
-ERROR: logging before flag.Parse: I0314 14:56:13.629550       1 event.go:221] Event(v1.ObjectReference{Kind:"PersistentVolumeClaim", Namespace:"default", Name:"redis-data-redis-app-0", UID:"d8d33f38-43b7-45b3-b77d-31740e25f4d6", APIVersion:"v1", ResourceVersion:"337966", FieldPath:""}): type: 'Warning' reason: 'ProvisioningFailed' failed to provision volume with StorageClass "local-path": Only support ReadWriteOnce access mode
-```
-

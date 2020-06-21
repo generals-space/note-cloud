@@ -86,5 +86,7 @@ spec:
         requests:
           storage: 200M
       ## 指定storage class
+      ## rancher的`local-path`不支持`readWriteMany`访问模式, 
+      ## 所以这里我们使用`nfs-provisioner`存储.
       ## storageClassName: local-path
       storageClassName: nfs-storage

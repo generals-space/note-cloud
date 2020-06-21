@@ -79,8 +79,9 @@ spec:
     command: ["tail", "-f", "/etc/profile"]
     volumeMounts:
     - name: myconfig
-      ## mountPath应该是一个目录, 如果这个路径不存在会自动创建为目录,
-      ## 但如果这个路径存在但却是个文件, 那么容器启动就会出错. 如下
+      ## 在这一示例中, mountPath需要是一个目录, 如果这个目录不存在会自动创建为目录,
+      ## configmap 中的键会作为文件写到这个目录下.
+      ## 如果这个路径存在但却是个文件, 那么容器启动就会出错. 如下
       ## unknown: Are you trying to mount a directory onto a file (or vice-versa)? 
       ## Check if the specified host path exists and is the expected type
       mountPath: /root/config

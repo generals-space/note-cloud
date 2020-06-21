@@ -1,0 +1,12 @@
+cluster.name: elasticsearch 
+node.name: es-01
+network.host: 0.0.0.0
+## 对客户端提供服务的端口
+http.port: 9200
+## 集群内与其他节点交互的端口
+transport.tcp.port: 9300
+## path.data: /home/elasticsearch
+bootstrap.memory_lock: false
+bootstrap.system_call_filter: false
+## 这里的数组成员为各节点的 node.name 值.
+cluster.initial_master_nodes: ["es-01"]
