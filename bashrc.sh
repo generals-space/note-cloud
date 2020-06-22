@@ -72,9 +72,9 @@ function kwd() {
 function dpid(){
     docker inspect -f "{{.State.Pid}}" $1
 }
-## @function: 清空目标容器的日志
+## @function: 清空目标容器的日志(docker clear log)
 ## $1:        目标容器名称或id
-function dclear() {
+function dclog() {
     local log_path=$(docker inspect -f '{{.LogPath}}' $1)
     ## 清空目标文件
     :>$log_path
@@ -90,7 +90,7 @@ function dnsenter() {
     nsenter -t $1 -n /bin/sh
 }
 ## @function: 清理不用的容器和镜像
-function dclear() {
+function dclean() {
     ## 删除旧容器, 不会删除当前正在运行的容器
     docker rm $(docker ps -a -q)
     ## 移除本地多余的历史镜像
