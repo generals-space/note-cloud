@@ -1,8 +1,0 @@
-server.name: kibana
-server.host: 0.0.0.0
-server.port: 5601
-
-#### 这里的 es 为 service 名称
-## elasticsearch.hosts: [ "http://es:9200" ]
-elasticsearch.username: elastic
-elasticsearch.password: "123456"

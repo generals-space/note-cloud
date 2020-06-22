@@ -1,1 +1,0 @@
-kubectl create configmap redis-conf --from-file=./cm/redis.conf
