@@ -5,4 +5,5 @@
     - 配置外部dns
 2. [CoreDns配置以及外部dns使用](https://www.cnblogs.com/weifeng1463/p/12518110.html)
     - 转载参考文章1, 不过担心1可能会挂, 留个备份.
-
+3. [详解 DNS 与 CoreDNS 的实现原理](https://draveness.me/dns-coredns/)
+    - 工作原理+源码分析

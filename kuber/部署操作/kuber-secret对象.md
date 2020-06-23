@@ -2,7 +2,7 @@
 
 参考文章
 
-1. []
+1. [Kubernetes中的Secret配置](https://www.cnblogs.com/Leslieblog/p/10158429.html)
 
 `secret`类型目前有3种: 
 

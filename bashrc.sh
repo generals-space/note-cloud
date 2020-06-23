@@ -44,7 +44,7 @@ function ks() {
 function kex() {
     ## 如果把标准输出也 null 掉, 当目标 Pod 有正常 bash 时就无法进行交互, 终端会卡死.
     ## kubectl exec -it $1 bash 1>/dev/null 2>/dev/null
-    kubectl exec -it $1 2>/dev/null
+    kubectl exec -it $1 bash 2>/dev/null
     if (( $? != 0 )); then
         echo 'bash does exist, try to use sh'
         kubectl exec -it $1 sh
