@@ -96,3 +96,15 @@ function dclean() {
     ## 移除本地多余的历史镜像
     docker images | grep '<none>' | awk '{print $3}' | xargs docker rmi
 }
+## @function:   进入容器内部, 优先尝试 bash 终端
+## @note:       alias dex='docker exec -it'
+## $1:          目标 Pod 名称
+function dex() {
+    ## 如果把标准输出也 null 掉, 当目标 Pod 有正常 bash 时就无法进行交互, 终端会卡死.
+    ## docker exec -it $1 bash 1>/dev/null 2>/dev/null
+    docker exec -it $1 bash 2>/dev/null
+    if (( $? != 0 )); then
+        echo 'bash does exist, try to use sh'
+        docker exec -it $1 sh
+    fi
+}

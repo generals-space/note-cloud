@@ -148,3 +148,6 @@ spec:
 ```
 
 ...md, 用`items`字段需要显示定义所有键, 没定义的就不映射了. 上面的pod创建出来, `/root/config`下就只有一个`profile`文件.
+
+> 注意: `volumeMounts`下不像`configMapKeyRef`可以通过`items`指定要挂载的`key`, 但ta有一个字段可以实现相似的效果: `subPath`.
+
