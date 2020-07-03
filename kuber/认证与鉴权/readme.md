@@ -12,7 +12,7 @@
 4. [官方文档 kubernetes-api](https://kubernetes.io/docs/reference/kubernetes-api/)
     - 给出了不同版本kuber的API手册链接
     - 手册中包含各种资源的`get`/`list`/`watch`等操作的使用示例, 选项参数, 及对应的restful请求示例, 值得参考.
-
+5. [浅聊Kubernetes的各种认证策略以及适用场景](https://zhuanlan.zhihu.com/p/97797321)
 
 ## 1. 概述
 

@@ -27,6 +27,7 @@ alias dc='docker-compose'
 alias k='kubectl'
 alias kde='kubectl describe'
 alias kap='kubectl apply -f'
+alias kgl='kubectl get --show-labels'
 
 ## @function: 获取当前的context列表
 ## @note:     kc -> kubectl context
