@@ -18,7 +18,7 @@ spec:
   scope: Namespaced
 ```
 
-部署这个yaml之后我们可以通过`kubectl get PodGroup`获取这个类型的资源, 当然, 此时是没有的.
+部署这个yaml之后我们可以通过`kubectl get PodGroup`获取这个类型的资源(当然, 此时是没有的).
 
 ```console
 $ k apply -f crd.yaml

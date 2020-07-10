@@ -102,7 +102,7 @@ go mod vendor
 cd ..
 ```
 
-注意: `apimachinery`必须要在GOPATH目录下, 否则在生成过程中可能出现如下报错.
+注意: 上面我们使用`git`将两个项目clone到本地, 因为`apimachinery`必须要在GOPATH目录下, 否则在生成过程中可能出现如下报错.
 
 ```
 Generating deepcopy funcs
@@ -111,13 +111,15 @@ F0421 10:09:13.896524   30295 deepcopy.go:885] Hit an unsupported type invalid t
 
 ------
 
-然后执行如下命令
+然后我们的项目也要在`$GOPATH`下, 在项目根路径执行如下命令(`podgroup`是项目在`GOPATH`下的相对路径)
 
 ```console
 $ $GOPATH/src/k8s.io/code-generator/generate-groups.sh all podgroup/pkg/client podgroup/pkg/apis testgroup:v1
 ```
 
-执行命令时所在的目录没有强制要求, 另外, `testgroup:v1`, 对应了`podgroup`项目中的`pkg/apis/testgroup/v1`目录, 如果两者不一致, 会报`Error: Failed making a parser: unable to add directory "podgroup/xxx": unable to import "podgroup/xxx": cannot find package "podgroup/xxx"`.
+执行命令时所在的目录没有强制要求, 你其实可以不把`podgroup`移到`$GOPATH`下, 只要之后把生成的代码从`$GOPATH`拷贝回去就行.
+
+另外, `testgroup:v1`, 对应了`podgroup`项目中的`pkg/apis/testgroup/v1`目录, 如果两者不一致, 会报`Error: Failed making a parser: unable to add directory "podgroup/xxx": unable to import "podgroup/xxx": cannot find package "podgroup/xxx"`.
 
 然后可正常生成代码.
 
