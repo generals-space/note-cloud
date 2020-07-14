@@ -3,9 +3,7 @@
 参考文章
 
 1. [Kubernetes 多container组成的Pod](https://blog.csdn.net/liumiaocn/article/details/52490444)
-
 2. [多容器POD及Kubernetes容器通信](https://www.kubernetes.org.cn/2767.html)
-
 3. [List All Container Images Running in a Cluster](https://kubernetes.io/zh/docs/tasks/access-application-cluster/list-all-running-container-images/)
     - 针对容器的操作. kubernetes里container并不是一种资源, 所以`describe`, `log`等命令不能指定某一容器, 这篇文章是用`get pod`子命令加`-o`选项输出格式化信息得到的.
 
@@ -72,7 +70,7 @@ $ k exec -it project -c centos7 -- /bin/bash
 
 这两个pod之间貌似没有联系, 无法通过container name连接???
 
-```
+```console
 $ k exec -it project -c centos7 -- /bin/bash
 [root@project /]# ping postgres
 ping: postgres: Name or service not known
@@ -82,7 +80,7 @@ ping: postgres: Name or service not known
 
 参考文章2对单pod多container的应用场景和共享机制进行了详细解释, 同一个pod下的多个container的确共享网络空间, ta们无法通过name通信, 但是都可以使用localhost表示自己.
 
-```
+```console
 [root@project /]# nc -l 5432
 Ncat: bind to :::5432: Address already in use. QUITTING.
 [root@project /]# netstat -anp
