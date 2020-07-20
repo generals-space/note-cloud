@@ -32,10 +32,15 @@ func main() {
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	// 这里的 GroupVersion 决定了访问前缀为 /api/v1
-	cfg.ContentConfig = cgRest.ContentConfig{
-		GroupVersion:         &apiCorev1.SchemeGroupVersion,
-		NegotiatedSerializer: cgScheme.Codecs,
-	}
+	/*
+		// 这种方式也可以
+		cfg.ContentConfig = cgRest.ContentConfig{
+			GroupVersion:         &apiCorev1.SchemeGroupVersion,
+			NegotiatedSerializer: cgScheme.Codecs,
+		}
+	*/
+	cfg.GroupVersion = &apiCorev1.SchemeGroupVersion
+	cfg.NegotiatedSerializer = cgScheme.Codecs.WithoutConversion()
 
 	restClientAPI, err := cgRest.RESTClientFor(cfg)
 	if err != nil {
