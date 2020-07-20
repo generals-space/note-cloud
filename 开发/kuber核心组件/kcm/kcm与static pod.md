@@ -4,13 +4,11 @@
 
 1. [官方文档  Create static Pods](https://kubernetes.io/docs/tasks/configure-pod-container/static-pod/)
 
-写在前面
-
 kubernetes版本: v1.16.2(1主2从)
 
 在研究`kube-controller-manager`源码的时候, 希望通过`go run main.go`执行测试程序. 不过由于分布式资源锁的存在, 只有成功获得锁的实例才能继续执行, 所以需要将主节点上运行着的`controller-manager`的pod删除. 
 
-但删除后总是会重启, 而且pod输出的yaml文件没有Reference块, 也没有发现该ns下对应的deployment, daemonset, statefulset, rs, rc等相关的对象.
+但删除后总是会重启, 而且pod输出的yaml文件没有`Reference`块, 也没有发现该ns下对应的deployment, daemonset, statefulset, rs, rc等相关的对象.
 
 然后查看apiserver, scheduler的日志, 也没有发现可疑的输出.
 
@@ -44,7 +42,7 @@ total 16
 -rw------- 1 root root 1160 Dec 26 23:28 kube-scheduler.yaml
 ```
 
-worker节点中, 该目录为空.
+> worker节点中, 该目录为空.
 
 ------
 

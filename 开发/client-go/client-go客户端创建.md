@@ -1,4 +1,4 @@
-# client-go
+# client-go客户端创建
 
 参考文章
 
@@ -6,6 +6,9 @@
     - 在集群外, 引用`kubeconfig`作为认证信息.
 2. [Authenticating inside the cluster](https://github.com/kubernetes/client-go/tree/master/examples/in-cluster-client-configuration)
     - 在pod内部, 引用`/var/run/secrets/kubernetes.io/serviceaccount`目录内的文件作为认证信息.
+3. [k8s源码解析 - 如何使用yaml创建k8s的资源](https://blog.csdn.net/u014618114/article/details/105168800/)
+	- 集群内外访问 apiserver 的客户端的不同创建方式
+	- `client-go`中的 clientset, 是各种资源的客户端集合, 实际上操作每一种资源, 都需要相应的客户端, clientSet结构体中每个client成员都是`rest.Interface`类型.
 
 ## 1. 获取`rest.Config`配置对象
 
