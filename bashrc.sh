@@ -67,6 +67,13 @@ function kwd() {
     ## $@ 表示传入的所有参数.
     kubectl get -o wide $@
 }
+## @function:   强制删除一个pod
+## $1:          目标Pod名称(必选)
+## $2:          目标资源的所属空间, 如 -n namespace(可选)
+function kkill() {
+    ## $@ 表示传入的所有参数.
+    kubectl delete pod --force --grace-period 0 $@
+}
 ###################################################################
 ## @function: 查看目标容器的进程pid, 以便之后进入其网络空间
 ## $1:        容器名称/ID
