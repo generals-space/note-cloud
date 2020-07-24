@@ -93,9 +93,9 @@ function denter(){
     docker exec -it $1 /bin/bash
 }
 ## @function: 进入目标容器网络空间
-## $1:        目标容器进程pid
+## $1:        容器名称/ID
 function dnsenter() {
-    nsenter -t $1 -n /bin/sh
+    nsenter -t $(dpid $1) -n /bin/sh
 }
 ## @function: 清理不用的容器和镜像
 function dclean() {

@@ -1,6 +1,9 @@
 参考文章
 
 1. [prometheus-book](https://yunlzheng.gitbook.io/prometheus-book/)
+2. [container-monitor](https://yasongxu.gitbook.io/container-monitor/)
+3. [监控神器Prometheus用不对，也就是把新手村的剑](https://cloud.tencent.com/developer/article/1660745)
+
 
 metrics: 指标
 
