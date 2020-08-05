@@ -4,6 +4,8 @@ kuber: 1.16.2
 
 我试了下, 只有`Daemonset`和`StatefulSet`在创建的时候会自动创建相应的`ControllerRevision`对象, `Deployment`都没有.
 
+另外, 每次对`StatefulSet`对象进行更新操作时, 就会自动创建一个新的`ControllerRevision`对象.
+
 > 以下将`ControllerRevision`简称为`kcr`
 
 ```console
@@ -43,3 +45,5 @@ revision: 1
 ```
 
 `data`块的内容是该`kcr`所属的资源的`spec`部分的内容, 上面我做了一些删减.
+
+> 最新的`kcr`对象内容一般等于当前最新`Daemonset`/`StatefulSet` 对象的内容.

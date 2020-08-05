@@ -18,7 +18,6 @@ spec:
   schedule: "*/1 * * * *"
   jobTemplate:
     spec:
-      ## job 完成后 60s 自动删除...貌似没用
       ttlSecondsAfterFinished: 60
       template:
         spec:
