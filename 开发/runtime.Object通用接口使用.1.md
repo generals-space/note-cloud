@@ -2,6 +2,8 @@
 
 参考文章
 
+1. [crd-ipkeeper/pkg/staticip/new.go](https://github.com/generals-space/crd-ipkeeper/blob/ccdf7e693a4edf309db551e90ab94e5411caf270/pkg/staticip/new.go#L50)
+
 - kuber: 1.16.2
 - apimachinery: v0.17.0
 
@@ -20,6 +22,7 @@ ta可以表示所有 kuber 资源(如`Deployment`, `Daemonset`, `Statefulset`等
 ```go
 import(
 	apimMetav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	appsv1 "k8s.io/api/apps/v1"
 )
 func (c *Controller) caller(){
     sts := &appsv1.StatefulSet{
@@ -39,6 +42,7 @@ func (c *Controller) doit(obj runtime.Object) {
 ```go
 import(
 	apimMetav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	appsv1 "k8s.io/api/apps/v1"
 )
 func (c *Controller) caller(){
 	sts := &appsv1.StatefulSet{
@@ -68,4 +72,6 @@ func (c *Controller) doit(obj runtime.Object) {
 
 对于`Spec`和`Status`, 如果之后仍然无法找到ta们的通用接口的话, 可以尝试将ta们转换成`map[string]interface{}`, 判断其各自的字段.
 
-参考[crd-ipkeeper/pkg/staticip/new.go](https://github.com/generals-space/crd-ipkeeper/blob/ccdf7e693a4edf309db551e90ab94e5411caf270/pkg/staticip/new.go#L50), 虽然不是很典型, 但是思路与我上面的不谋而合.
+参考文章1, 是我之前写的小项目, 虽然不是很典型, 但是思路与我上面的不谋而合.
+
+关于如何得到一个`runtime.Object`对象的`GVK`信息, 在我下一篇文章中会讲到.
