@@ -21,7 +21,7 @@ $ docker inspect service_parserhub-serv_1 | grep -i logpath
 
 ```
 docker run --privileged -it -v /var/run/docker.sock:/var/run/docker.sock jongallant/ubuntu-docker-client 
-## 下面这句是在容器内执行的
+## 下面这句是在容器内执行的, 目的是清理linux中的日志
 docker run --net=host --ipc=host --uts=host --pid=host -it --security-opt=seccomp=unconfined --privileged --rm -v /:/host alpine /bin/sh
 chroot /host
 ```
@@ -47,7 +47,7 @@ D           c           dev         home        lib         mnt         port    
 
 这样执行ps时就可以看到所有容器正在的进程.
 
-```
+```console
 $ docker run -it --name vmhost --net=host --ipc=host --uts=host --pid=host --security-opt=seccomp=unconfined --privileged -v /:/host generals/alpine /bin/sh
 / # ps -ef
 PID   USER     TIME  COMMAND

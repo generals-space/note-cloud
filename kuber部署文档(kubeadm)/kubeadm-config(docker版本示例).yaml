@@ -1,0 +1,82 @@
+apiVersion: kubeadm.k8s.io/v1beta1
+kind: InitConfiguration
+localAPIEndpoint:
+  advertiseAddress:
+  bindPort: 6443
+bootstrapTokens:
+- groups:
+  - system:bootstrappers:kubeadm:default-node-token
+  token: abcdef.0123456789abcdef
+  ttl: 24h0m0s
+  usages:
+    - signing
+    - authentication
+nodeRegistration:
+  name: docker-desktop
+  criSocket: /var/run/dockershim.sock
+  taints: []
+---
+apiVersion: kubeadm.k8s.io/v1beta1
+kind: ClusterConfiguration
+certificatesDir: /run/config/pki
+clusterName: kubernetes
+dns:
+  type: CoreDNS
+etcd:
+  local:
+    dataDir: /var/lib/etcd
+imageRepository: k8s.gcr.io
+kubernetesVersion: v1.16.5
+networking:
+  dnsDomain: cluster.local
+  podSubnet: ""
+  serviceSubnet: 10.96.0.0/12
+controlPlaneEndpoint: vm.docker.internal:6443
+apiServer:
+  extraArgs:
+    enable-admission-plugins: NodeRestriction
+  timeoutForControlPlane: 4m0s
+controllerManager: {}
+scheduler: {}
+---
+apiVersion: kubeproxy.config.k8s.io/v1alpha1
+bindAddress: 0.0.0.0
+clientConnection:
+  acceptContentTypes: ""
+  burst: 10
+  contentType: application/vnd.kubernetes.protobuf
+  kubeconfig: /var/lib/kube-proxy/kubeconfig.conf
+  qps: 5
+clusterCIDR: ""
+configSyncPeriod: 15m0s
+conntrack:
+  max: 0
+  maxPerCore: 0
+  min: 0
+  tcpCloseWaitTimeout: 1h0m0s
+  tcpEstablishedTimeout: 24h0m0s
+enableProfiling: false
+healthzBindAddress: 0.0.0.0:10256
+hostnameOverride: ""
+iptables:
+  masqueradeAll: false
+  masqueradeBit: 14
+  minSyncPeriod: 0s
+  syncPeriod: 30s
+ipvs:
+  excludeCIDRs: null
+  minSyncPeriod: 0s
+  scheduler: ""
+  syncPeriod: 30s
+kind: KubeProxyConfiguration
+metricsBindAddress: 127.0.0.1:10249
+mode: ""
+nodePortAddresses: null
+oomScoreAdj: -999
+portRange: ""
+resourceContainer: /kube-proxy
+udpIdleTimeout: 250ms
+winkernel:
+  enableDSR: false
+  networkName: ""
+  sourceVip: ""
