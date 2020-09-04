@@ -10,3 +10,10 @@
     - `FlexVolume`, 每创建一个 Pod, 都需要事先为其在 nfs 服务端创建对应的目录, 一一对应, 无法实现自动化, 不够智能.
 
 CSI出现后, 建议使用CSI替代.
+
+
+volumes -> hostPath, 然后`volumeMounts`进行挂载.
+
+volumes -> persistentVolumeClaim, pvc 绑定 pv, pv 指定 hostPath.
+
+除了`hostPath`, `nfs`类型的卷, 我还只见过通过`volumes`直接挂载, 没见过通过 pv/pvc 挂载的.
