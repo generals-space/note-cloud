@@ -36,7 +36,8 @@ spec:
             - --configmap=$(POD_NAMESPACE)/nginx-configuration
             - --tcp-services-configmap=$(POD_NAMESPACE)/tcp-services
             - --udp-services-configmap=$(POD_NAMESPACE)/udp-services
-            - --publish-service=$(POD_NAMESPACE)/ingress-nginx
+            ## 这里, 与 svc 中的名称相同
+            - --publish-service=$(POD_NAMESPACE)/nginx-svc
             - --annotations-prefix=nginx.ingress.kubernetes.io
           securityContext:
             allowPrivilegeEscalation: true

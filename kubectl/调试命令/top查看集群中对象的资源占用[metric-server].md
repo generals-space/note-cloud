@@ -30,11 +30,11 @@ Error from server (NotFound): the server could not find the requested resource (
 
 ## 关于 metric-server
 
-metric server 从 kubelet 收集资源信息, 并通过 apiserver 暴露出来. ta 本来是配合 HPA 横向扩容(貌似也有 VPA 纵向扩容)使用的, 监测到资源占用达到临界就自动扩容.
+metric-server 从 kubelet 收集资源信息, 并通过 apiserver 暴露出来. ta 本来是配合 HPA 横向扩容(貌似也有 VPA 纵向扩容)使用的, 监测到资源占用达到临界就自动扩容.
 
 同时ta的信息也可以通过`kubectl top`访问, 方便调试.
 
-部署方法就不在这里详细说明了, 见另一篇文章, 还真有几个小坑.
+部署方法就不在这里详细说明了, 见另一篇文章(`metrics-server`监控专题), 还真有几个小坑.
 
 ## 
 
@@ -70,3 +70,6 @@ Swap:             0           0           0
 3. pod的内存值是其实际使用量, 也是做limit限制时判断oom的依据. 
 4. pod的使用量等于其所有 container 的总和, 不包括 pause 容器, 值等于`cadvisr`中的`container_memory_working_set_bytes`指标
 
+------
+
+`k top node|pod`的数据有延迟, 大概30s.

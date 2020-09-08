@@ -4,7 +4,7 @@
 
 1. [官方文档 kubernetes_sd_config](https://prometheus.io/docs/prometheus/latest/configuration/configuration/#kubernetes_sd_config)
 
-prometheus webUI -> Status -> Target 页面显示了配置文件中的抓取任务. 这些job需要在配置文件中声明才可以展示, 同时, 只有声明过的job才可以在 Graph 页通过
+prometheus webUI -> Status -> Target 页面显示了配置文件中的抓取任务, 这些job需要在配置文件中声明才可以展示.
 
 ## 静态任务
 
@@ -67,7 +67,7 @@ kubernetes   192.168.0.101:6443   10d
 
 ![](https://gitee.com/generals-space/gitimg/raw/master/2179BC55A47E7A4EAC56025EC15468CF.png)
 
-上面的`kubernetes_sd_configs`配置中, 通过`namespaces`过滤了多余的ep资源. 但这其实是不准确的, 因为default命名空间下如果存在其他的ep资源, 也会出现在job的结果表格中. 我们可以使用ta进行初级的过滤, 但不能作为最终的配置. 如下图.
+上面的`kubernetes_sd_configs`配置中, 通过`namespaces`过滤了多余的 endpoints 资源. 但这其实是不准确的, 因为default命名空间下如果存在其他的ep资源, 也会出现在job的结果表格中. 我们可以使用ta进行初级的过滤, 但不能作为最终的配置. 如下图.
 
 ![](https://gitee.com/generals-space/gitimg/raw/master/71D3422C7B57B74B9BA3503E9CAA5ED1.png)
 

@@ -16,6 +16,8 @@ kuber 版本: 1.16.2 单节点集群, 宿主机配置 4C 8G.
 
 ## FAQ
 
+`metrics-server`在采集数据时会有延迟, 首次成功启动时需要几分钟, 在此期间使用`k top`查询, 可能会报`unable to fetch pod metrics for pod`.
+
 ### 无法收集 Pod 信息
 
 ```
@@ -79,7 +81,7 @@ kubelet_summary:k8s-master-01: unable to fetch metrics from Kubelet k8s-master-0
 
 `--kubelet-preferred-address-types=InternalIP`
 
-`coredns`无法根据宿主机节点的hostname得到真实IP, 需要加上这个选项.
+`coredns`无法根据宿主机节点的hostname得到真实IP, 需要在启动参数中加上这个选项.
 
 ### 
 

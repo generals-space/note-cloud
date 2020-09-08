@@ -16,3 +16,10 @@
 $ k get pod -l 'component not in (kube-apiserver)'
 Error from server (BadRequest): Unable to find "/v1, Resource=pods" that match label selector "component not in (kube-apiserver)", field selector "": unable to parse requirement: found 'not', expected: '=', '!=', '==', 'in', notin'
 ```
+
+还有一种是按照是否存在某个标签来过滤的.
+
+```
+k get pod -l 'label01'
+k get pod -l '!label01'
+```
