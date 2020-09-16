@@ -5,9 +5,7 @@
 1. [Kubernetes对象之PersistentVolume，StorageClass和PersistentVolumeClaim](https://www.jianshu.com/p/99e610067bc8)
     - 对pv和pvc的概念解释的比较浅显易懂
     - 对PV的访问模式(accessModes)和回收策略(persistentVolumeReclaimPolicy)有很清晰的解释
-
 2. [KUBERNETES存储之PERSISTENT VOLUMES简介](https://www.cnblogs.com/styshoo/p/6731425.html)
-
 3. [Configure a Pod to Use a PersistentVolume for Storage](https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/)
     - kubernetes官方文档
 
