@@ -1,11 +1,13 @@
+# kuber-亲和性配置[affinity]
+
 参考文章
 
 1. [K8S高级调度——亲和性和反亲和性](https://www.jianshu.com/p/61725f179223)
     - 亲和性与反亲和性的应用场景
-    - 
-2. [Kubernetes调度之亲和性和反亲和性](https://www.centos.bz/2018/06/kubernetes%E8%B0%83%E5%BA%A6%E4%B9%8B%E4%BA%B2%E5%92%8C%E6%80%A7%E5%92%8C%E5%8F%8D%E4%BA%B2%E5%92%8C%E6%80%A7/)
+2. [Kubernetes调度之亲和性和反亲和性](https://johng.cn/kubernetes-affinity-anti-affinity/)
     - 运行时调度策略: `nodeAffinity（主机亲和性）`，`podAffinity（POD亲和性）`以及`podAntiAffinity（POD反亲和性）`
     - 3个示例, 但都不完整
+    - `RequiredDuringSchedulingRequiredDuringExecution`还不支持, 看写文章的时间, 应该是`1.14`版本之前吧.
 3. [k8s之pod亲和性与反亲和性的topologyKey](https://blog.csdn.net/asdfsadfasdfsa/article/details/106027367)
     - 亲和性/反亲和性中`topologyKey`字段的含义.
 
@@ -17,7 +19,7 @@
 
 每种亲和性和反亲和性策略都有三种规则可以设置
 
-- `RequiredDuringSchedulingRequiredDuringExecution`: 在调度期间要求满足亲和性或者反亲和性规则，如果不能满足规则，则POD不能被调度到对应的主机上. 在之后的运行过程中，如果因为某些原因（比如修改label）导致规则不能满足，系统会尝试把POD从主机上删除（现在版本还不支持）. 
+- `RequiredDuringSchedulingRequiredDuringExecution`: 在调度期间要求满足亲和性或者反亲和性规则，如果不能满足规则，则POD不能被调度到对应的主机上. 在之后的运行过程中，如果因为某些原因（比如修改label）导致规则不能满足，系统会尝试把POD从主机上删除(现在版本还不支持). 
 - `RequiredDuringSchedulingIgnoredDuringExecution`: 在调度期间要求满足亲和性或者反亲和性规则，如果不能满足规则，则POD不能被调度到对应的主机上. 在之后的运行过程中，系统不会再检查这些规则是否满足. 
     - 比如最开始创建时时希望业务 Pod 部署在与 redis 相同的 node 上, 之后在运行期间该 node 上的 Pod 删除并被调度到其他 node 上了, 这种情况下业务 Pod 并不会随 redis 重新调度.
 - `PreferredDuringSchedulingIgnoredDuringExecution`: 在调度期间尽量满足亲和性或者反亲和性规则，如果不能满足规则，POD也有可能被调度到对应的主机上. 在之后的运行过程中，系统不会再检查这些规则是否满足. 
