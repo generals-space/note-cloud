@@ -1,6 +1,6 @@
 # crd 与 controller
 
-## 1. CustomResourceDefinition
+## 1. crd(CustomResourceDefinition)
 
 首先, 我们可以通过声明`CustomResourceDefinition`类型的资源创建一种新的资源. 以`PodGroup`为例, 我们创建了一种名为`PodGroup`的资源.
 

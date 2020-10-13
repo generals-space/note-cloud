@@ -17,7 +17,7 @@
     - kuber 并不是完美的
     - 诸多与kuber同级的编排工具: Mesos(两层式调度器架构), Sparrow(去中心化架构), Hawk(混合式调度器架构), Nomad(共享状态的调度器架构), 及ta们各自的优缺点.
     - CRD的默认规则: name 通常是 plural 和 group 的结合; 另外, 一般来说 CRD 的作用域是 namespaced 就可以了; 还有 kind 一般采用驼峰命名法等..
-6. [kubernetes/sample-apiserver工程readme - When using go 1.11 modules](https://github.com/kubernetes/sample-apiserver/#when-using-go-111-modules)
+6. [kubernetes/sample-apiserver - When using go 1.11 modules](https://github.com/kubernetes/sample-apiserver/#when-using-go-111-modules)
     - `sample-apiserver` v1.17+
     - 使用`code-generator`时无法使用`go mod`创建工程
     - `Note, however, that if you intend to generate code then you will also need the code-generator repo to exist in an old-style location. One easy way to do this is to use the command go mod vendor to create and populate the vendor directory.`

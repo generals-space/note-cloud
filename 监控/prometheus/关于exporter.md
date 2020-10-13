@@ -5,9 +5,9 @@
 1. [Prometheus+Grafana搭建监控系统](https://blog.csdn.net/hfut_wowo/article/details/78536022)
     - 以一个初学者的角度解释 prometheus+grafana 监控体系中各组件的作用.
 
-prometheus可以理解为一个数据库+数据抓取工具，工具从各处抓来统一的数据，放入prometheus这一个时间序列数据库中。
+prometheus可以理解为一个数据库+数据抓取工具, 工具从各处抓来统一的数据, 放入prometheus这一个时间序列数据库中。
 
-那如何保证各处的数据格式是统一的呢？就是通过exporter。exporter也是用GO写的程序，它开放一个http接口，对外提供格式化的数据。所以在不同的环境下，需要编写不同的exporter。
+那如何保证各处的数据格式是统一的呢？就是通过exporter。exporter也是用GO写的程序, 它开放一个http接口, 对外提供格式化的数据。所以在不同的环境下, 需要编写不同的exporter。
 
 比如, 收集node物理机的信息, 可以使用[node_exptorter](https://github.com/prometheus/node_exporter), 收集tcp, udp, icmp等数据, 可以使用[blackbox_exporter](https://www.github.com/prometheus/blackbox_exporter)等.
 
