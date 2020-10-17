@@ -9,9 +9,16 @@ status:
     middleware.disk/capacity: 1024000000
 ```
 
-下面两种
+下面两种都不行
 
 ```
 k get node node名称 -o=jsonpath="{.status.allocatable.middleware.currentcpu}" 
 k get node node名称 -o=jsonpath="{.status.allocatable['middleware.disk/capacity']}" 
+```
+
+需要这样
+
+```
+k get node node名称 -o=jsonpath="{.status.allocatable.middleware\\.currentcpu}" 
+k get node node名称 -o=jsonpath="{.status.allocatable.middleware\\.disk\\/capacity}" 
 ```
