@@ -17,3 +17,11 @@ Error from server (BadRequest): Unable to find "/v1, Resource=pods" that match l
 
 > 所有类型资源都支持`metadata.name`和`metadata.namespace`字段.
 
+但是!!!
+
+虽然不能通过目标主机 IP 进行过滤, 但是其实可以使用主机名称.
+
+```
+k get pod --filed-selector spec.nodeName=目标主机名称
+```
+
