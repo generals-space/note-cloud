@@ -19,7 +19,7 @@ StartLimitInterval=0
 RestartSec=10
 ```
 
-当时在网上到处搜索**kubelet 日志等级**, **kubelet log level**都没找到结果, 最后却在一次意外中发现了, 就是参考文章中的报错. 报错的解决方法很简单, 照做就行了, 这里主要讲一下kubelet的配置方法.
+当时在网上到处搜索**kubelet 日志等级**, **kubelet log level**都没找到结果, 最后却在一次意外中发现了, 就是参考文章1中的报错. 报错的解决方法很简单, 照做就行了, 这里主要讲一下kubelet的配置方法.
 
 `kubelet.service`文件中`ExecStart`只有`ExecStart=/usr/bin/kubelet`, 但实际还存在一个`kubelet.service.d`目录, 该目录下初始存在一个`10-kubeadm.conf`文件, 内容如下.
 
