@@ -65,6 +65,8 @@ spec:
         command: ['tail', '-f', '/etc/os-release']
 ```
 
+> 除了`matchExpressions`运算之外, `nodeSelectorTerms`的规则其实还有`matchFields`运算, 目前还没有遇到过.
+
 ## podeAffinity
 
 ```yaml
@@ -107,3 +109,5 @@ spec:
         image: registry.cn-hangzhou.aliyuncs.com/generals-space/centos7
         command: ['tail', '-f', '/etc/os-release']
 ```
+
+> 除了`matchExpressions`运算之外, `labelSelector`其实还有`matchLabels`运算, 目前还没有遇到过.

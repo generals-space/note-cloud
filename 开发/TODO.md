@@ -2,3 +2,4 @@
 2. client-go库中分布式资源锁的实现原理
 3. workqueue 的实现原理
 
+runc 磁盘分配, init 启动命令与信号转发机制

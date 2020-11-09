@@ -66,6 +66,8 @@ k8s-worker-02   Ready    <none>   47h   v1.16.2   beta.kubernetes.io/arch=amd64,
 
 ### 删除
 
+就用一个减号`-`
+
 ```console
 $ k label node k8s-master-01 aaa-
 node/k8s-master-01 labeled
