@@ -139,7 +139,7 @@ max locked memory       (kbytes, -l) unlimited
         securityContext:
           privileged: false
           capabilities:
-            add: ["NET_ADMIN", "SYS_PTRACE", "SYS_ADMIN"]
+            add: ["CAP_SYS_RESOURCE"]
 ```
 
 经过验证, 正常使用.
