@@ -36,6 +36,8 @@ func main() {
 }
 ```
 
+> `selection`包下就一个单文件, 列举了一下可用的操作类型, 也就 7, 8 个的样子.
+
 `labels.SelectorFromSet()`的使用方法虽然简单, 但是貌似只能指定`key=val`这种情况, 对于`!=`, `in`, `not in`这些操作就无能为力了. 
 
 我在相应的`_test.go`文件中也没有找到相关的示例, 只能使用`Requirement`对象.

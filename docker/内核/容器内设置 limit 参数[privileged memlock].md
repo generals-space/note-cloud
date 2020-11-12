@@ -23,7 +23,9 @@
 docker run -d --ulimit nofile=20480:40960 nproc=1024:2048 容器名
 ```
 
-> 冒号前面是soft limit, 后面是hard limit.
+> 冒号前面是 soft limit, 后面是 hard limit.
+> 
+> limit 值只接受数值类型, `unlimited`需要设置成`-1`.
 
 ## 2. kuber 中设置`ulimit`
 
@@ -54,28 +56,34 @@ bash: ulimit: max locked memory: cannot modify limit: Operation not permitted
 
 > 虽然设置`unlimited`失败了, 但其实当设置值大于默认的`82000`时都会失败, 设置值小于`82000`是可以成功的...
 
-所以就算`docker run`使用`--ulimit`也不行.
+------
+
+在`docker run`时使用`--ulimit`选项可以
 
 ```console
-$ docker run -it --name ulimit --ulimit memlock 82000:unlimited registry.cn-hangzhou.aliyuncs.com/generals-space/centos7-devops bash
-invalid argument "memlock" for "--ulimit" flag: invalid ulimit argument: memlock
+$ docker run -it --name ulimit --ulimit memlock=-1:-1 registry.cn-hangzhou.aliyuncs.com/generals-space/centos7-devops bash
+[root@3b5fe1388e5a /]# ulimit -a | grep locked
+max locked memory       (kbytes, -l) unlimited
 ```
 
-启动命令里加`--privileged`也不行.
+不过这种方法貌似还有点问题.
 
 ```
-$ docker run -it --name ulimit --privileged --ulimit memlock 82000:unlimited registry.cn-hangzhou.aliyuncs.com/generals-space/centos7-devops bash
-invalid argument "memlock" for "--ulimit" flag: invalid ulimit argument: memlock
+$ docker run -it --name ulimit --ulimit memlock=100:100 registry.cn-hangzhou.aliyuncs.com/generals-space/centos7-devops bash
+[root@78f42b22f00b /]# ulimit -a | grep locked
+max locked memory       (kbytes, -l) 0
 ```
 
-当然, 先使用`--privileged`启动容器, 再执行`ulimit -l unlimited`是可以的...
+设置其他值时, 直接为0了, 貌似以`82000`这个值为分界线...???
+
+> 当然, 先使用`--privileged`启动容器, 再执行`ulimit -l unlimited`也是可以的...
 
 ------
 
 虽然说`ulimit`命令设置的参数只在当前会话中有效, 但是在此会话下的子进程也可以生效.
 
 ```console
-$ docker run -it --name ulimit --privileged  registry.cn-hangzhou.aliyuncs.com/generals-space/centos7-devops bash
+$ docker run -it --name ulimit --privileged registry.cn-hangzhou.aliyuncs.com/generals-space/centos7-devops bash
 [root@a4d27f9b6c45 /]# ulimit -l unlimited
 [root@a4d27f9b6c45 /]# ulimit -a
 max locked memory       (kbytes, -l) unlimited

@@ -1,5 +1,9 @@
 # 使用go mod下载kubernetes时出现unexpected status
 
+<!key!>: {71d63267-269b-4154-92fc-daad8767aae4}
+
+<!link!>: {d03f75fd-1b5d-46f2-a100-85566ec39d51}
+
 参考文章
 
 1. [golang官方文档 proxy.golang.org: @v/list includes versions with no corresponding .info file](https://github.com/golang/go/issues/34033)

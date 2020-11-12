@@ -79,11 +79,6 @@ function kkill() {
     kubectl delete pod --force --grace-period 0 $@
 }
 ###################################################################
-## @function: 查看目标容器的进程pid, 以便之后进入其网络空间
-## $1:        容器名称/ID
-function dpid(){
-    docker inspect -f "{{.State.Pid}}" $1
-}
 ## @function: 清空目标容器的日志(docker clear log)
 ## $1:        目标容器名称或id
 function dclog() {
@@ -91,15 +86,17 @@ function dclog() {
     ## 清空目标文件
     :>$log_path
 }
-## @function: 进入目标容器
-## $1:        目标容器名称或id
+## @function: 进入目标容器网络空间
+## $1:        目标容器名称/ID
 function denter(){
-    docker exec -it $1 /bin/bash
+    local dpid=$(docker inspect -f "{{.State.Pid}}" $1)
+    nsenter -t $dpid -n /bin/sh
 }
 ## @function: 进入目标容器网络空间
-## $1:        容器名称/ID
+## $1:        目标容器名称/ID
 function dnsenter() {
-    nsenter -t $(dpid $1) -n /bin/sh
+    local dpid=$(docker inspect -f "{{.State.Pid}}" $1)
+    nsenter -t $dpid -n /bin/sh
 }
 ## @function: 清理不用的容器和镜像
 function dclean() {
