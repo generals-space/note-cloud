@@ -94,7 +94,7 @@ pod "test-pod" created
 
 进去看看.
 
-```
+```console
 $ kubectl exec -it test-pod -- /bin/bash
 [root@test-pod /]# cd /root/config
 [root@test-pod config]# ls
