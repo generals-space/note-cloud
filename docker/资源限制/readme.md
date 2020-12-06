@@ -18,6 +18,13 @@ CGroup: Control Group
 
 每种subsystem下可以存储的是该subsystem所有可选选项(cpu下的`cfs_period_us`, `shares`这种), 以及所有设置了此subsystem下cgroup的subsystem名称, 各特定的subsystem下是各该subsystem本身的设置值.
 
+进到`/sys/fs/cgroup`目录, 该目录中存放着各种资源子系统如 cpu, memory, pids 等.
+
+每种子系统目录下都存在着占用此类资源的分组, 一般会同时存在`docker`和`kubepods`, 不过由于部署了 kuber 之后, 就不会再在宿主机上直接通过 docker 创建容器了, 所以`docker`分组下的内容一般为空(这里的空是指没有用 dockerID 命名的目录), 而`kubepods`分组下就会存在当前宿主机上正在运行的 pod 的目录(这些目录的名称中包含了对应的 docker 容器的名称), 而每个 pod 目录下还会存在与之相关的容器的子目录(pause, 和 containers 中包含的容器).
+
+----
+
 `docker`, `kubelet`的`cgroup driver`的可选值都为`systemd`与`cgroupfs`.
 
 `dockerd`使用的 cgroup driver 默认为`cgroupfs`.
+
