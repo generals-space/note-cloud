@@ -2,9 +2,9 @@
 #!encoding=utf-8
 
 ## 解析kubectl的config文件, 生成ca.crt, client.crt和client.key三个文件.
-## 用法: python base64_to_file.py /etc/kubernetes/admin.conf
+## 用法: python k2file.py /etc/kubernetes/admin.conf
 
-## 有个问题: script_dir 总是获取 base64_to_file.py 脚本所在的目录, 而非执行脚本所在的目录.
+## 有个问题: script_dir 总是获取 k2file.py 脚本所在的目录, 而非执行脚本所在的目录.
 ## 而使用 open() 打开并创建文件时, 如果不写绝对路径, 就会使用以脚本所在位置的相对路径.
 ## 需要使用 os.getcwd() 代替, 这样得到的是执行脚本时所在的目录, 而非脚本本身所在的目录.
 
@@ -40,7 +40,7 @@ def parse_yaml(target_file, curr_dir):
 
 
 if __name__ == '__main__':
-    ## python base64_to_file.py /etc/kubernetes/admin.conf 的 argv 中不包含 `python`
+    ## python k2file.py /etc/kubernetes/admin.conf 的 argv 中不包含 `python`
     if len(sys.argv) == 3: 
         print("请指定配置文件路径")
         sys.exit(-1)
