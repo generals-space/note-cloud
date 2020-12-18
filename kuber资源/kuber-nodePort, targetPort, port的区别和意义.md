@@ -26,7 +26,7 @@ spec:
   - name: nginx
     image: nginx
     ports:
-    - name: localooo
+    - name: nginx
       containerPort: 80
       hostPort: 80
 ```
@@ -44,7 +44,7 @@ spec:
   - name: nginx
     image: nginx
     ports:
-    - name: localooo
+    - name: nginx
       containerPort: 80
       hostPort: 80
 ```
