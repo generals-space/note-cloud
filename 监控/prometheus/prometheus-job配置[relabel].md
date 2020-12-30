@@ -39,18 +39,18 @@ scrape_configs:
 
 ```yaml
 scrape_configs:
-  - job_name: kubernetes-apiservers
-    kubernetes_sd_configs:
-      - role: endpoints
-        namespaces:
-          names: 
-            - default
-    scheme: https
-    tls_config:
-      ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-    bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
-    relabel_configs: []
-  ## job kubernetes-apiservers end 
+- job_name: kubernetes-apiservers
+  kubernetes_sd_configs:
+  - role: endpoints
+    namespaces:
+      names: 
+      - default
+  scheme: https
+  tls_config:
+    ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+  bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+  relabel_configs: []
+## job kubernetes-apiservers end 
 ```
 
 最值得重点讲解的就是`kubernetes_sd_configs`(其中`sd`为`service discovery`, 即服务发现), 按照官方文档所说(参考文章1), 此字段提供了5种监控模式: `node`, `service`, `pod`, `endpoints`和`ingress`, 通过`role`字段指定(看数据类型可知, 可以指定多个`role`), prometheus会获取kuber集群中相应资源的信息.
@@ -77,17 +77,17 @@ kubernetes   192.168.0.101:6443   10d
 
 ```yaml
 scrape_configs:
-  - job_name: kubernetes-apiservers
-    kubernetes_sd_configs:
-      - role: endpoints
-    scheme: https
-    tls_config:
-      ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-    bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
-    relabel_configs:
-      - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
-        action: keep
-        regex: default;kubernetes;https
+- job_name: kubernetes-apiservers
+  kubernetes_sd_configs:
+  - role: endpoints
+  scheme: https
+  tls_config:
+    ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+  bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+  relabel_configs:
+  - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
+    action: keep
+    regex: default;kubernetes;https
   ## job kubernetes-apiservers end ...
 ```
 

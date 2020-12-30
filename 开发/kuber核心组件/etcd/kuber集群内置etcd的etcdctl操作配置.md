@@ -29,6 +29,7 @@ export ETCDCTL_ENDPOINTS=https://127.0.0.1:2379
 export ETCDCTL_CACERT=/etc/kubernetes/pki/etcd/ca.crt
 export ETCDCTL_CERT=/etc/kubernetes/pki/etcd/server.crt
 export ETCDCTL_KEY=/etc/kubernetes/pki/etcd/server.key
+etcdctl get / --prefix
 ```
 
 另外, 由于kubeadm创建的etcd服务使用的是`hostNetwork`, 可以直接在集群外访问, 拷贝所需的证书和密钥即可.

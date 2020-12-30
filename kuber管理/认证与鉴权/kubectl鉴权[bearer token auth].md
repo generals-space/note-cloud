@@ -26,7 +26,7 @@ users:
     token: 7176d48e4e66ddb3557a82f2dd316a93
 ```
 
-指定`-h`选项可以查看到如下帮助信息
+而`set-credentials`可以指定不同的认证方式, 使用`-h`选项可以查看到如下帮助信息
 
 ```console
 $ kubectl config set-credentials -h
@@ -47,13 +47,15 @@ Sets a user entry in kubeconfig
  Bearer token and basic auth are mutually exclusive.
 ```
 
-可以看到上面提到了3种认证方式:
+可以看到上面提到了3种认证方式
 
 1. Client-certificate: 最常用的证书/密钥对, 一般使用kubeadm创建的集群都会生成此种方式的配置文件.
 2. Bearer Token:
 3. Basic Auth: 就是用户名密码.
 
 其中`Bearer Token`与`Basic Auth`不可同时使用.
+
+## Bearer Token
 
 ```
 kubectl config set-credentials user02 --token=7176d48e4e66ddb3557a82f2dd316a93
