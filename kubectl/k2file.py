@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 #!encoding=utf-8
 
-## 解析kubectl的config文件, 生成ca.crt, client.crt和client.key三个文件.
+## 解析kubectl的config文件, 在当前目录(执行此命令时所在的目录)
+## 生成ca.crt, client.crt和client.key三个文件.
 ## 用法: python k2file.py /etc/kubernetes/admin.conf
 
 ## 有个问题: script_dir 总是获取 k2file.py 脚本所在的目录, 而非执行脚本所在的目录.
@@ -41,7 +42,7 @@ def parse_yaml(target_file, curr_dir):
 
 if __name__ == '__main__':
     ## python k2file.py /etc/kubernetes/admin.conf 的 argv 中不包含 `python`
-    if len(sys.argv) == 3: 
+    if len(sys.argv) == 1: 
         print("请指定配置文件路径")
         sys.exit(-1)
 

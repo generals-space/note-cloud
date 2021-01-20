@@ -17,15 +17,18 @@
         2. crt: 用于解决webhook访问k8s时所需要的证书问题, 官网也建议使用crt-manager解决证书问题; 
         3. finalizer: 由于这个Object可能创建一些其他的resource(比如pod), 在删除之前, 需要做一些清理工作, finalizer就是实现这个清理的framework代码; 
 5. [使用 Kubebuilder 构建 Kubernetes CRD Controller](https://blog.ihypo.net/15645917310391.html)
-    - 给出了一个完成的 kubebuilder 完成的工程示例
+    - 给出了一个完成的 kubebuilder 完成的工程示例, 值得借鉴
+    - [示例代码的核心逻辑](https://github.com/Coderhypo/KubeService/blob/master/pkg/controller/microservice/microservice_controller.go)
 6. [kubebuilder2.0学习笔记——搭建和使用](https://segmentfault.com/a/1190000020338350)
+    - `webhook`的创建与使用
 7. [kubebuilder2.0学习笔记——进阶使用](https://segmentfault.com/a/1190000020359577)
+    - kubebuilder内置的`github.com/go-logr/logr`日志对象的使用方法
 8. [kubebuilder 官方文档](https://book.kubebuilder.io/introduction.html)
 
 `kubebuilder`与`operator-sdk`都是二进制文件, 可以不下载源码直接执行. 另外`kubebuilder`的`Makefile`中调用了`kustomize`, 所以也需要下载`kustomize`的可执行文件.
 
-kubebuilder: 2.3.1
-kustomize: 3.6.1
+- kubebuilder: 2.3.1
+- kustomize: 3.6.1
 
 ```console
 $ kubebuilder version
@@ -36,8 +39,8 @@ Version: version.Version{KubeBuilderVersion:"2.3.1", KubernetesVendor:"1.16.4", 
 
 ## 1. init
 
-```
-kubebuilder init
+```console
+## kubebuilder init
 kubebuilder init --domain=generals.space
 ```
 
@@ -57,17 +60,18 @@ kubebuilder create api --group apps --version v1alpha1 --kind PodGroup
 
 这一步会在当前目录生成`api`目录, 其下有`types.go`, `zz_generated.deepcopy`等文件. 同时也会生成`controllers`目录, 其下会包含`podgroup_controller.go`文件及对应的单元测试文件.
 
+- `--namespaced=false`: 可以将 CRD 对象设置为集群级别, 默认为`true`
+
 ## 3. 编写代码
 
-`types.go`仍然存放着 CRD 的结构声明. 我们要关注的, 目前只有`podgroup_controller.go`这个文件, ta 与传统使用 code-generator 生成的代码而编写的 controller 不同.
+`api/types.go`仍然存放着 CRD 的结构声明. 我们要关注的, 目前只有`podgroup_controller.go`这个文件, ta 与传统使用 code-generator 生成的代码而编写的 controller 不同.
 
 ## 4. 运行&部署
 
 到了这一步, 网上的文章说的几乎都是`make && make install`, 但我们这里将其中的步骤拆分开来.
 
-首先当然是`make`所表示的, build 我们的代码, 其中也包含了编译与验证的过程.
-
-然后`make install`调用`kustomize`, 生成 CRD 的 yaml 部署文件, 同时调用`kubectl apply -f`直接将其部署到集群中.
+1. `make`: 即 build 我们的代码, 其中也包含了编译与验证的过程.
+2. `make install`调用`kustomize`, 生成 CRD 的 yaml 部署文件, 同时调用`kubectl apply -f`直接将其部署到集群中.
 
 我们首先生成 CRD 的部署文件(这一步最好看一下`Makefile`中的做法, 有一步`manifests`必不可少), 再运行我们构建好的可执行文件(也可以执行`go run main.go`), 最后创建 CR 实例. 在`config/sample`目录下会有一个 CRD 实例的部署文件, 不过貌似其结构在`create api`的时候就已经固定了, 之后`make`与`make install`并不会自动修改其中的内容.
 

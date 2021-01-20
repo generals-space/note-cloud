@@ -47,7 +47,7 @@ proc on /proc type proc (rw,nosuid,nodev,noexec,relatime)
 
 这样, 在容器中, 可以任意修改sysctl内核参数.
 
-> 注意：如果修改的是namespaced的参数, 则不会影响host和其他容器. 反之, 则会影响它们. 
+> 注意: 如果修改的是namespaced的参数, 则不会影响host和其他容器. 反之, 则会影响它们. 
 
 如果想在容器中修改主机的`net.ipv4.ip_default_ttl`参数, 则除了`--privileged`, 还需要加上 `--net=host`. 
 
@@ -59,7 +59,7 @@ docker run -v /proc/sys:/proc/sys -it ubuntu bash
 
 然后写容器内的`/proc/sys`文件.
 
-注意： 这样操作, 效果类似于`--privileged`, 对于namespaced的参数, 不会影响host和其他容器. 
+注意: 这样操作, 效果类似于`--privileged`, 对于`namespaced`的参数, 不会影响host和其他容器. 
 
 ### 1.3 `docker run`的`--sysctl`选项
 
@@ -72,14 +72,14 @@ net.ipv4.ip_default_ttl = 63
 
 注意:
 
-1. 只有namespaced参数才可以, 否则会报错”invalid argument…”
-2. 这种方式只是在容器初始化过程中完成内核参数的修改, 容器运行起来以后, /proc/sys仍然是以只读方式挂载的, 在容器中不能再次修改sysctl内核参数. 
+1. 只有`namespaced`参数才可以, 否则会报错”invalid argument…”
+2. 这种方式只是在容器初始化过程中完成内核参数的修改, 容器运行起来以后, `/proc/sys`仍然是以只读方式挂载的, 在容器中不能再次修改`sysctl`内核参数. 
 
 ## 2. kuber 中设置 sysctl
 
 ### 2.1 通过`sysctls`和`unsafe-sysctls`注解
 
-k8s进一步把`syctl`参数分为`safe`和`unsafe`, 非namespaced的参数, 肯定是unsafe. namespaced参数, 也只有一部分被认为是safe的. 
+k8s进一步把`syctl`参数分为`safe`和`unsafe`, 非`namespaced`的参数, 肯定是unsafe. namespaced参数, 也只有一部分被认为是unsafe的. 
 
 `safe`的条件：
 
@@ -143,4 +143,4 @@ spec:
 
 ```
 
-这样跟`docker run –privileged`效果一样, 在Pod中/proc是以`rw`权限mount的, 可以直接修改相关sysctl内核参数. 
+这样跟`docker run –privileged`效果一样, 在Pod中`/proc`是以`rw`权限mount的, 可以直接修改相关sysctl内核参数. 
