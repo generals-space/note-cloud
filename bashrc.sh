@@ -89,13 +89,13 @@ function dclog() {
 ## $1:        目标容器名称/ID
 function denter(){
     local dpid=$(docker inspect -f "{{.State.Pid}}" $1)
-    nsenter -t $dpid -n /bin/sh
+    nsenter -t $dpid --net /bin/sh
 }
 ## @function: 进入目标容器网络空间
 ## $1:        目标容器名称/ID
 function dnsenter() {
     local dpid=$(docker inspect -f "{{.State.Pid}}" $1)
-    nsenter -t $dpid -n /bin/sh
+    nsenter -t $dpid --net /bin/sh 
 }
 ## @function: 清理不用的容器和镜像
 function dclean() {

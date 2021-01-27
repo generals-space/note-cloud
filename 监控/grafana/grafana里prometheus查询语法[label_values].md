@@ -9,11 +9,21 @@ prometheus 中查询指定指标的语法大致为`metric{label=value}`, 但是 
 
 ## label_values(metric, label)
 
-查询 prometheus `metric`指标项中, 拥有`label`字段的所有结果, 且只查询`label`字段的值, 不包含结果中的其他字段. 如果对应到 prmetheus 自身的查询语句, 应该是
+查询 prometheus `metric`指标项中, 拥有`label`字段的所有结果, 且只查询`label`字段的值, 不包含结果中的其他字段. 
+
+如果对应到 prmetheus 自身的查询语句, 应该是
 
 ```
 metric{label!=""}
 ```
+
+比如`label_values(up{pod_name=~".*exporter-0"},pod_name)`就是查询中`up`这个指标中, `pod_name`名称满足`.*expoter-0`的结果.
+
+```
+up{pod_name=xxx,job=xxx,namespace=xxx}
+```
+
+又由于这些结果中还包含像`job`,`namespace`等其中字段, 但我们只想取`pod_name`, 所以`label_values`的第二个参数就写了`pod_name`.
 
 但是需要注意, grafana 的 `label_values(metric,label)`只查询`label`值, 结果是一个`lebel`值的列表. 
 
