@@ -22,5 +22,5 @@
 
 8. [Kubernetes Handbook——Kubernetes中文指南/云原生应用架构实践手册](https://jimmysong.io/kubernetes-handbook/)
 
-9.  [Kubernetes 指南](https://www.wenjiangs.com/docs/kubernetes-handbook)
+9. [Kubernetes 指南](https://www.wenjiangs.com/docs/kubernetes-handbook)
 
