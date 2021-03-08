@@ -1,4 +1,4 @@
-# kuber-requests与limits 
+# kuber-requests与limits与实际资源使用率的关系[Burstable Guaranteed]
 
 kuber: 1.16.2, 单节点集群, 4c8g
 
@@ -8,11 +8,11 @@ kuber: 1.16.2, 单节点集群, 4c8g
 
 首先, 我们知道`requests`与`limits`分别确定了一个Pod的下限和上限, kuber 会为设置了`requests`的Pod从这个Pod被调度到的节点上划分出`requests`指定大小的资源, 由其独享, 且会根据`limits`限制其资源总量.
 
-不过要注意, 不管是`requests`还是`limits`, 都是预分配的块, 并不是指此Pod实际使用的资源, 我们可以称其为"逻辑资源".
+不过要注意, 不管是`requests`还是`limits`, 都是预分配的块, 并不是指此Pod实际使用的资源, 我们可以称其为**逻辑资源**.
 
 ### 1.1
 
-一个node节点上所有Pod的`requests`资源总和不可大于(也没法等于, 即只能小于)该node本身实际的资源, 否则之后调度到该node上的Pod将处于`Pending`状态, `describe`信息时会发现`insufficient`事件.
+一个node节点上所有Pod的`requests`资源总和不可大于(也没法等于, 即只能小于)该node本身实际的资源, 否则之后调度到该node上的Pod将处于`Pending`状态, `describe`信息时会发现`Insufficient`事件.
 
 ### 1.2 
 

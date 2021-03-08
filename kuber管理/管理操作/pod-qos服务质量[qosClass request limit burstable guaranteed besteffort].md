@@ -33,17 +33,29 @@ status:
 
 ## 2. QoS判定规则
 
-- `BestEffort`: `resources`啥都不设置就是`BestEffort`. 不过需要该Pod下所有 container 都不设置才行, 万一设置了某个 container 的`requests`或`limits`, 就不是了.
-- `Burstable`: Pod 中任意 container 设置了`requests`或`limits`
+### 2.1 `BestEffort`
 
-- `Guaranteed`: 
-    1. Pod 中所有 container **都**设置了`requests`和`limits`
-    2. 每个 container 自身的`requests.cpu`和`limits.cpu`值相同, `requests.memory`与`limits.memory`值相同(`cpu`与`memory`都要有).
-    3. container 之间的`cpu`和`memory`不必相同.
+`resources`啥都不设置就是`BestEffort`. 不过需要该Pod下所有 container 都不设置才行, 万一设置了某个 container 的`requests`或`limits`, 就不是了.
+
+### 2.2 `Burstable`
+
+Pod 中任意 container 设置了`requests`或`limits`.
+
+## 2.3 `Guaranteed`
+
+要成为`Guaranteed`, 需要达到的条件比较多, 如下
+
+1. Pod 中所有 container **都**设置了`requests`和`limits`
+2. 每个 container 自身的`requests.cpu`和`limits.cpu`值相同, `requests.memory`与`limits.memory`值相同(**`cpu`与`memory`都要有**).
+3. container 之间的`cpu`和`memory`不必相同.
+
+------
 
 `BestEffort`的最简单, `Burstable`和`Guaranteed`的判断可能复杂一些, 接下来着重解释.
 
-### 2.1 注意点1
+## 3. 示例
+
+### 3.1 注意点1
 
 对于`resources`资源配置, 如果只设置`limits`而不设置`requests`, kuber会自动将`requests`的取值与`limits`保持一致.
 
@@ -58,7 +70,7 @@ status:
             memory: 100Mi
 ```
 
-### 2.2 注意点2
+### 3.2 注意点2
 
 虽然如果不设置`requests`时会自动取`limits`的值, 但是如果`limits`下只设置了`cpu`或`memory`的**其中一个**, 也是不行的.
 
@@ -76,7 +88,7 @@ status:
 
 当然, 多 container 中, 一个设置`limits.cpu`, 另一个设置`limits.memory`就更不行了.
 
-### 2.3 注意点3
+### 3.3 注意点3
 
 所以各 container 的如果不设置`requests`块, 只要`limits.cpu`和`limits.memory`相同也是会被标识为`Guaranteed`的.
 
