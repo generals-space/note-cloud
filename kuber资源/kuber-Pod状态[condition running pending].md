@@ -1,5 +1,9 @@
 # kuber-Pod状态[running pending]
 
+`Pod.Status.Conditions`是一个数组, 但貌似没有顺序, 可以简单通过`Condition`成员的`lastTransitionTime`属性自行排序.
+
+PodScheduled ->
+
 ## Pending - PodScheduled
 
 `kubectl`查看 Pod 在 Pending 状态时, Pod 的 status 状态如下, `PodScheduled`表示正在被调度(选择主机), `phase`为`Pending`
@@ -14,7 +18,7 @@ status:
   phase: Pending
 ```
 
-`kubectl`查看 Pod 在 Init 状态时, Pod 的 status 状态存在两部分, 一部分是 initContainer 的, 一部分是 container 的.
+`kubectl`查看 Pod 在 Init 状态时, Pod 的 status 状态存在两部分, 一部分是`initContainer`的, 一部分是`container`的.
 
 `kubectl`的`Init:PodInitializing`就表示 initContainer 在执行(如果没有 initContainer, 这个阶段可能会一闪而没).
 
