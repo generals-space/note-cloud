@@ -13,5 +13,30 @@
 
 理想的情况下, 驱逐对无状态且设计良好的业务方影响很小. 但是并非所有的业务方都是无状态的, 也并非所有的业务方都针对 Kubernetes 优化其业务逻辑. 
 
-例如, 对于有状态的业务, 如果没有共享存储, 异地重建后的 pod 完全丢失原有数据; 即使数据不丢失, 对于 Mysql 类的应用, 如果出现双写, 重则破坏数据. 对于关心 IP 层的业务, 异地重建后的 pod IP 往往会变化, 虽然部分业务方可以利用 service 和 dns 来解决问题, 但是引入了额外的模块和复杂性. 
+例如
 
+1. 对于有状态的业务, 如果没有共享存储, 异地重建后的 pod 完全丢失原有数据; 即使数据不丢失, 对于 Mysql 类的应用, 如果出现双写, 重则破坏数据. 
+2. 对于关心 IP 层的业务, 异地重建后的 pod IP 往往会变化, 虽然部分业务方可以利用 service 和 dns 来解决问题, 但是引入了额外的模块和复杂性. 
+
+Node 对于 Pod 的驱逐往往是因为资源压力, 比如磁盘空间不足(CPU不足应该只会降低请求处理速度, 而内存不足则可能引发OOM, 姑且认为只有磁盘吧).
+
+`Evicted`的Pod的事件描述可能如下
+
+```
+Events:
+  Type     Reason       Age     From                    Message
+  ----     ------       ----    ----                    -------
+  Nomarl   Scheduled    90m     default-scheduler       Successfully assigned PodXXX to NodeXXX
+  Warning  Evicted      90m     kubelet, 主机名          The node was low on resource: [DiskPressure].
+```
+
+相关的配置在 Node 上 kubelet 的配置文件中, 如`/var/lib/kubelet/config.yaml`.
+
+```yaml
+evictionHard:
+  imagefs.available: 15%
+  memory.available: 100Mi
+  nodefs.available: 10%
+  imagefs.available: 5%
+evictionPressureTransitionPeriod: 5m0s
+```

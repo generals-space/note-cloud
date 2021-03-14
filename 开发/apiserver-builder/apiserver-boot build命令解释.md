@@ -11,7 +11,9 @@ apiserver-boot build container --image myapiserver:0.0.1
 apiserver-boot build config --name podgroup-apiserver --namespace default --image myapiserver:0.0.1
 ```
 
-`apiserver-boot build executables`: 先执行`apiserver-boot build generated`生成代码, 然后编译`cmd/apiserver`与`cmd/manager`, 在`bin`目录下生成`apiserver`和`controller-manager`两个可执行文件, 基本等同于如下
+## `apiserver-boot build executables`
+
+执行这条命令时, 将会先执行`apiserver-boot build generated`生成代码, 然后编译`cmd/apiserver`与`cmd/manager`, 在`bin`目录下生成`apiserver`和`controller-manager`两个可执行文件, 基本等同于如下
 
 ```bash
 apiserver-boot build generated
@@ -20,7 +22,9 @@ go build -o bin/apiserver cmd/apiserver/main.go
 go build -o bin/controller-manager cmd/manager/main.go
 ```
 
-`apiserver-boot build container --image myapiserver:0.0.1`: 同样先`generated`, 然后编译`apiserver`和`controller-manager`, 然后将两个二进制文件封装到 docker 镜像.
+## `apiserver-boot build container --image myapiserver:0.0.1`
+
+同样先`generated`, 然后编译`apiserver`和`controller-manager`, 然后将两个二进制文件封装到 docker 镜像.
 
 ```
 apiserver-boot build generated
@@ -47,7 +51,9 @@ ADD apiserver .
 ADD controller-manager .
 ```
 
-`apiserver-boot build config --name podgroup-apiserver --namespace default --image myapiserver:0.0.1`: 在工程根目录下创建`config`子目录, 结构如下:
+## `apiserver-boot build config --name podgroup-apiserver --namespace default --image myapiserver:0.0.1`
+
+在工程根目录下创建`config`子目录, 结构如下:
 
 ```
 [root@k8s-master-01 config]# tree

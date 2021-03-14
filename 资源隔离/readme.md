@@ -11,6 +11,8 @@
     - 比较全, 列举比较多, 但对概念解释不清晰, 应该是没实践过.
 [深入理解 Linux Cgroup 系列（一）：基本概念](https://www.cnblogs.com/ryanyangcs/p/11198140.html)
     - 比较易懂
+[Tencent/TencentOS-kernel](https://github.com/Tencent/TencentOS-kernel)
+    - readme里讲了一些高大上的东西.
 
 CGroup: Control Group
 

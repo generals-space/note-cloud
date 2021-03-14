@@ -1,6 +1,10 @@
 # kuber-Pod状态[running pending]
 
-`Pod.Status.Conditions`是一个数组, 但貌似没有顺序, 可以简单通过`Condition`成员的`lastTransitionTime`属性自行排序.
+参考文章
+
+1. [What the heck are Conditions in Kubernetes controllers?](https://maelvls.dev/kubernetes-conditions/)
+
+`Pod.Status.Conditions`是一个数组, ~~但貌似没有顺序~~, 可以简单通过`Condition`成员的`lastTransitionTime`属性自行排序.
 
 PodScheduled ->
 
