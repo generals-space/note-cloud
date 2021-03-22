@@ -7,6 +7,7 @@
 [跟我学 K8S--代码: 调试 Kubernetes](https://segmentfault.com/a/1190000015807702)
     - 脚本官方脚本`local-up-cluster.sh`启动集群
     - `dlv`进行调试
+[k8s 源码阅读系统文章](https://chenxy.blog.csdn.net/category_6361923.html)
 
 - `etcd`: 保存了整个集群的状态;
 - `apiserver`: 提供了资源操作的唯一入口，并提供认证、授权、访问控制、API 注册和发现等机制;

@@ -62,7 +62,7 @@ initial-cluster: k8s-master-43-101=https://172.16.43.101:2380,k8s-master-43-102=
 
 ## 关于headless service
 
-在statefulset中, headless service也是非常重要的一个点. 其实headless service就是普通的`Service`资源, 且类型为`ClusterIP`, 只不过把`clusterIP`字段显示地设置为了`None`. 
+在statefulset中, headless service也是非常重要的一个点. 其实headless service就是普通的`Service`资源, 且类型为`ClusterIP`, 只不过把`clusterIP`字段显示地设置为了`None`(注意这里两个`clusterIP`大小写不一样). 
 
 ```
 $ kubectl get svc redis-service

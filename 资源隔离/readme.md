@@ -13,6 +13,8 @@
     - 比较易懂
 [Tencent/TencentOS-kernel](https://github.com/Tencent/TencentOS-kernel)
     - readme里讲了一些高大上的东西.
+[获取 Docker container 中的资源使用情况](https://zhuanlan.zhihu.com/p/35914450)
+[Java 10发布后，Docker容器管理能力得到显著增强](http://www.dockone.io/article/5931)
 
 CGroup: Control Group
 
