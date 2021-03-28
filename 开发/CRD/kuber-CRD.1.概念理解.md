@@ -61,8 +61,8 @@ spec:
 
 继续, 自定义资源作为kuber的一种扩展, 需要注册. 按照参考文章2中readme所说, 需要先build, 然后再执行.
 
-```
-go build -o sample-controller .
+```console
+$ go build -o sample-controller .
 ./sample-controller -kubeconfig=$HOME/.kube/config
 I1109 17:25:47.265085  110201 controller.go:227] Successfully synced 'default/example-foo'
 I1109 17:25:47.265217  110201 event.go:281] Event(v1.ObjectReference{Kind:"Foo", Namespace:"default", Name:"example-foo", UID:"8fef5f20-e97e-45be-9ba8-f6c60e2a9b66", APIVersion:"samplecontroller.k8s.io/v1alpha1", ResourceVersion:"2259372", FieldPath:""}): type: 'Normal' reason: 'Synced' Foo synced successfully

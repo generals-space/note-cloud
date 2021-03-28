@@ -4,7 +4,7 @@
 
 1. [kubernetes/apiextensions-apiserver](https://github.com/kubernetes/apiextensions-apiserver)
 
-通过操作 kuber 内置的资源对象, 使用的是通过`client-go`构建的客户端`clientset/restclient`, 但是ta们无法操作CRD类型. 
+通过操作 kuber 内置的资源对象, 使用的是通过`client-go`构建的客户端`clientset`/`restclient`, 但是ta们无法操作CRD类型. 
 
 开发者如果希望在代码中动态创建/查找/删除 CRD 类型的资源, 需要借助`apiextensions-apiserver`工具库来实现.
 
