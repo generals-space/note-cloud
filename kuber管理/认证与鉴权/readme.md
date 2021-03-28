@@ -8,4 +8,6 @@
 2. [Kubernetes API访问控制](https://kubernetes.io/zh/docs/reference/access-authn-authz/controlling-access/)
     - 官方文档
 
-对于一个已经存在绑定关系的`Pod`, `ServiceAccount`, `Role(ClusterRole)`和`RoleBinding(ClusterRoleBinding)`, 更新`Role(ClusterRole)`中的资源权限配置, 是不需要重启`Pod`与其中的进程的, 直接就可以生效.
+对于一个已经存在绑定关系的`Pod`, `ServiceAccount`, `Role(ClusterRole)`和`RoleBinding(ClusterRoleBinding)`.
+
+更新`Role(ClusterRole)`中的资源权限配置, 是不需要重启`Pod`与其中的进程的, 直接就可以生效.

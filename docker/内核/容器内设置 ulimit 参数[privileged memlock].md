@@ -118,7 +118,7 @@ max locked memory       (kbytes, -l) 82000
 max locked memory       (kbytes, -l) unlimited
 ```
 
-> 别想新建一个bash再看了, `/etc/security/limit.conf`这方法对root就不生效, 重启容器也一样.
+> **别想新建一个bash再看了, `/etc/security/limit.conf`这方法对root就不生效, 重启容器也一样, 所以容器内的主进程最好通过普通用户运行.**
 
 ------
 
