@@ -20,5 +20,5 @@ F1223 02:31:46.140237   86710 deepcopy.go:885] Hit an unsupported type invalid t
 - code-generator: v0.17.0
 - apimachinery: v0.17.0
 
-`code-generator`要生成代码, 需要GOPATH目录下存在`code-generator`和`apimachinery`两个工程, 只在CRD工程的`vendor`目录下不管用.
+`code-generator`要生成代码, 需要`GOPATH`目录下存在`code-generator`和`apimachinery`两个工程, 只在CRD工程的`vendor`目录下不管用.
 

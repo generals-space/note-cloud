@@ -1,7 +1,0 @@
-## apiVersion 需要是 crd 中声明的 group/version 的组合
-apiVersion: testgroup.k8s.io/v1
-kind: PodGroup
-metadata:
-  name: podgroup01
-spec:
-    availableReplicas: 2
