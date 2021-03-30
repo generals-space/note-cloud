@@ -14,6 +14,7 @@
     - 官方文档
 4. [kubernetes安全控制认证与授权(一)](https://blog.csdn.net/yan234280533/article/details/75808048)
     - kuber 给没有通过认证的请求一个特殊的用户名`system:anonymous`和组名`system:unauthenticated`.
+5. [使用 RBAC 鉴权 - 对主体的引用](https://kubernetes.io/zh/docs/reference/access-authn-authz/rbac/#referring-to-subjects)
 
 
 `RoleBinding`与`ClusterRoleBinding`可绑定的主体有3类: `Users`, `Groups`与`ServiceAccount`
@@ -41,3 +42,25 @@ subjects:
   name: system:serviceaccounts
   apiGroup: rbac.authorization.k8s.io
 ```
+
+User, Group 与 ServiceAccount 的区别可以通过下面的配置一眼看出来, `ServiceAccount`没有`apiGroup`.
+
+```yaml
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: system:masters
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: system:anonymous
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: admin
+- namespace: kube-system
+  kind: ServiceAccount
+  name: default
+```
+
+~~但是 User, Group 之间却没什么明显的区分手段.~~ ???
+
+用户定义的 Group 的标准格式应该是上面提到的`system:serviceaccounts[:mynamespace]`, 而`system:masters`为组, `system:anonymous`为用户...这个应该可以理解为是系统内置的配置, 可以见参考文章5中提到的"核心组件角色"与"其他组件角色"
