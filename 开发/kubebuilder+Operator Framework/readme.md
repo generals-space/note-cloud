@@ -1,4 +1,4 @@
-# kubebuilder+Operator Framework
+# kubebuilder
 
 参考文章
 

@@ -21,7 +21,6 @@ spec:
     command: ['tail', '-f', '/etc/os-release']
 ```
 
-
 `ipAddrs`可以是合法的, PodCIDR 中的任意 IP, 且**可以是当前集群中未被划分的网段中的 IP**. 
 
 ```
