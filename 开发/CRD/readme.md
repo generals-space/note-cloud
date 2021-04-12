@@ -6,6 +6,7 @@
     - 描述了声明式API的涵义.
 3. [kubernetes/apiextensions-apiserver](https://github.com/kubernetes/apiextensions-apiserver)
     - 用于管理`CRD`资源的包(通过`client-go`没有针对CRD的实现)
+4. [通过自定义资源扩展Kubernetes](https://blog.gmem.cc/crd)
 
 - `CRD`: Custom Resource Definition 自定义资源对象
 - `CR`: Custom Resource CRD的实例
