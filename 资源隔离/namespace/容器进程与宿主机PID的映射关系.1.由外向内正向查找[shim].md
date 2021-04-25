@@ -16,6 +16,19 @@
 
 在宿主机上使用`ps -ef`可以看到该主机上所有容器内的进程信息, 但是没办法和指定容器对应起来, 这篇文章就是讨论如何在宿主机上, 通过进程`PID`查找一个其所在的容器的方法.
 
+通过`ps -ef`, 一直查找目标进程的父进程, 直到找到`containerd-shim`进程.
+
+```
+$ ps -ef| grep 58365
+root      58365   1285  0 15:36 ?        00:00:01 containerd-shim -namespace moby -workdir /var/lib/containerd/io.containerd.runtime.v1.linux/moby/470a404d95381d66c3eced7c02594a14589c66849fac50ef5332d74d3f83f9ae -address /run/containerd/containerd.sock -containerd-binary /usr/bin/containerd -runtime-root /var/run/docker/runtime-runc -systemd-cgroup
+root      58384  58365  0 15:36 ?        00:00:01 tail -f /etc/profile
+root      61533  58365  0 18:45 pts/0    00:00:00 sh
+```
+
+其中`moby/470a40xxxxxxxxxxxxxxxxx`, 就是该进程所在的docker容器的pid, 使用`docker ps | grep `过滤一下, 就能知道目标进程在哪个容器里了.
+
+md 下面的都是废话.
+
 ## 1. `cgroup.procs`文件
 
 按照参考文章1所说, 可以使用`cgroup`中的`cgroup.procs`来查找.
