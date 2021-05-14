@@ -22,6 +22,6 @@ Error from server (BadRequest): Unable to find "/v1, Resource=pods" that match l
 虽然不能通过目标主机 IP 进行过滤, 但是其实可以使用主机名称.
 
 ```
-k get pod --filed-selector spec.nodeName=目标主机名称
+k get pod --field-selector spec.nodeName=目标主机名称
 ```
 

@@ -6,3 +6,8 @@
     - 字段选择器（field-selector）
     - 标签选择器（labels-selector）
 
+按照Pod标签与所在主机, 查询Pod
+
+```
+k get pod --selector middleware=es --field-selector spec.nodeName=
+```

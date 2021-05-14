@@ -14,6 +14,7 @@
 5. [kubebuilder 使用手册(EN)](https://book.kubebuilder.io/introduction.html)
 6. [kubebuilder 使用手册(CN)](https://cloudnative.to/kubebuilder/quick-start.html)
 7. [kubebuilder 进阶使用](https://zhuanlan.zhihu.com/p/144978395)
+8. [深入解析 Kubebuilder：让编写 CRD 变得更简单](https://www.cnblogs.com/alisystemsoftware/p/11580202.html)
 
 > operator 是描述、部署和管理 kubernetes 应用的一套机制, 从实现上来说, 可以将其理解为 CRD 配合可选的 webhook 与 controller 来实现用户业务逻辑, 即 operator = CRD + webhook + controller
 
