@@ -13,7 +13,7 @@
 3. [calico 网络结合 k8s networkpolicy 实现租户隔离及部分租户下业务隔离](https://blog.csdn.net/qianggezhishen/article/details/80390598)
 4. [Calico官方文档 Network policy](https://docs.projectcalico.org/v3.10/reference/resources/networkpolicy)
 
-关于NetworkPolicy的声明还是很简单的(如果只像参考文章1中那样的话), 下面给出几个简单示例
+关于`NetworkPolicy`的声明还是很简单的(如果只像参考文章1中那样的话), 下面给出几个简单示例
 
 **示例1**
 
@@ -52,7 +52,6 @@ spec:
   podSelector: {}
   policyTypes:
   - Ingress
-
   ingress:
     - from:
         - podSelector: {}
