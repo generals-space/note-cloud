@@ -29,7 +29,7 @@ cd flexvolume-nfs
 docker build --no-cache=true -f dockerfile -t flex-nfs .
 ```
 
-该目录中`deploy.sh`为`entrypoint`入口程序, 不过ta好像就是把`nfs`工具拷贝到节点相应的目录下, `/usr/libexec/kubernetes/kubelet-plugins/volume/exec/`, 会拷贝为`k8s~nfs/nfs`, 全路径为`/usr/libexec/kubernetes/kubelet-plugins/volume/exec/k8s~nfs/nfs`.
+该目录中`deploy.sh`为`entrypoint`入口程序, 不过ta好像就是把`nfs`工具拷贝到节点相应的目录`/usr/libexec/kubernetes/kubelet-plugins/volume/exec/`下, 并命名为`k8s~nfs/nfs`, 全路径为`/usr/libexec/kubernetes/kubelet-plugins/volume/exec/k8s~nfs/nfs`.
 
 其中`nfs`为实现了`FlexVolume`接口的执行程序(实际上就是一个`bash`脚本), 每创建一个Pod, `kubelet`就会使用`fork/exec`调用ta, 实现挂载/卸载的操作.
 
