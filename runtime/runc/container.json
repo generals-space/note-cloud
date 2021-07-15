@@ -1,0 +1,112 @@
+{
+    "StreamConfig": {},
+    "State": {
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "RemovalInProgress": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 1,
+        "Error": "",
+        "StartedAt": "2021-05-25T07:57:37.237848507Z",
+        "FinishedAt": "2021-05-25T07:58:07.256905269Z",
+        "Health": null
+    },
+    "ID": "477cdd0e4ccd9e88060ddd1899560aefeb4fae988d0bbda57ac046db79c22fa6",
+    "Created": "2021-05-25T07:57:36.839605459Z",
+    "Managed": false,
+    "Path": "/bin/sh",
+    "Args": [
+        "-c",
+        "BUILD_DATE=$(date +%F-%T) \u0026\u0026 CGO_ENABLED=0 GOOS=linux GOARCH=$GOARCH go build -o /redis_exporter     -ldflags  \"-s -w -extldflags \\\"-static\\\" -X main.BuildVersion=$TAG -X main.BuildCommitSha=$SHA1 -X main.BuildDate=$BUILD_DATE\" ."
+    ],
+    "Config": {
+        "Hostname": "477cdd0e4ccd",
+        "Domainname": "",
+        "User": "",
+        "AttachStdin": false,
+        "AttachStdout": false,
+        "AttachStderr": false,
+        "Tty": false,
+        "OpenStdin": false,
+        "StdinOnce": false,
+        "Env": [
+            "PATH=/go/bin:/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+            "GOLANG_VERSION=1.16.4",
+            "GOPATH=/go",
+            "GOARCH=amd64",
+            "SHA1=[no-sha]",
+            "TAG=[no-tag]"
+        ],
+        "Cmd": [
+            "/bin/sh",
+            "-c",
+            "BUILD_DATE=$(date +%F-%T) \u0026\u0026 CGO_ENABLED=0 GOOS=linux GOARCH=$GOARCH go build -o /redis_exporter     -ldflags  \"-s -w -extldflags \\\"-static\\\" -X main.BuildVersion=$TAG -X main.BuildCommitSha=$SHA1 -X main.BuildDate=$BUILD_DATE\" ."
+        ],
+        "Healthcheck": {
+            "Test": [
+                "NONE"
+            ]
+        },
+        "Image": "sha256:638cc240bbae9ab263fe3c376ce0596c96c26a3a1239e22213f170fc72040b96",
+        "Volumes": null,
+        "WorkingDir": "/go/src/github.com/oliver006/redis_exporter",
+        "Entrypoint": null,
+        "OnBuild": null,
+        "Labels": {}
+    },
+    "Image": "sha256:638cc240bbae9ab263fe3c376ce0596c96c26a3a1239e22213f170fc72040b96",
+    "NetworkSettings": {
+        "Bridge": "",
+        "SandboxID": "b5f63a0dd3b0b75656c9628d052d90e32a5c73f1275afe75835912c5e4a5af4b",
+        "HairpinMode": false,
+        "LinkLocalIPv6Address": "",
+        "LinkLocalIPv6PrefixLen": 0,
+        "Networks": {
+            "bridge": {
+                "IPAMConfig": null,
+                "Links": null,
+                "Aliases": null,
+                "NetworkID": "684838af8dfef49a49d508c3dad3c855dbe52ccde2f5ad63cfc6082b180f9f1b",
+                "EndpointID": "",
+                "Gateway": "",
+                "IPAddress": "",
+                "IPPrefixLen": 0,
+                "IPv6Gateway": "",
+                "GlobalIPv6Address": "",
+                "GlobalIPv6PrefixLen": 0,
+                "MacAddress": "",
+                "DriverOpts": null,
+                "IPAMOperational": false
+            }
+        },
+        "Service": null,
+        "Ports": null,
+        "SandboxKey": "/var/run/docker/netns/b5f63a0dd3b0",
+        "SecondaryIPAddresses": null,
+        "SecondaryIPv6Addresses": null,
+        "IsAnonymousEndpoint": true,
+        "HasSwarmEndpoint": false
+    },
+    "LogPath": "",
+    "Name": "/infallible_rubin",
+    "Driver": "overlay2",
+    "OS": "linux",
+    "MountLabel": "",
+    "ProcessLabel": "",
+    "RestartCount": 0,
+    "HasBeenStartedBefore": true,
+    "HasBeenManuallyStopped": false,
+    "MountPoints": {},
+    "SecretReferences": null,
+    "ConfigReferences": null,
+    "AppArmorProfile": "",
+    "HostnamePath": "/var/lib/docker/containers/477cdd0e4ccd9e88060ddd1899560aefeb4fae988d0bbda57ac046db79c22fa6/hostname",
+    "HostsPath": "/var/lib/docker/containers/477cdd0e4ccd9e88060ddd1899560aefeb4fae988d0bbda57ac046db79c22fa6/hosts",
+    "ShmPath": "",
+    "ResolvConfPath": "/var/lib/docker/containers/477cdd0e4ccd9e88060ddd1899560aefeb4fae988d0bbda57ac046db79c22fa6/resolv.conf",
+    "SeccompProfile": "",
+    "NoNewPrivileges": false
+}

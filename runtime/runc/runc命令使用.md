@@ -35,7 +35,7 @@ cd /mycontainer
 runc run mycontainerid
 ```
 
-> `mycontainerid`可以是任意值.
+> `mycontainerid`可以是任意字符串.
 
 如果未修改上面生成的`config.json`文件, `run`子命令会打开一个`sh`会话.
 
@@ -95,7 +95,7 @@ $ ps -ef | grep 90414
 root      90414      1  0 18:28 ?        00:00:00 runc init
 ```
 
-看来init是一个类似守护进程的命令.
+看来`runc init`是一个类似守护进程的命令.
 
 然后启动容器.
 
@@ -111,7 +111,7 @@ ID              PID         STATUS      BUNDLE             CREATED              
 mycontainerid   90414       running     /mycontainer   2020-04-15T10:28:44.760800845Z   root
 ```
 
-最主要是的, `ps`的目标进程发生了变化.
+最主要是的, `ps`的目标进程发生了变化, 我们看不到上面的`runc init`进程了.
 
 ```console
 $ ps -ef | grep 90414

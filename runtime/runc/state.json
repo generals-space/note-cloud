@@ -1,0 +1,611 @@
+{
+    "id": "mycontainer01",
+    "init_process_pid": 81585,
+    "init_process_start": 46172385,
+    "created": "2021-06-28T14:58:04.800053813Z",
+    "config": {
+        "no_pivot_root": false,
+        "parent_death_signal": 0,
+        "rootfs": "/tmp/mycontainer01/rootfs",
+        "readonlyfs": true,
+        "rootPropagation": 0,
+        "mounts": [
+            {
+                "source": "proc",
+                "destination": "/proc",
+                "device": "proc",
+                "flags": 0,
+                "propagation_flags": null,
+                "data": "",
+                "relabel": "",
+                "extensions": 0,
+                "premount_cmds": null,
+                "postmount_cmds": null
+            },
+            {
+                "source": "tmpfs",
+                "destination": "/dev",
+                "device": "tmpfs",
+                "flags": 16777218,
+                "propagation_flags": null,
+                "data": "mode=755,size=65536k",
+                "relabel": "",
+                "extensions": 0,
+                "premount_cmds": null,
+                "postmount_cmds": null
+            },
+            {
+                "source": "devpts",
+                "destination": "/dev/pts",
+                "device": "devpts",
+                "flags": 10,
+                "propagation_flags": null,
+                "data": "newinstance,ptmxmode=0666,mode=0620,gid=5",
+                "relabel": "",
+                "extensions": 0,
+                "premount_cmds": null,
+                "postmount_cmds": null
+            },
+            {
+                "source": "shm",
+                "destination": "/dev/shm",
+                "device": "tmpfs",
+                "flags": 14,
+                "propagation_flags": null,
+                "data": "mode=1777,size=65536k",
+                "relabel": "",
+                "extensions": 0,
+                "premount_cmds": null,
+                "postmount_cmds": null
+            },
+            {
+                "source": "mqueue",
+                "destination": "/dev/mqueue",
+                "device": "mqueue",
+                "flags": 14,
+                "propagation_flags": null,
+                "data": "",
+                "relabel": "",
+                "extensions": 0,
+                "premount_cmds": null,
+                "postmount_cmds": null
+            },
+            {
+                "source": "sysfs",
+                "destination": "/sys",
+                "device": "sysfs",
+                "flags": 15,
+                "propagation_flags": null,
+                "data": "",
+                "relabel": "",
+                "extensions": 0,
+                "premount_cmds": null,
+                "postmount_cmds": null
+            },
+            {
+                "source": "cgroup",
+                "destination": "/sys/fs/cgroup",
+                "device": "cgroup",
+                "flags": 2097167,
+                "propagation_flags": null,
+                "data": "",
+                "relabel": "",
+                "extensions": 0,
+                "premount_cmds": null,
+                "postmount_cmds": null
+            }
+        ],
+        "devices": [
+            {
+                "type": 99,
+                "path": "/dev/null",
+                "major": 1,
+                "minor": 3,
+                "permissions": "",
+                "file_mode": 438,
+                "uid": 0,
+                "gid": 0,
+                "allow": false
+            },
+            {
+                "type": 99,
+                "path": "/dev/random",
+                "major": 1,
+                "minor": 8,
+                "permissions": "",
+                "file_mode": 438,
+                "uid": 0,
+                "gid": 0,
+                "allow": false
+            },
+            {
+                "type": 99,
+                "path": "/dev/full",
+                "major": 1,
+                "minor": 7,
+                "permissions": "",
+                "file_mode": 438,
+                "uid": 0,
+                "gid": 0,
+                "allow": false
+            },
+            {
+                "type": 99,
+                "path": "/dev/tty",
+                "major": 5,
+                "minor": 0,
+                "permissions": "",
+                "file_mode": 438,
+                "uid": 0,
+                "gid": 0,
+                "allow": false
+            },
+            {
+                "type": 99,
+                "path": "/dev/zero",
+                "major": 1,
+                "minor": 5,
+                "permissions": "",
+                "file_mode": 438,
+                "uid": 0,
+                "gid": 0,
+                "allow": false
+            },
+            {
+                "type": 99,
+                "path": "/dev/urandom",
+                "major": 1,
+                "minor": 9,
+                "permissions": "",
+                "file_mode": 438,
+                "uid": 0,
+                "gid": 0,
+                "allow": false
+            }
+        ],
+        "mount_label": "",
+        "hostname": "runc",
+        "namespaces": [
+            {
+                "type": "NEWPID",
+                "path": ""
+            },
+            {
+                "type": "NEWNET",
+                "path": ""
+            },
+            {
+                "type": "NEWIPC",
+                "path": ""
+            },
+            {
+                "type": "NEWUTS",
+                "path": ""
+            },
+            {
+                "type": "NEWNS",
+                "path": ""
+            }
+        ],
+        "capabilities": {
+            "Bounding": [
+                "CAP_AUDIT_WRITE",
+                "CAP_KILL",
+                "CAP_NET_BIND_SERVICE"
+            ],
+            "Effective": [
+                "CAP_AUDIT_WRITE",
+                "CAP_KILL",
+                "CAP_NET_BIND_SERVICE"
+            ],
+            "Inheritable": [
+                "CAP_AUDIT_WRITE",
+                "CAP_KILL",
+                "CAP_NET_BIND_SERVICE"
+            ],
+            "Permitted": [
+                "CAP_AUDIT_WRITE",
+                "CAP_KILL",
+                "CAP_NET_BIND_SERVICE"
+            ],
+            "Ambient": [
+                "CAP_AUDIT_WRITE",
+                "CAP_KILL",
+                "CAP_NET_BIND_SERVICE"
+            ]
+        },
+        "networks": [
+            {
+                "type": "loopback",
+                "name": "",
+                "bridge": "",
+                "mac_address": "",
+                "address": "",
+                "gateway": "",
+                "ipv6_address": "",
+                "ipv6_gateway": "",
+                "mtu": 0,
+                "txqueuelen": 0,
+                "host_interface_name": "",
+                "hairpin_mode": false
+            }
+        ],
+        "routes": null,
+        "cgroups": {
+            "name": "mycontainer01",
+            "path": "",
+            "scope_prefix": "",
+            "Paths": null,
+            "allowed_devices": [
+                {
+                    "type": 99,
+                    "path": "",
+                    "major": -1,
+                    "minor": -1,
+                    "permissions": "m",
+                    "file_mode": 0,
+                    "uid": 0,
+                    "gid": 0,
+                    "allow": true
+                },
+                {
+                    "type": 98,
+                    "path": "",
+                    "major": -1,
+                    "minor": -1,
+                    "permissions": "m",
+                    "file_mode": 0,
+                    "uid": 0,
+                    "gid": 0,
+                    "allow": true
+                },
+                {
+                    "type": 99,
+                    "path": "/dev/null",
+                    "major": 1,
+                    "minor": 3,
+                    "permissions": "rwm",
+                    "file_mode": 0,
+                    "uid": 0,
+                    "gid": 0,
+                    "allow": true
+                },
+                {
+                    "type": 99,
+                    "path": "/dev/random",
+                    "major": 1,
+                    "minor": 8,
+                    "permissions": "rwm",
+                    "file_mode": 0,
+                    "uid": 0,
+                    "gid": 0,
+                    "allow": true
+                },
+                {
+                    "type": 99,
+                    "path": "/dev/full",
+                    "major": 1,
+                    "minor": 7,
+                    "permissions": "rwm",
+                    "file_mode": 0,
+                    "uid": 0,
+                    "gid": 0,
+                    "allow": true
+                },
+                {
+                    "type": 99,
+                    "path": "/dev/tty",
+                    "major": 5,
+                    "minor": 0,
+                    "permissions": "rwm",
+                    "file_mode": 0,
+                    "uid": 0,
+                    "gid": 0,
+                    "allow": true
+                },
+                {
+                    "type": 99,
+                    "path": "/dev/zero",
+                    "major": 1,
+                    "minor": 5,
+                    "permissions": "rwm",
+                    "file_mode": 0,
+                    "uid": 0,
+                    "gid": 0,
+                    "allow": true
+                },
+                {
+                    "type": 99,
+                    "path": "/dev/urandom",
+                    "major": 1,
+                    "minor": 9,
+                    "permissions": "rwm",
+                    "file_mode": 0,
+                    "uid": 0,
+                    "gid": 0,
+                    "allow": true
+                },
+                {
+                    "type": 99,
+                    "path": "/dev/console",
+                    "major": 5,
+                    "minor": 1,
+                    "permissions": "rwm",
+                    "file_mode": 0,
+                    "uid": 0,
+                    "gid": 0,
+                    "allow": true
+                },
+                {
+                    "type": 99,
+                    "path": "",
+                    "major": 136,
+                    "minor": -1,
+                    "permissions": "rwm",
+                    "file_mode": 0,
+                    "uid": 0,
+                    "gid": 0,
+                    "allow": true
+                },
+                {
+                    "type": 99,
+                    "path": "",
+                    "major": 5,
+                    "minor": 2,
+                    "permissions": "rwm",
+                    "file_mode": 0,
+                    "uid": 0,
+                    "gid": 0,
+                    "allow": true
+                },
+                {
+                    "type": 99,
+                    "path": "",
+                    "major": 10,
+                    "minor": 200,
+                    "permissions": "rwm",
+                    "file_mode": 0,
+                    "uid": 0,
+                    "gid": 0,
+                    "allow": true
+                }
+            ],
+            "devices": [
+                {
+                    "type": 97,
+                    "path": "",
+                    "major": -1,
+                    "minor": -1,
+                    "permissions": "rwm",
+                    "file_mode": 0,
+                    "uid": 0,
+                    "gid": 0,
+                    "allow": false
+                },
+                {
+                    "type": 99,
+                    "path": "",
+                    "major": -1,
+                    "minor": -1,
+                    "permissions": "m",
+                    "file_mode": 0,
+                    "uid": 0,
+                    "gid": 0,
+                    "allow": true
+                },
+                {
+                    "type": 98,
+                    "path": "",
+                    "major": -1,
+                    "minor": -1,
+                    "permissions": "m",
+                    "file_mode": 0,
+                    "uid": 0,
+                    "gid": 0,
+                    "allow": true
+                },
+                {
+                    "type": 99,
+                    "path": "/dev/null",
+                    "major": 1,
+                    "minor": 3,
+                    "permissions": "rwm",
+                    "file_mode": 0,
+                    "uid": 0,
+                    "gid": 0,
+                    "allow": true
+                },
+                {
+                    "type": 99,
+                    "path": "/dev/random",
+                    "major": 1,
+                    "minor": 8,
+                    "permissions": "rwm",
+                    "file_mode": 0,
+                    "uid": 0,
+                    "gid": 0,
+                    "allow": true
+                },
+                {
+                    "type": 99,
+                    "path": "/dev/full",
+                    "major": 1,
+                    "minor": 7,
+                    "permissions": "rwm",
+                    "file_mode": 0,
+                    "uid": 0,
+                    "gid": 0,
+                    "allow": true
+                },
+                {
+                    "type": 99,
+                    "path": "/dev/tty",
+                    "major": 5,
+                    "minor": 0,
+                    "permissions": "rwm",
+                    "file_mode": 0,
+                    "uid": 0,
+                    "gid": 0,
+                    "allow": true
+                },
+                {
+                    "type": 99,
+                    "path": "/dev/zero",
+                    "major": 1,
+                    "minor": 5,
+                    "permissions": "rwm",
+                    "file_mode": 0,
+                    "uid": 0,
+                    "gid": 0,
+                    "allow": true
+                },
+                {
+                    "type": 99,
+                    "path": "/dev/urandom",
+                    "major": 1,
+                    "minor": 9,
+                    "permissions": "rwm",
+                    "file_mode": 0,
+                    "uid": 0,
+                    "gid": 0,
+                    "allow": true
+                },
+                {
+                    "type": 99,
+                    "path": "/dev/console",
+                    "major": 5,
+                    "minor": 1,
+                    "permissions": "rwm",
+                    "file_mode": 0,
+                    "uid": 0,
+                    "gid": 0,
+                    "allow": true
+                },
+                {
+                    "type": 99,
+                    "path": "",
+                    "major": 136,
+                    "minor": -1,
+                    "permissions": "rwm",
+                    "file_mode": 0,
+                    "uid": 0,
+                    "gid": 0,
+                    "allow": true
+                },
+                {
+                    "type": 99,
+                    "path": "",
+                    "major": 5,
+                    "minor": 2,
+                    "permissions": "rwm",
+                    "file_mode": 0,
+                    "uid": 0,
+                    "gid": 0,
+                    "allow": true
+                },
+                {
+                    "type": 99,
+                    "path": "",
+                    "major": 10,
+                    "minor": 200,
+                    "permissions": "rwm",
+                    "file_mode": 0,
+                    "uid": 0,
+                    "gid": 0,
+                    "allow": true
+                }
+            ],
+            "memory": 0,
+            "memory_reservation": 0,
+            "memory_swap": 0,
+            "kernel_memory": 0,
+            "kernel_memory_tcp": 0,
+            "cpu_shares": 0,
+            "cpu_quota": 0,
+            "cpu_period": 0,
+            "cpu_rt_quota": 0,
+            "cpu_rt_period": 0,
+            "cpuset_cpus": "",
+            "cpuset_mems": "",
+            "pids_limit": 0,
+            "blkio_weight": 0,
+            "blkio_leaf_weight": 0,
+            "blkio_weight_device": null,
+            "blkio_throttle_read_bps_device": null,
+            "blkio_throttle_write_bps_device": null,
+            "blkio_throttle_read_iops_device": null,
+            "blkio_throttle_write_iops_device": null,
+            "freezer": "",
+            "hugetlb_limit": null,
+            "oom_kill_disable": false,
+            "memory_swappiness": null,
+            "net_prio_ifpriomap": null,
+            "net_cls_classid_u": 0,
+            "cpu_weight": 0,
+            "cpu_max": ""
+        },
+        "uid_mappings": null,
+        "gid_mappings": null,
+        "mask_paths": [
+            "/proc/acpi",
+            "/proc/asound",
+            "/proc/kcore",
+            "/proc/keys",
+            "/proc/latency_stats",
+            "/proc/timer_list",
+            "/proc/timer_stats",
+            "/proc/sched_debug",
+            "/sys/firmware",
+            "/proc/scsi"
+        ],
+        "readonly_paths": [
+            "/proc/bus",
+            "/proc/fs",
+            "/proc/irq",
+            "/proc/sys",
+            "/proc/sysrq-trigger"
+        ],
+        "sysctl": null,
+        "seccomp": null,
+        "Hooks": {
+            "poststart": null,
+            "poststop": null,
+            "prestart": null
+        },
+        "version": "1.0.1-dev",
+        "labels": [
+            "bundle=/tmp/mycontainer01"
+        ],
+        "no_new_keyring": false
+    },
+    "rootless": false,
+    "cgroup_paths": {
+        "blkio": "/sys/fs/cgroup/blkio/user.slice/mycontainer01",
+        "cpu": "/sys/fs/cgroup/cpu,cpuacct/user.slice/mycontainer01",
+        "cpuacct": "/sys/fs/cgroup/cpu,cpuacct/user.slice/mycontainer01",
+        "cpuset": "/sys/fs/cgroup/cpuset/mycontainer01",
+        "devices": "/sys/fs/cgroup/devices/user.slice/mycontainer01",
+        "freezer": "/sys/fs/cgroup/freezer/mycontainer01",
+        "hugetlb": "/sys/fs/cgroup/hugetlb/mycontainer01",
+        "memory": "/sys/fs/cgroup/memory/user.slice/mycontainer01",
+        "name=systemd": "/sys/fs/cgroup/systemd/user.slice/user-0.slice/session-7388.scope/mycontainer01",
+        "net_cls": "/sys/fs/cgroup/net_cls,net_prio/mycontainer01",
+        "net_prio": "/sys/fs/cgroup/net_cls,net_prio/mycontainer01",
+        "perf_event": "/sys/fs/cgroup/perf_event/mycontainer01",
+        "pids": "/sys/fs/cgroup/pids/user.slice/mycontainer01"
+    },
+    "namespace_paths": {
+        "NEWIPC": "/proc/81585/ns/ipc",
+        "NEWNET": "/proc/81585/ns/net",
+        "NEWNS": "/proc/81585/ns/mnt",
+        "NEWPID": "/proc/81585/ns/pid",
+        "NEWUSER": "/proc/81585/ns/user",
+        "NEWUTS": "/proc/81585/ns/uts"
+    },
+    "external_descriptors": [
+        "/dev/null",
+        "/dev/null",
+        "/dev/null"
+    ],
+    "intel_rdt_path": ""
+}
