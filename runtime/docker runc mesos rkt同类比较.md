@@ -29,7 +29,7 @@ $ ls /usr/bin/ | grep runc
 runc
 ```
 
-```
+```console
 $ ps -ef | grep containerd
 root       1258      1  0 05:58 ?        00:00:44 /usr/bin/containerd
 root       1263      1  1 05:58 ?        00:06:17 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
@@ -40,7 +40,7 @@ root       1942   1258  0 05:58 ?        00:00:04 containerd-shim -namespace mob
 
 如下, 容器`ad7a7a5952fd0`中的nginx进程就是对应`container-shim`的子进程.
 
-```
+```console
 $ ps -ef | grep 1942
 root       1942   1258  0 05:58 ?        00:00:04 containerd-shim -namespace moby -workdir /var/lib/containerd/io.containerd.runtime.v1.linux/moby/ad7a7a5952fd0f1b6637d49cdb673d73b73b65d750f21a734b133d8e07e25b98 -address /run/containerd/containerd.sock -containerd-binary /usr/bin/containerd -runtime-root /var/run/docker/runtime-runc -systemd-cgroup
 root       1961   1942  0 05:58 ?        00:00:00 nginx: master process nginx -g daemon off;
