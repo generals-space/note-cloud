@@ -4,7 +4,8 @@
 
 1. [Linux Namespace : Mount](https://www.cnblogs.com/sparkdev/p/9424649.html)
     - `unshare --mount`的使用方法与隔离表现
-    - `mount`的`--make-shared`, `--make-private`参数表现.
+    - `mount`的`--make-shared`, `--make-private`参数的行为表现.
+    - `unshare --propagation`选项的作用.
 
 ## 示例1-`unshare --mount`的隔离表现
 

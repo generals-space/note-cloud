@@ -20,13 +20,15 @@ cgcreate -g cpu,cpuset:gopls
 
 系统中的控制组可以使用`lscgroup`查看
 
-```
+```console
 $ lscgroup | grep gopls
 cpuset:/gopls
 cpu,cpuacct:/gopls
 ```
 
-注意格式为`子系统:group名称`, 上面的`cgcreate`实际上创建了两个控制组. 另外, 控制组貌似拥有目录一样的结构, 子级目录可以继承父级目录的配置参数, 而上面我们创建的`gopls`实际上存放在了根目录`/`下, 所以`lscgroup`结果中出现了`/gopls`.
+注意格式为`子系统:group名称`, 上面的`cgcreate`实际上创建了两个控制组. 
+
+另外, 控制组貌似拥有目录似的结构, 子级目录可以继承父级目录的配置参数, 而上面我们创建的`gopls`实际上存放在了根目录`/`下, 所以`lscgroup`结果中出现了`/gopls`.
 
 接下来使用`cgset`设置cpu和内存的各项控制指标.
 

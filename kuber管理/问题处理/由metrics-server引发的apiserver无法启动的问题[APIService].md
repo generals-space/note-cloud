@@ -1,9 +1,11 @@
-# 由metrics-server引发的apiserver无法启动的问题
+# 由metrics-server引发的apiserver无法启动的问题[APIService]
 
 参考文章
 
 1. [ks-apiserver 无法启动](https://kubesphere.com.cn/forum/d/3017-ks-apiserver)
     - k8s的服务发现机制要求所有apiservice都是True状态
+2. [kubernetes问题解答专栏](https://www.ziji.work/kubernetes/kubernetes-question-answer-special.html)
+3. [kubernetes 1.18.x metrics-server 采集不到数据](https://www.haxi.cc/archives/k8s-1-18-x-metrics-server-no-data.html)
 
 ## 问题描述
 
@@ -65,3 +67,5 @@ ok, 现在通过227删除`metrics-server`的Pod是解决不了问题的, 只能�
 我的猜测是, 如果apiserver本身没有选主机制的话, 那就是之前3个apiserver是正常启动的状态, 之后`metrics-server`挂掉, 225, 226主机先后宕机, 只剩下227一个在服务.
 
 在ta们三个主机上执行`docker ps | grep apiserver`查看启动时间, 227上的apiserver启动时间是最久的, 印证了我的猜测.
+
+这么说来, 坏掉的APIService可真是危险啊...

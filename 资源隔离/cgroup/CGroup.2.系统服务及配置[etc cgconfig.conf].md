@@ -53,9 +53,9 @@ root:gopls cpu gopls
 
 然后重启`cgconfig`与`cgred`两个服务, 对名为`gopls`这个进程的资源限制就会生效.
 
-### 2.1 解释
+## 3. 解释
 
-关于`cgconfig.d/gopls.conf`
+### 关于`cgconfig.d/gopls.conf`
 
 `cpu.cfs_period_us`: 调度周期, 及将所有待运行任务(有的时候进程处于sleep状态)全部执行一遍的总时间(调度器会根据各任务的权重把这个时间分给各个任务).
 `cpu.cfs_quota_us`: 此进程在调度周期当中可以占用的时间
@@ -68,7 +68,7 @@ root:gopls cpu gopls
 
 具体解释可以查看参考文章3.
 
-关于`cgrules.conf`
+### 关于`cgrules.conf`
 
 该文件有固定格式
 
@@ -85,9 +85,11 @@ root:gopls cpu gopls
 
 `destination`则是`group`名称.
 
-### 2.2 扩展: 多subsystem的cgroup配置
+## 4. 扩展: 多subsystem的cgroup配置
 
 参考文章1和2中的`group`块都只有一种subsystem, 如果我想在限制进程`gopls`的cpu使用率的同时还想设置其对cpu核心的亲和性(只允许该进程使用某几个cpu)呢?
+
+`cgconfig.d/gopls.conf`配置
 
 ```conf
 group gopls {
@@ -102,6 +104,8 @@ group gopls {
 }
 ```
 
+`cgrules.conf`配置
+
 ```
 root:gopls cpu,cpuset gopls
 ```
@@ -110,7 +114,7 @@ root:gopls cpu,cpuset gopls
 
 `cpuset`就是核心集配置, 你可以使用如下命令查看自己机器上的cpu核心数量
 
-```
+```console
 $ cat /sys/fs/cgroup/cpuset/cpuset.cpus
 0-7
 ```
