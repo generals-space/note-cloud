@@ -7,6 +7,9 @@
     - `mount`的`--make-shared`, `--make-private`参数的行为表现.
     - `unshare --propagation`选项的作用.
 
+`mount namespace`是用来隔离`mountpoint`挂载点的, 我们创建一个新的mount ns, 这个新的ns会继承父ns的所有挂载点, 但是之后双方再进行挂载/卸载操作时, 就不会再互相影响了.
+
+
 ## 示例1-`unshare --mount`的隔离表现
 
 ```

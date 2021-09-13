@@ -9,6 +9,7 @@
 4. [Kernel not freeing memory cgroup causing no space left on device](https://github.com/moby/moby/issues/29638)
 5. [Cgroup leaking, no space left on /sys/fs/cgroup](https://github.com/kubernetes/kubernetes/issues/70324)
 6. [cgroup limit reached - no space left on device](https://stackoverflow.com/questions/45278379/cgroup-limit-reached-no-space-left-on-device)
+7. [K8S 问题排查： cgroup 内存泄露问题 - kmem](https://www.cnblogs.com/leffss/p/15019898.html)
 
 场景描述
 
@@ -20,7 +21,7 @@
 
 但是目前最重要的是把开发想要创建的pod启动起来, 先不管其他pod的问题, 想着既然之前还可以重建, 现在不行, 那么需要查一下对应的deploy资源. 我describe了一下, 看到如下部分的结果, 觉得很可疑.
 
-```
+```console
 $ kubectl describe deploy 目标deploy资源
 OldReplicaSets:		fika-io-749979362 (3/3 replicas created)
 NewReplicaSet:		<none>

@@ -7,7 +7,7 @@
 使用`kubectl`强制删除一个 pod 需要两个参数: `--force`, `--grace-period=0`
 
 ```
-kubectl delete pod podName --grace-period=0 --force
+kubectl delete pod pod名称 --grace-period=0 --force
 ```
 
 但在使用 client-go 提供的`Delete()`方法中, `metav1.DeleteOptions{}`参数中并没有`force`成员.
