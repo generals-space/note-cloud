@@ -15,6 +15,8 @@ kube-flannel-ds-amd64-67f65bfbc7   daemonset.apps/kube-flannel-ds-amd64   1     
 kube-proxy-544458d8d6              daemonset.apps/kube-proxy              1          27m
 ```
 
+一个`ControllerRevision`对象的内容如下
+
 ```yaml
 apiVersion: apps/v1
 data:

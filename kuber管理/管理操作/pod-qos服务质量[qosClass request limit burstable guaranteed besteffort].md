@@ -118,7 +118,7 @@ Pod 中任意 container 设置了`requests`或`limits`.
 
 当NODE节点上内存资源充足的时候, QoS级别是`BestEffort`的POD可以使用节点上剩余的所有内存资源(因为没有设置`limit`, 所以理论上没有上限). 
 
-当NODE节点上内存资源不够的时候, QoS级别是BestEffort的POD会最先被kill掉; 
+当NODE节点上内存资源不够的时候, QoS级别是`BestEffort`的POD会最先被kill掉; 
 
 ### Burstable
 

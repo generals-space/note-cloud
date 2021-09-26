@@ -1,4 +1,4 @@
-# node节点宕机时的pod驱散行为
+# node节点宕机时的pod驱散行为[kcm kubelet eviction]
 
 参考文章
 
