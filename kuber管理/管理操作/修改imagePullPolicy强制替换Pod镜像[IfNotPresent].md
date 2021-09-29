@@ -46,4 +46,6 @@ Error response from daemon: conflict: unable to delete 902dead0a02e (cannot be f
 
 解决方法是, 到pod所在主机上, 将容器B需要更新的镜像拉下来(此时旧镜像的tag将变为`none`), 然后用`docker kill`将容器B干掉, kubelet会自动将容器B重新启动, 不影响容器A的运行, 并且, 新启动的容器B将会使用新版本的镜像.
 
+> 容器B的镜像拉取策略不必修改为`Always`.
+
 上述方法实践可行, 但是在应用之前仍需谨慎.
