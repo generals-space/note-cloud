@@ -18,7 +18,17 @@
 
 如果不更改`imagePullPolicy`字段, 保持默认`IfNotPresent`, 然后**手动**将新的`v1.0`拉取到主机上(此时, 旧的`v1.0`镜像tag就会变成`none`了), 重启Pod, 镜像会替换吗?
 
-答案是: 不会, Pod仍然会使用旧的`v1.0`镜像.
+答案是: 可以.
+
+`IfNotPresent`只是保证当本地镜像Tag存在是, 不会有"Pull"这一动作, 但是如果新镜像的Tag把旧镜像替换了, 如果Pod重启, 还是会使用新镜像启动的.
+
+其实换一种思路可以更好地理解.
+
+sts, deploy, ds中对于`container.image`字段, 单纯指定了镜像Tag, 并没有保存镜像id. 当我们删除一个Pod时, 被sts, deploy, ds各自的controller manager监听到Pod被删除, 则会重新构建一个Pod对象并提交, Kubelet会使用目标镜像重建一个. 
+
+此时Pod controller才会通知kubelet重建容器, kubelet并不会管上一个Pod用的是哪个镜像, 而是直接按照镜像Tag来, 所以重建的容器使用的是用最新Tag的镜像.
+
+------
 
 如果先尝试在主机上使用`docker rmi centos:v1.0`移除旧的镜像, 可能会出现
 
@@ -33,8 +43,6 @@ Error response from daemon: conflict: unable to remove repository reference "cen
 ```
 Error response from daemon: conflict: unable to delete 902dead0a02e (cannot be forced) - image is being used by running container bfbf5ba1e22d
 ```
-
-所以基本无解.
 
 ## 3. Pod中包含多个容器的场景
 

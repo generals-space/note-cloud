@@ -11,6 +11,9 @@
     - Pod 调度行为受到`request`的影响(而不是`limit`).
     - `cpu`取值的规则与示例
     - `apiserver`插件: `metrics-server`
+6. [06-设置 Kubernetes 资源限制](https://www.jianshu.com/p/352909c038f8)
+    - Kubernetes会根据QoS设置oom的评分调整参数`oom_score_adj`
+    - 当节点的内存和cpu资源不足, 开始驱逐节点上的pod时, QoS同样会影响驱逐的优先级
 
 ## 1. 引言
 
