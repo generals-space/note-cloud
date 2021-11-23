@@ -13,7 +13,7 @@
 
 kuber集群对于API访问, 在认证阶段提供了多种方式(见参考文章4), 开发者在访问 kuber API 时可以自行选择认证手段, 只要一种成功就算成功. 
 
-`kubectl`本身支持其中的3种, ta的`config`子命令有一个`set-credentials`参数, ta主要配置`kubeconfig`文件中的`user`字段, 如下
+`kubectl`本身支持其中的3种, ta的`config`子命令有一个`set-credentials`参数, 主要用于配置`kubeconfig`文件中的`user`字段, 如下
 
 ```yaml
 users:
@@ -71,3 +71,9 @@ kubectl config set-credentials user02 --token=7176d48e4e66ddb3557a82f2dd316a93
 
 1. `kubernetes.io/service-account-token`类型的`secret`资源对象, 其中的`token`数据要经过`base64`解密才能填写到`kubeconfig`的`user.token`字段;
 2. 各`ns`下默认创建的名为`default`的SA是没有绑定`Role/RoleBinding`权限的, 需要手动创建, 否则没有任何权限.
+
+可以使用curl验证 Bearer Token
+
+```
+curl -k -H 'Content-Type: application/json' -H 'Authorization: Bearer 7176d48e4e66ddb3557a82f2dd316a93' 'https://127.0.0.1:6443/api/v1/namespaces/kube-system/pods'
+```
