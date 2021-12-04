@@ -2,6 +2,10 @@
 
 1. [FlexVolume](https://feisky.gitbooks.io/kubernetes/plugins/flex-volume.html)
 2. [k8s与存储--flexvolume解读](https://segmentfault.com/a/1190000020320771)
+3. [《深入剖析kubernetes》学习笔记（4）——容器持久化存储](https://www.cnblogs.com/liweijiee/p/14365371.html)
+    - `PersistentVolumeController`功能
+    - `attach`, `mount`
+    - PV、PVC机制是否过度设计？
 
 1. `FlexVolume`与`CSI`是两个并列的概念, 作用可视作相同.
 2. `CSI`可与`PV/PVC`配合使用, 而`FlexVolume`只能单独使用.

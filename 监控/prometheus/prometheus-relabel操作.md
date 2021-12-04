@@ -74,3 +74,15 @@ relabel_configs:
 labelmap, labeldrop, labelkeep对于数据的采集与展示是没有影响的, ta们只影响存储到时间序列中的维度(是否存在, 或是命名).
 
 在prometheus的WebUI中, Status -> Target面板下, 各Job的表格展示中, `Labels`列表示的就是`labelmap`, `labeldrop`与`labelkeep`处理后的结果, 鼠标悬停在上面可以看到`Before Relabeling`时的数据.
+
+------
+
+应用场景, 看起来像是将内置的 label 字段简化, 移除`__meta`前缀.
+
+```yaml
+  ## labelmap 这个行为比较特殊
+  - separator: ;
+    regex: __meta_kubernetes_service_label_(.+)
+    replacement: $1
+    action: labelmap
+```

@@ -1,0 +1,75 @@
+---
+apiVersion: v1
+## log-format-upstream: ingress 默认的日志格式
+data:
+  log-format-upstream: '$the_real_ip - [$the_real_ip] - $remote_user [$time_local] "$request" $status $body_bytes_sent "$http_referer" "$http_user_agent" $request_length $request_time [$proxy_upstream_name] [$proxy_alternative_upstream_name] $upstream_addr $upstream_response_length $upstream_response_time $upstream_status $req_id'
+kind: ConfigMap
+metadata:
+  labels:
+    app: ingress-nginx
+  name: ingress-nginx-config
+  namespace: kube-system
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-ingress-controller
+  namespace: kube-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ingress-nginx
+  template:
+    metadata:
+      labels:
+        app: ingress-nginx
+    spec:
+      containers:
+      - name: nginx-ingress-controller
+        image: quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.25.0
+        imagePullPolicy: IfNotPresent
+        args:
+          - /nginx-ingress-controller
+          ## 这里, 与 svc 中的名称相同
+          - --publish-service=$(POD_NAMESPACE)/ingress-nginx-svc
+          - --configmap=$(POD_NAMESPACE)/ingress-nginx-config
+        env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        ports:
+        - name: http
+          containerPort: 80
+        - name: https
+          containerPort: 443
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /healthz
+            port: 10254
+            scheme: HTTP
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 10
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /healthz
+            port: 10254
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 10
+        lifecycle:
+          preStop:
+            exec:
+              command:
+              - /wait-shutdown

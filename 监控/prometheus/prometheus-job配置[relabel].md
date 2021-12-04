@@ -93,9 +93,9 @@ scrape_configs:
 
 上面的配置可达到我们的最终目的, 其重点就在于`relabel_configs`. 
 
-我们将`action`指定为`keep`, 就是将`source_labels`字段中列举出的各`label`的值, 与`regex`中声明的值不相同的`endpoints`资源移除, 只保留满足`regex`规则的行.
+我们将`action`指定为`keep`, 可以看作是过滤操作, 将`source_labels`字段中列举出的各`label`的值, 与`regex`中声明的值不相同的`endpoints`资源移除, 只保留满足`regex`规则的行.
 
-即, 服务发现的`endpoints`资源中, `__meta_kubernetes_namespace`标签的值要为`default`, `__meta_kubernetes_service_name`标签的值要为`kubernetes`, `__meta_kubernetes_endpoint_port_name`标签的值要为`https`, 否则就不能出现在此job结果中.
+即, 服务发现的`endpoints`资源中, `__meta_kubernetes_namespace`标签的值要为`default`, `__meta_kubernetes_service_name`标签的值要为`kubernetes`, `__meta_kubernetes_endpoint_port_name`标签的值要为`https`, 否则就不能出现在此job结果中. 防止相同namespace存在其他service, 去采集没有`/metrics`路径, 采集会失败.
 
 那么问题来了, `__meta_kubernetes_namespace`这种东西究竟是哪里来的标签? 在哪看?
 
