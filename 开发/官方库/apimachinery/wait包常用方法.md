@@ -1,3 +1,7 @@
+参考文章
+
+1. [kubernetes wait包详解](https://www.yuque.com/xiaowantang/yu1g2w/iizdgk)
+
 ```
 import (
 	"k8s.io/apimachinery/pkg/util/wait"

@@ -19,6 +19,13 @@ spec:
         image: registry.cn-hangzhou.aliyuncs.com/generals-space/centos7-devops
         imagePullPolicy: IfNotPresent
         command: ["tail", "-f", "/etc/os-release"]
+        resources:
+          requests:
+            cpu: 100m
+            memory: 50Mi
+          limits:
+            cpu: 500m
+            memory: 500Mi
       ## 允许在master节点部署
       tolerations:
       ## 这一段表示pod需要容忍拥有master角色的node们, 
