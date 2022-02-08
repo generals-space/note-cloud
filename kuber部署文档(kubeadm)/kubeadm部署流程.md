@@ -107,9 +107,13 @@ systemctl enable kubelet
 
 > `dockerd`使用的 cgroup driver 默认为`cgroupfs`.
 
-> 安装指定版本的kube组件(需要与`kubeadm-config.yaml`中的`kubernetesVersion`字段匹配)
-> 
-> `yum install -y kubelet-1.16.2 kubeadm-1.16.2 kubectl-1.16.2`
+------
+
+安装指定版本的kube组件(需要与`kubeadm-config.yaml`中的`kubernetesVersion`字段匹配)
+
+```
+yum install -y kubelet-1.16.2 kubeadm-1.16.2 kubectl-1.16.2
+```
 
 ## 2. apiserver高可用
 
