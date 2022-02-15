@@ -17,7 +17,9 @@
 7. [分布统计：Heatmap面板](https://yunlzheng.gitbook.io/prometheus-book/part-ii-prometheus-jin-jie/grafana/grafana-panels/use_heatmap_panel)
     - Graph面板来可视化Histogram类型的监控指标不够直观, 最好使用Heatmap面板
 
-一般指标项大多为`gauge`, 表示某个瞬时值, 由prometheus按时间序列采集后, 在grafana里直接写上这类指标, 就能得到由点组成的折线.
+一般指标项大多为`gauge`, 表示某个瞬时值, 如当前工程中的线程数, 正在处理的请求数等, 是不断变动的. 由prometheus按时间序列采集后, 在grafana里直接写上这类指标, 就能得到由点组成的折线.
+
+counter则为一个累加值, 如自从工程启动, 经历的GC次数, 处理过的请求总数等. counter值可以根据rate()函数计算出累似于gauge的"速率"数据.
 
 而 histogram 和 summary 就不太容易理解了, 建议查看参考文章4.
 

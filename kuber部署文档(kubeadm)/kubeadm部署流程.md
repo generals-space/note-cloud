@@ -15,13 +15,13 @@ sed -i --follow-symlinks "s/^SELINUX=permissive/SELINUX=disabled/g" /etc/selinux
 swapoff -a; sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
 
 #### 更新时间(etcd 对时间一致性要求高)
-## 以下两条适用于 centos7
-## timedatectl set-timezone Asia/Shanghai
-## echo '8 * * * * /usr/sbin/ntpdate asia.pool.ntp.org && /sbin/hwclock --systohc' >> /var/spool/cron/root
-## 以下3句适用于 centos 8
-systemctl start chronyd
-systemctl enable chronyd
-chronyc sources
+#### 以下两条适用于 centos7
+timedatectl set-timezone Asia/Shanghai
+echo '8 * * * * /usr/sbin/ntpdate asia.pool.ntp.org && /sbin/hwclock --systohc' >> /var/spool/cron/root
+#### 以下3句适用于 centos 8
+## systemctl start chronyd
+## systemctl enable chronyd
+## chronyc sources
 
 hostnamectl set-hostname --static k8s-master-01
 
@@ -121,10 +121,9 @@ yum install -y kubelet-1.16.2 kubeadm-1.16.2 kubectl-1.16.2
 
 ```bash
 docker run -d --name k8s-server-lb \
---restart always \
---net host \
+--restart always --net host \
 -v /etc/kubernetes/k8s-nginx-lb.conf:/etc/nginx/nginx.conf \
-nginx:12
+nginx:latest
 ```
 
 > nginx 容器使用的是宿主机网络, 监听的端口是 8443, 这里为了与 api server 监听的 6443 区分开. 并且由于写在 kubeadm-config.yaml 文件中, 最终生成的 kubectl 配置文件 `/etc/kubernetes/admin.conf`, 及各节点的 kubelet 的通信地址, 都将是 `k8s-server-lb:8443`.
