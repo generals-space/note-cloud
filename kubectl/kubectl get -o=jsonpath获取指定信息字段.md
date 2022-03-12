@@ -1,4 +1,4 @@
-# kubectl get获取指定信息字段[jsonpath]
+# kubectl get -o=jsonpath获取指定信息字段
 
 参考文章
 

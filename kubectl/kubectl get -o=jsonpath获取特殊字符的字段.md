@@ -1,4 +1,4 @@
-# kubectl get jsonpath获取特殊字符的字段
+# kubectl get -o=jsonpath获取特殊字符的字段
 
 在 k8s 各资源的 status 块中, 貌似键名中可以包含一些特殊字段, 比如点号`.`, 斜线`/`等, 直接使用是无法获取到这些字段的值的.
 
