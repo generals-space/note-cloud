@@ -101,7 +101,6 @@ func appliesToUser(user user.Info, subject rbacv1.Subject, namespace string) boo
 ```
 
 注意, 上述代码中`case rbacv1.UserKind:`要求, `cluster-admin`必需是一个User对象才可以, 否则就通不过鉴权.
-
 但实际上, kube系统中是没有 User/Group 类型的资源的, 那么如何定义一个 User/Group?
 
 正确的做法是, 直接在`cluster-admin`的`ClusterRoleBinding`资源的Subject中添加一个Kind为User的对象就可以了.

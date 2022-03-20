@@ -175,7 +175,7 @@ $ kubectl rolling-update my-rcName-v1 -f my-rcName-v2-rc.yaml --update-period=10
 
 ### 4.1 原理
 
-在Kubernetes中, 在受到RC调控的时候, Pod副本是变化的, 对于的虚拟IP也是变化的, 比如发生迁移或者伸缩的时候. 这对于Pod的访问者来说是不可接受的. Kubernetes中的Service是一种抽象概念, 它定义了一个Pod逻辑集合以及访问它们的策略, `Service`同`Pod`的关联同样是居于`Label`来完成的. Service的目标是提供一种桥梁,  它会为访问者提供一个固定访问地址, 用于在访问时重定向到相应的后端, 这使得非 Kubernetes原生应用程序, 在无须为Kubemces编写特定代码的前提下, 轻松访问后端. 
+在Kubernetes中, 在受到RC调控的时候, Pod副本是变化的, 对于的虚拟IP也是变化的, 比如发生迁移或者伸缩的时候. 这对于Pod的访问者来说是不可接受的. Kubernetes中的Service是一种抽象概念, 它定义了一个Pod逻辑集合以及访问它们的策略, `Service`同`Pod`的关联同样是居于`Label`来完成的. Service的目标是提供一种桥梁, 它会为访问者提供一个固定访问地址, 用于在访问时重定向到相应的后端, 这使得非 Kubernetes原生应用程序, 在无须为Kubemces编写特定代码的前提下, 轻松访问后端. 
 
 `Service`同RC一样, 都是通过Label来关联Pod的. 当你在Service的yaml文件中定义了该Service的selector中的label为app:my-web, 那么这个Service会将`Pod.metadata.labeks`中`label`为`app:my-web`的Pod作为分发请求的后端. 当Pod发生变化时(增加、减少、重建等), Service会及时更新. 这样一来, `Service`就可以作为`Pod`的访问入口, 起到代理服务器的作用, 而对于访问者来说, 通过`Service`进行访问, 无需直接感知`Pod`. 
 
@@ -246,7 +246,7 @@ Service的虚拟IP是由Kubernetes虚拟出来的内部网络, 外部是无法�
 
 ### 4.5 servicede 自发性机制
 
-Kubernetes中有一个很重要的服务自发现特性. 一旦一个service被创建, 该service的service IP和service port等信息都可以被注入到pod中供它们使用. Kubernetes主要支持两种service发现 机制: 环境变量和DNS. 
+Kubernetes中有一个很重要的服务自发现特性. 一旦一个service被创建, 该service的service IP和service port等信息都可以被注入到pod中供它们使用. Kubernetes主要支持两种service发现机制: 环境变量和DNS. 
 
 **环境变量方式**
 
