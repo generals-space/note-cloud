@@ -17,7 +17,7 @@ type Object interface {
 }
 ```
 
-ta可以表示所有 kuber 资源(如`Deployment`, `Daemonset`, `Statefulset`等), 也包含自定义资源(不过这些资源的指针对象才可以).
+ta可以表示所有 kube 资源(如`Deployment`, `Daemonset`, `Statefulset`等), 也包含自定义资源(不过这些资源的指针对象才可以).
 
 ```go
 import(
