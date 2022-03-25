@@ -10,10 +10,10 @@
     - 字段选择器（field-selector）
     - 标签选择器（labels-selector）
 
-- `k get pod -l esname=es-hjl-13`
-- `k get pod -l esname=es-hjl-13,estype=data`
-- `k get pod -l esname=es-hjl-13,estype!=data`
-- `k get pod -l 'esname=es-hjl-13,estype in (data,master)'`
+- `k get pod -l esname=es-13`
+- `k get pod -l esname=es-13,estype=data`
+- `k get pod -l esname=es-13,estype!=data`
+- `k get pod -l 'esname=es-13,estype in (data,master)'`
 
 支持的运算符有`=`, `!=`, `==`, `in`, `notin`. `k get --help`信息中没有介绍, 我是在错误信息里找到的...
 

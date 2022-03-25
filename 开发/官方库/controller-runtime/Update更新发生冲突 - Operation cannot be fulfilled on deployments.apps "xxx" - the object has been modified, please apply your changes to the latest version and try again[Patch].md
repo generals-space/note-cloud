@@ -15,7 +15,7 @@
 在controller中调用`r.Update()`更新`Deployment`类型资源时, 频繁出现下面的错误.
 
 ```
-2022-03-12T18:59:33.966+0800	ERROR	controller-runtime.controller	Reconciler error	{"controller": "deployment", "request": "test-test/hjl-0311-07", "error": "Operation cannot be fulfilled on deployments.apps \"hjl-0311-07\": the object has been modified; please apply your changes to the latest version and try again"}
+2022-03-12T18:59:33.966+0800	ERROR	controller-runtime.controller	Reconciler error	{"controller": "deployment", "request": "test-test/0311-07", "error": "Operation cannot be fulfilled on deployments.apps \"0311-07\": the object has been modified; please apply your changes to the latest version and try again"}
 ```
 
 ## 解决方案
