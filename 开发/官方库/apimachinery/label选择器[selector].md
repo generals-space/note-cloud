@@ -70,3 +70,20 @@ func main() {
 		LabelSelector: "key01=val01,!key02",
 	})
 ```
+
+将 map 形式的对象转换成 selector 对象.
+
+```go
+	label := fmt.Sprintf(
+		"esname=%s", esc.Name,
+	)
+	labelMap, err := labels.ConvertSelectorToLabelsMap(label)
+	if err != nil {
+		klog.Errorf(
+			"stop escluster %s step %d, convert label selector failed: %s",
+			escName, step, err,
+		)
+		break
+	}
+	podList, err := op.podLister.Pods(ns).List(labels.SelectorFromSet(labelMap))
+```

@@ -24,6 +24,24 @@ spec:
     singular: logstashcluster
   preserveUnknownFields: true
   scope: Namespaced
+  validation:
+    openAPIV3Schema:
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        metadata:
+          type: object
+        spec:
+          ## properties:
+          ##   foo:
+          ##     type: string
+          type: object
+        status:
+          type: object
+      type: object
+  version: v1
   versions:
   - name: v1
     schema:
