@@ -7,3 +7,5 @@
     - 转载参考文章1, 不过担心1可能会挂, 留个备份.
 3. [详解 DNS 与 CoreDNS 的实现原理](https://draveness.me/dns-coredns/)
     - 工作原理+源码分析
+4. [Linux网络学习笔记（二）：域名解析(DNS)——以 CoreDNS 为例](https://www.debugger.wiki/article/html/1585468925262819)
+
