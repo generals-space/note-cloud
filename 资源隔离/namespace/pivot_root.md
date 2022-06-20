@@ -6,3 +6,5 @@
 2. [pivot_root](https://zhuanlan.zhihu.com/p/101096040)
     - `pivot_root . .`可以避免创建临时目录.
     - [rootfs: make pivot_root not use a temporary directory](https://github.com/opencontainers/runc/commit/f8e6b5af5e120ab7599885bd13a932d970ccc748)
+3. [解决PivotRoot系统调用失败](https://github.com/iamwwcposts/articles/issues/2)
+4. [PivotRoot调用失败，Invalid arguments error](https://github.com/iamwwc/wwcdocker/issues/3)

@@ -17,3 +17,4 @@
     - UTS Namespace: 提供主机名隔离能力
     - PID Namespace: 提供进程隔离能力
     - User Namespace: 提供用户隔离能力
+4. [Namespaces in operation, part 1: namespaces overview](https://lwn.net/Articles/531114/)

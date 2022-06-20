@@ -6,6 +6,19 @@
     - `unshare --mount`的使用方法与隔离表现
     - `mount`的`--make-shared`, `--make-private`参数的行为表现.
     - `unshare --propagation`选项的作用.
+2. [黄东升: mount namespace和共享子树](https://cloud.tencent.com/developer/article/1518101)
+    - 共享子树(Shared subtrees)
+    - 四种传递类型：
+        - MS_SHARED
+        - MS_PRIVATE
+        - MS_SLAVE
+        - MS_UNBINDABLE
+    - Peer groups（对等组）
+3. [Mount namespaces, mount propagation, and unbindable mounts](https://blog.csdn.net/u012319493/article/details/102887094)
+    - MS_SHARED 和 MS_PRIVATE 示例
+    - MS_SLAVE 示例
+    - MS_UNBINDABLE 示例
+4. [Building a container by hand using namespaces: The mount namespace](https://www.redhat.com/sysadmin/mount-namespaces)
 
 `mount namespace`是用来隔离`mountpoint`挂载点的, 我们创建一个新的mount ns, 这个新的ns会继承父ns的所有挂载点, 但是之后双方再进行挂载/卸载操作时, 就不会再互相影响了.
 
