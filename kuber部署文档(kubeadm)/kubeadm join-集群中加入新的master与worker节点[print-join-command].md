@@ -52,7 +52,7 @@ failed to create API client configuration from kubeconfig: invalid configuration
 To see the stack trace of this error execute with --v=5 or higher
 ```
 
-场景描述
+#### 场景描述
 
 单节点集群想添加两个worker节点, 按照上述步骤执行发现出错了. 看这报错是因为我把`kubectl`的配置文件更改了的缘故. 我把base64加密的证书字符串放到单独的文件中了, 配置文件类似如下
 
@@ -81,7 +81,7 @@ users:
 
 而且上面的报错是因为在kubectl配置文件中的证书路径写的是相对路径, ta找不到这些证书.
 
-解决办法
+#### 解决办法
 
 要么把证书路径写成绝对路径, 要么在`~/.kube/`目录下执行`kubeadm命令`.
 

@@ -112,6 +112,7 @@ systemctl enable kubelet
 安装指定版本的kube组件(需要与`kubeadm-config.yaml`中的`kubernetesVersion`字段匹配)
 
 ```
+yum install -y kubernetes-cni-0.6.0 kubelet-1.13.2 kubeadm-1.13.2 kubectl-1.13.2
 yum install -y kubelet-1.16.2 kubeadm-1.16.2 kubectl-1.16.2
 ```
 
