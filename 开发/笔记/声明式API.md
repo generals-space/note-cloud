@@ -8,3 +8,6 @@
     - **声明式API才算Kubernetes项目编排能力赖以生存的核心所在**
 2. [【Kubernetes】深入解析声明式API](https://www.cnblogs.com/yuxiaoba/p/9803284.html)
     - client提交创建资源的请求后, apiserver的执行流程(这个过程写的很详细, 就是感觉有点不符合"声明式API"的主题)
+
+
+个人认为, 声明式, 与接口式相对应.

@@ -3,13 +3,11 @@
 参考文章 
 
 1. [Chart Development Tips and Tricks](https://helm.sh/docs/howto/charts_tips_and_tricks/)
-
 2. [Built-in Objects](https://helm.sh/docs/topics/chart_template_guide/builtin_objects/)
     - helm chart内置对象, 如`.Release.Name`, `.Release.Namespace`
     - `.Release`表示helm创建的release实例
     - `.Chart`表示`Chart.yaml`文件中的内容空间.
     - `.Values`同理, 表示`values.yaml`内容空间.
-
 3. [helm--chart模板文件简单语法使用](https://www.cnblogs.com/DaweiJ/articles/8779256.html)
     - 用户级试用总结, 更易上手.
 

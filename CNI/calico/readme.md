@@ -22,8 +22,6 @@
     - 各组件在容器内部的配置文件目录位置.
     - calico的优点与缺点
 7. [DockOne微信分享（二六二）：谐云Calico大规模场景落地实践](http://dockerone.com/article/10382)
-8. [Calico IPAM源码解析](https://harmonycloudcaas.yuque.com/docs/share/b4ccb4d5-7b1e-4daf-b0c5-002424073702?#)
-    - 泽宇
 
 calico的BGP与flannel的host-gw一样, 是L3的underlay方案.
 

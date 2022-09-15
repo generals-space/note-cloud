@@ -5,6 +5,7 @@
 1. [k8s hostNetwork涉及到dns问题](https://linuxeye.com/470.html)
 2. [dnsPolicy in hostNetwork not working as expected](https://github.com/kubernetes/kubernetes/issues/87852)
 3. [kuber 官方文档 Pod's DNS Policy](https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-s-dns-policy)
+4. [k8s hostNetwork 网络的 pod 无法解析 service 排查](https://blog.csdn.net/a8138/article/details/121184631)
 
 环境
 

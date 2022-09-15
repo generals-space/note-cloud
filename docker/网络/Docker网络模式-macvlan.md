@@ -30,18 +30,15 @@ $ ip link set eno16777736 promisc on
 首先创建docker网络(与host, bridge, none等网络模式同级)
 
 ```
-$ docker network create -d macvlan --subnet=172.32.100.0/24 --gateway=172.32.100.2 -o parent=eno16777736 macnet
+docker network create -d macvlan --subnet=172.32.100.0/24 --gateway=172.32.100.2 -o parent=eno16777736 macnet
 ```
 
-`--subnet`指定与宿主机所在相同网络(没关系, 不会冲突)
+- `--subnet`: 指定与宿主机所在相同网络(没关系, 不会冲突)
+- `--gateway`: 指定宿主机网络中的网关
+- `-o parent`: 则指定了出口网卡, 还是比较容易理解的.
+- `macnet`: 是网络名称, 可随意指定.
 
-`--gateway`指定宿主机网络中的网关
-
-`-o parent`则指定了出口网卡, 还是比较容易理解的.
-
-`macnet`是网络名称, 可随意指定.
-
-```
+```console
 $ docker network ls
 NETWORK ID          NAME                DRIVER              SCOPE
 ef2a68c1ca8d        bridge              bridge              local
@@ -53,7 +50,7 @@ e312e054c1a0        macnet              macvlan             local
 接下来就可以指定目标网络启动容器了.
 
 ```
-$ docker run -it --net=macnet --ip=172.32.100.248 daocloud.io/centos:6 /bin/bash
+docker run -it --net=macnet --ip=172.32.100.248 daocloud.io/centos:6 /bin/bash
 ```
 
 按照这个方法在多台宿主机上部署, 可以达到跨主机容器互联的目的. 但是, 同一宿主机上的不同容器间可以联通, 不同宿主机上的不同容器也可以联通, 某一宿主机可以与其他宿主机上的容器联通, 但就是宿主机无法与其本身的容器联通...我真是X﹏X
