@@ -16,6 +16,9 @@
     - 穿越形态: Underlay, Overlay
     - 隔离方式: Flat, VLAN, VxLAN/GRE
     - 分析了多个第三方网络插件提供的网络方案的分类, 优缺点及适用场景.
+4. [K8S CNI之：利⽤ ipvlan + host-local 打通容器与宿主机的平⾏⽹络](https://juejin.cn/post/6844903801057443853)
+    - Underlay 与宿主机平⾏⽹络（2层⽹络或3层⽹络）: bridge、macvlan、ipvlan、calico bgp、flannel host-gw
+    - Overlay 利⽤ SDN 技术的虚拟⽹络 flannel vxlan、calico ipip、weave
 
 - `Overlay`: `Overlay`在云化场景比较常见. `Overlay`下面是受控的`VPC`网络, 当出现不属于`VPC`管辖范围中的`IP`或者`MAC`, `VPC`将不允许此`IP`/`MAC`穿越. 出现这种情况时, 我们都利用`Overlay`方式来做. 
 - `Underlay`: 在一个较好的一个可控的网络场景下, 我们一般利用`Underlay`. 可以这样通俗的理解, 无论下面是裸机还是虚拟机, 只要网络可控, 整个容器的网络便可直接穿过去, 这就是`Underlay`. 

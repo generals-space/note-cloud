@@ -13,12 +13,15 @@
     - flannel插件实现的overlay网络
     - flannel组件以UDP模式实现的, 容器间跨主机通信时数据包传递的全过程(精彩)
     - 生产环境不推荐使用UDP模式的原因: 性能(数据包在用户空间与内核空间多次拷贝)
-3. [Kubernetes网络方案的三大类别和六个场景](https://sq.163yun.com/blog/article/223878660638527488)
+5. [Kubernetes网络方案的三大类别和六个场景](https://sq.163yun.com/blog/article/223878660638527488)
     - 总纲级别, 值得一读
     - Calico提供了两种网络模型: 
         1. BGP (`Underlay L3`)
         2. ipip (`Overlay L3`)
-
+6. [K8S CNI之：利⽤ ipvlan + host-local 打通容器与宿主机的平⾏⽹络](https://juejin.cn/post/6844903801057443853)
+    - Underlay 与宿主机平⾏⽹络（2层⽹络或3层⽹络）: bridge、macvlan、ipvlan、calico bgp、flannel host-gw
+    - Overlay 利⽤ SDN 技术的虚拟⽹络 flannel vxlan、calico ipip、weave
+    - 很不错的文章
 
 Calico BGP
 

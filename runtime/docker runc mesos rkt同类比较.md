@@ -5,11 +5,9 @@
     - [rkt/rkt](https://github.com/rkt/rkt) 该项目已结束, CoreOS公司最早发起.
     - [docker/docker-ce](https://github.com/docker/docker-ce)
     - LXC 容器. 不支持与 kuber 整合, 没有实现 OCI 的标准
-
-[opencontainers/runc](https://github.com/opencontainers/runc)
+2. [opencontainers/runc](https://github.com/opencontainers/runc)
     - 之前 docker 旗下的 [libcontainer](https://github.com/docker-archive/libcontainer)
-
-[containerd/containerd](https://github.com/containerd/containerd)
+3. [containerd/containerd](https://github.com/containerd/containerd)
     - 之前 docker 旗下的 [containerd](https://github.com/docker-archive/containerd)
 
 docker info: 19.03.5
