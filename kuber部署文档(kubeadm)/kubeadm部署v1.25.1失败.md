@@ -38,3 +38,48 @@ Sep 20 00:14:40 ubuntu kubelet[36562]: E0920 00:14:40.663165   36562 kubelet.go:
 其实最开始换成 crio 接口还是无效, 本来kubelet要创建容器一定是要通过接口让 CRI 运行时完成的, 但是static容器没启动 kubelet 也没报错, 一点信息也看不出来.
 
 后来想修改一下 crio 本身的日志级别, 查看了下ta的配置文件`/etc/crio/crio.conf`
+
+```conf
+# The image used to instantiate infra containers.
+# This option supports live configuration reload.
+pause_image = "k8s.gcr.io/pause:3.2"
+```
+
+将`pause_image`字段换成`registry.aliyuncs.com/google_containers/pause:3.8`, 清理后重新执行`kubeadm init`, 竟然可以了...
+
+```yaml
+apiVersion: kubeadm.k8s.io/v1beta3
+kind: InitConfiguration
+localAPIEndpoint:
+  advertiseAddress: 192.168.128.135
+  bindPort: 6443
+nodeRegistration:
+  criSocket: unix:///var/run/crio/crio.sock
+  imagePullPolicy: IfNotPresent
+  ## name: ubuntu
+  ## taints: null
+  ## kubeletExtraArgs:
+  ##   v: "5"
+---
+apiServer:
+  timeoutForControlPlane: 4m0s
+apiVersion: kubeadm.k8s.io/v1beta3
+certificatesDir: /etc/kubernetes/pki
+clusterName: kubernetes
+controllerManager: {}
+dns: {}
+etcd:
+  local:
+    dataDir: /var/lib/etcd
+imageRepository: registry.aliyuncs.com/google_containers
+kind: ClusterConfiguration
+kubernetesVersion: 1.25.1
+networking:
+  dnsDomain: cluster.local
+  serviceSubnet: 10.96.0.0/12
+scheduler: {}
+---
+kind: KubeletConfiguration
+apiVersion: kubelet.config.k8s.io/v1beta1
+cgroupDriver: systemd
+```
