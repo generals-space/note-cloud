@@ -26,7 +26,7 @@ kuber中RBAC的运行原理
 
 > 思路大致理清了, 但总觉得`RoleBinding`/`ClusterRoleBinding`有此多余, 在声明User/SA资源实例的时候不能把`Binding`的功能集成进去吗? 
 
-另外, 参考文章2中有提到`User`类型的`Binding`主体, 与SA同级. 不过kuber中并没有`User`类型的资源, `Binding`中的`User`对象只能用于kubectl配置文件中的`user`字段.
+另外, 参考文章2中有提到`User`类型的`Binding`主体, 与SA同级. 不过kuber中并没有`User`(还有`Group`)类型的资源, 这个话题请见另一篇文章.
 
 ------
 

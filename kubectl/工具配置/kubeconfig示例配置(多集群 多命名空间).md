@@ -4,7 +4,8 @@
 <!tags!>: <!kubernetes!>
 <!keys!>: Pyak5endi8nCjjr[
 -->
-```yml
+
+```yaml
 apiVersion: v1
 clusters:
   - name: kubernetes

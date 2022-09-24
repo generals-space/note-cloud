@@ -39,14 +39,10 @@ $ kya secret coredns-token-pz4dj
 apiVersion: v1
 data:
   ca.crt: "base64字符串"
-  namespace: a3ViZS1zeXN0ZW0= ## base64解码后为 kube-system
+  namespace: base64("kube-system")
   token: "base64字符串"
 kind: Secret
 metadata:
-  annotations:
-    kubernetes.io/service-account.name: coredns
-    kubernetes.io/service-account.uid: 453cdf0a-9d98-45d2-ad35-973608bd7a63
-  creationTimestamp: "2021-03-27T16:02:42Z"
   name: coredns-token-pz4dj
   namespace: kube-system
 type: kubernetes.io/service-account-token

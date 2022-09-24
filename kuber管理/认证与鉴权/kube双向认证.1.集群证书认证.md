@@ -50,35 +50,3 @@ $ openssl genrsa -out kubectl.key 2048
 $ openssl req -new -key kubectl.key -subj "/CN=kubectl所在的IP或域名" -out kubectl.csr
 $ openssl x509 -req -in kubectl.csr -CA ca.crt -CAkey ca.key -CAcreateserial -days 5000 -out kubectl.crt
 ```
-
-------
-
-配置apiserver系统服务, 保证有如下参数
-
-```
-[Service]
-ExecStart=/usr/local/kubernetes/bin/kube-apiserver  \
-    --bind-address=0.0.0.0 \
-    --secure-port=6443 \
-    --client-ca-file=/usr/local/kubernetes/etc/ca.crt \                 ## 根证书路径 
-    --tls-cert-file=/usr/local/kubernetes/etc/apiserver.crt \           ## apiserver证书路径 
-    --tls-private-key-file=/usr/local/kubernetes/etc/apiserver.key \    ## apiserver私钥路径
-    ...
-```
-
-重启apiserver服务.
-
-然后配置kubectl.
-
-```
-$ kubectl config set-cluster sky-test --server=https://apiserver.sky-mobi.com:6443 --certificate-authority=/usr/local/kubernetes/etc/ca.crt --embed-certs=true
-$ kubectl config set-credentials admin --certificate-authority=/usr/local/kubernetes/etc/ca.crt --client-key=/root/.kube/kubectl.key --client-certificate=/root/.kube/kubectl.crt
-$ kubectl config set-context sky-test --cluster=sky-test --user=admin
-$ kubectl config use-context sky-test
-```
-
-记得在kubectl所在主机上添加apiserver的hosts映射.
-
-kubectl客户端的证书和私钥中, `-subj`选项的CN值真是可以随便指定的, 也因此客户端的证书与私钥可以拷贝到其他机器上使用.
-
-...怎么感觉这种双向认证这么水呢???
