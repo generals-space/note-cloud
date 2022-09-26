@@ -61,7 +61,7 @@ bash: ulimit: max locked memory: cannot modify limit: Operation not permitted
 在`docker run`时使用`--ulimit`选项可以
 
 ```console
-$ docker run -it --name ulimit --ulimit memlock=-1:-1 registry.cn-hangzhou.aliyuncs.com/generals-space/centos7-devops bash
+$ docker run -it --name ulimit --ulimit memlock=-1:-1 registry.cn-hangzhou.aliyuncs.com/generals-space/centos:7-devops bash
 [root@3b5fe1388e5a /]# ulimit -a | grep locked
 max locked memory       (kbytes, -l) unlimited
 ```
@@ -69,7 +69,7 @@ max locked memory       (kbytes, -l) unlimited
 不过这种方法貌似还有点问题.
 
 ```
-$ docker run -it --name ulimit --ulimit memlock=100:100 registry.cn-hangzhou.aliyuncs.com/generals-space/centos7-devops bash
+$ docker run -it --name ulimit --ulimit memlock=100:100 registry.cn-hangzhou.aliyuncs.com/generals-space/centos:7-devops bash
 [root@78f42b22f00b /]# ulimit -a | grep locked
 max locked memory       (kbytes, -l) 0
 ```
@@ -83,7 +83,7 @@ max locked memory       (kbytes, -l) 0
 虽然说`ulimit`命令设置的参数只在当前会话中有效, 但是在此会话下的子进程也可以生效.
 
 ```console
-$ docker run -it --name ulimit --privileged registry.cn-hangzhou.aliyuncs.com/generals-space/centos7-devops bash
+$ docker run -it --name ulimit --privileged registry.cn-hangzhou.aliyuncs.com/generals-space/centos:7-devops bash
 [root@a4d27f9b6c45 /]# ulimit -l unlimited
 [root@a4d27f9b6c45 /]# ulimit -a
 max locked memory       (kbytes, -l) unlimited
@@ -137,7 +137,7 @@ su: cannot open session: Permission denied
 如果实在需要修改容器内的`memlock`, 也最好不要直接指定`privileged`, 而是通过`capabilities`指定内核能力.
 
 ```console
-$ docker run -it --name ulimit --cap-add SYS_RESOURCE registry.cn-hangzhou.aliyuncs.com/generals-space/centos7-devops bash
+$ docker run -it --name ulimit --cap-add SYS_RESOURCE registry.cn-hangzhou.aliyuncs.com/generals-space/centos:7-devops bash
 [root@a282fae2b94f /]# ulimit -l unlimited
 [root@a282fae2b94f /]# ulimit -a | grep locked
 max locked memory       (kbytes, -l) unlimited

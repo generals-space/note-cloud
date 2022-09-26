@@ -17,10 +17,10 @@ docker history 镜像ID
 docker image history 镜像ID
 ```
 
-以下以`registry.cn-hangzhou.aliyuncs.com/generals-space/centos7:devops`镜像为例
+以下以`registry.cn-hangzhou.aliyuncs.com/generals-space/centos:7:devops`镜像为例
 
 ```
-[root@k8s-master-01 manifests]# docker history registry.cn-hangzhou.aliyuncs.com/generals-space/centos7:devops --no-trunc
+[root@k8s-master-01 manifests]# docker history registry.cn-hangzhou.aliyuncs.com/generals-space/centos:7:devops --no-trunc
 IMAGE                                                                     CREATED             CREATED BY                                                                                                                                                                                                            SIZE                COMMENT
 sha256:e5d8f10fcec2116498fa2c1b40b463f140c681a89fa60c512578ad47b53b0f61   7 months ago        /bin/sh -c #(nop)  CMD ["tail" "-f" "/etc/profile"]                                                                                                                                                                   0B
 <missing>                                                                 7 months ago        /bin/sh -c yum install -y iproute net-tools     && yum clean all     && rm -rf /var/cache/yum                                                                                                                         28.1MB
@@ -38,7 +38,7 @@ sha256:e5d8f10fcec2116498fa2c1b40b463f140c681a89fa60c512578ad47b53b0f61   7 mont
 <missing>                                                                 11 months ago       /bin/sh -c #(nop)  LABEL org.label-schema.schema-version=1.0 org.label-schema.name=CentOS Base Image org.label-schema.vendor=CentOS org.label-schema.license=GPLv2 org.label-schema.build-date=20191001               0B
 <missing>                                                                 11 months ago       /bin/sh -c #(nop) ADD file:45a381049c52b5664e5e911dead277b25fadbae689c0bb35be3c42dff0f2dffe in /                                                                                                                      203MB
 [root@k8s-master-01 manifests]# docker images | grep devops
-registry.cn-hangzhou.aliyuncs.com/generals-space/centos7                      devops              e5d8f10fcec2        7 months ago        445MB
+registry.cn-hangzhou.aliyuncs.com/generals-space/centos:7                      devops              e5d8f10fcec2        7 months ago        445MB
 ```
 
 首先, 第一列为构建时其各层镜像的id, `e5d8f10fcec2`即为该镜像本身的id.

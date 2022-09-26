@@ -32,7 +32,7 @@ spec:
     spec:
       containers:
         - name: centos7
-          image: registry.cn-hangzhou.aliyuncs.com/generals-space/centos7
+          image: registry.cn-hangzhou.aliyuncs.com/generals-space/centos:7
           command:
             - sleep
             - "300"

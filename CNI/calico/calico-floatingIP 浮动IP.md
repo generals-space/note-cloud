@@ -37,7 +37,7 @@ metadata:
 spec:
   containers:
   - name: centos7
-    image: registry.cn-hangzhou.aliyuncs.com/generals-space/centos7
+    image: registry.cn-hangzhou.aliyuncs.com/generals-space/centos:7
     command: ['tail', '-f', '/etc/os-release']
 ```
 
@@ -77,7 +77,7 @@ spec:
     spec:
       containers:
       - name: centos7
-        image: registry.cn-hangzhou.aliyuncs.com/generals-space/centos7-devops
+        image: registry.cn-hangzhou.aliyuncs.com/generals-space/centos:7-devops
         imagePullPolicy: IfNotPresent
         command: ["tail", "-f", "/etc/os-release"]
       ## 允许在master节点部署

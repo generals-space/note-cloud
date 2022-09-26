@@ -18,7 +18,7 @@ The Pod "test-ds-sbj8g" is invalid: spec: Forbidden: pod updates may not change 
 还是失败了, 因为Pod资源只能修改`image`, `tolerations`等有限个字段.
 
 ```console
-$ k patch pod Pod名称 -p '{"spec":{"containers":[{"name":"centos7","image":"registry.cn-hangzhou.aliyuncs.com/generals-space/centos7-devops"}]}}'
+$ k patch pod Pod名称 -p '{"spec":{"containers":[{"name":"centos7","image":"registry.cn-hangzhou.aliyuncs.com/generals-space/centos:7-devops"}]}}'
 pod/test-ds-sbj8g patched
 ```
 

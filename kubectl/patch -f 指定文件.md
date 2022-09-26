@@ -10,7 +10,7 @@ patch子命令没有直接使用`-f`等选项指定读取哪个文件, 但是可
                 "containers": [
                 {
                     "name": "centos7",
-                    "image": "registry.cn-hangzhou.aliyuncs.com/generals-space/centos7-devops"
+                    "image": "registry.cn-hangzhou.aliyuncs.com/generals-space/centos:7-devops"
                 }
                 ]
             }

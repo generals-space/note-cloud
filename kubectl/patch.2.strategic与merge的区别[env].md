@@ -87,7 +87,7 @@ daemonset.apps/test-ds patched
 如果指定的`contaners[n].name`值不等于已有的字段值, 那么策略合并机制会认为我们想要在`containers`中再追加一个容器.
 
 ```
-$ k patch ds test-ds -p '{"spec":{"template":{"spec":{"containers":[{"name":"centos8","image":"registry.cn-hangzhou.aliyuncs.com/generals-space/centos7"}]}}}}'
+$ k patch ds test-ds -p '{"spec":{"template":{"spec":{"containers":[{"name":"centos8","image":"registry.cn-hangzhou.aliyuncs.com/generals-space/centos:7"}]}}}}'
 daemonset.apps/test-ds patched
 ```
 
@@ -105,7 +105,7 @@ The DaemonSet "test-ds" is invalid:
 因为是直接替换, 所以`containers`成员中必须存在`name`, `image`.
 
 ```
-k patch ds test-ds --type merge -p '{"spec":{"template":{"spec":{"containers":[{"name": "centos7", "image":"registry.cn-hangzhou.aliyuncs.com/generals-space/centos7", "env":[{"name":"updateTime","value":"123456"}]}]}}}}'
+k patch ds test-ds --type merge -p '{"spec":{"template":{"spec":{"containers":[{"name": "centos7", "image":"registry.cn-hangzhou.aliyuncs.com/generals-space/centos:7", "env":[{"name":"updateTime","value":"123456"}]}]}}}}'
 ```
 
 注意, 这一句执行了, 就不能达到合并`env`的目的了, 整个`containers`都被替换掉了...

@@ -61,7 +61,7 @@ spec:
                 - k8s-worker-02
       containers:
       - name: centos
-        image: registry.cn-hangzhou.aliyuncs.com/generals-space/centos7
+        image: registry.cn-hangzhou.aliyuncs.com/generals-space/centos:7
         command: ['tail', '-f', '/etc/os-release']
 ```
 
@@ -106,7 +106,7 @@ spec:
                 - kube-dns
       containers:
       - name: centos
-        image: registry.cn-hangzhou.aliyuncs.com/generals-space/centos7
+        image: registry.cn-hangzhou.aliyuncs.com/generals-space/centos:7
         command: ['tail', '-f', '/etc/os-release']
 ```
 
