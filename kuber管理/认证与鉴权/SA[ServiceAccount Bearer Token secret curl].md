@@ -21,7 +21,7 @@ default   1         18d
 
 ```yaml
 $ k get sa | grep default
-default                              1         16h
+default   1         16h
 $ kya sa default
 apiVersion: v1
 kind: ServiceAccount
@@ -34,7 +34,7 @@ secrets:
 
 ```yaml
 $ k get secret | grep coredns
-coredns-token-pz4dj                              kubernetes.io/service-account-token   3      11h
+coredns-token-pz4dj    kubernetes.io/service-account-token    3    11h
 $ kya secret coredns-token-pz4dj
 apiVersion: v1
 data:

@@ -67,7 +67,7 @@ spec:
 
 > 除了`matchExpressions`运算之外, `nodeSelectorTerms`的规则其实还有`matchFields`运算, 目前还没有遇到过.
 
-## podeAffinity
+## podAffinity
 
 ```yaml
 apiVersion: apps/v1

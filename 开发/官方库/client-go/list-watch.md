@@ -34,6 +34,6 @@ list-watch有两部分组成, 分别是`list`和`watch`. `list`非常好理解, 
 
 笔者在阅读Informer代码时候, 对这种做法十分不解. 按照多数人思路, 通过`resync`机制, 重新List一遍 resource下的所有Object, 可以更好的保证 Informer 缓存和 kuber 中数据的一致性. 
 
-咨询过 Google 内部 kuber 开发人员之后, 得到的回复是:
+咨询过 Google 内部 kube 开发人员之后, 得到的回复是:
 
 > 在 Informer 设计之初, 确实存在一个relist无法去执`resync`操作, 但后来被取消了. 原因是现有的这种 List/Watch 机制, 完全能够保证永远不会漏掉任何事件, 因此完全没有必要再添加relist方法去resync informer的缓存. 这种做法也说明了kuber完全信任etcd. 

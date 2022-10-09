@@ -69,7 +69,7 @@ spec:
           ## udp 模型需要将此值设置为 true
           privileged: false
           capabilities:
-             add: ["NET_ADMIN"]
+            add: ["NET_ADMIN"]
         env:
         - name: POD_NAME
           valueFrom:

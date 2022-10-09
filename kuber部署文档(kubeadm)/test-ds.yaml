@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: centos7
-        image: registry.cn-hangzhou.aliyuncs.com/generals-space/centos:7-devops
+        image: registry.cn-hangzhou.aliyuncs.com/generals-space/centos:7
         imagePullPolicy: IfNotPresent
         command: ["tail", "-f", "/etc/os-release"]
         resources:

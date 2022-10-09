@@ -184,6 +184,8 @@ done
 kubectl taint nodes --all node-role.kubernetes.io/master-
 ```
 
+> k taint node k8s-master-01 node-role.kubernetes.io/master=:NoSchedule
+
 ## 5. 网络插件
 
 此时加入的新节点, 包括初始的master节点, 状态都是 NotReady, 可以通过`kubectl get node`查看. 并且 kube-system 命名空间下的 core-dns pod 也是 Pending 状态(`FailedScheduling`: 0/3 nodes are available: 3 node(s) had taints that the pod didn't tolerate.). 
