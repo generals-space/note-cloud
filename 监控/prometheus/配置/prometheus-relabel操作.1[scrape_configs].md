@@ -6,6 +6,8 @@
     - `<relabel_config>`: replace, keep, drop, hashmod, labelmap, labeldrop, labelkeep
 2. [Prometheus中relabel_configs的使用](https://www.li-rui.top/2019/04/16/monitor/Prometheus%E4%B8%ADrelabel_configs%E7%9A%84%E4%BD%BF%E7%94%A8/)
     - 对`relabel_configs`及其子字段的概念解释得很清晰
+3. [Prometheus label（标签）改名](https://blog.csdn.net/qq_31977125/article/details/121556992)
+    - 复制 servicename 标签并命名为project标签, 但结果会有两个标签, 值相同.
 
 ## 1. 使用场景
 
@@ -64,7 +66,7 @@ relabel_configs:
 
 > 默认操作为`replace`(不指定`action`时, 即为`replace`).
 
-注意: `replace`操作并不会把原本的 label 移除.
+注意: 如果`target_label`是一个新标签, `replace`操作并不会把原本的 label 移除, 相当于标签数增加了.
 
 ### 2.2 keep/drop
 
