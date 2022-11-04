@@ -2,7 +2,7 @@
 
 参考文章
 
-- kuber: 1.16.2
+- kube: 1.16.2
 - apimachinery: v0.17.0
 
 apimachinery@v0.17.2/pkg/apis/meta/v1/types.go -> List{}

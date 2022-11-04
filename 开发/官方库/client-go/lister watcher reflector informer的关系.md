@@ -17,4 +17,30 @@ reflector 是 client-go 的核心, tools/cache/reflector.go -> Reflector.ListAnd
 
 可见 staging/src/k8s.io/apiserver/pkg/storage/cacher/cacher.go -> cacherListerWatcher{} 的 List/Watch 方法实现.
 
-reflector 与 queue 不直接相关.
+------
+
+list-watcher 组成 reflector, 然后由 reflector 组成 informer.
+
+sharedInformer 只包含 informer, 不过可以注册多种资源类型的 informer.
+
+其他的如 indexerInformer
+
+------
+
+Store, Indexer 都基于 threadSafeMap, Indexer 兼容 Store. 
+
+Store 只有常规的 CURD 操作, 无法指定索引器(AddIndexers), 而 Indexer 可以.
+
+基本没有直接使用 Store 对象的场景.
+
+两者都是由 tools/cache/store.go -> cache{} 对象实现的, 只不过 Store 对象只暴露了一部分 cache{} 的方法.
+
+------
+
+tools/cache/reflector.go -> ListAndWatch() 
+
+先进行全量同步, 保存到本地缓存.
+
+然后调用 watchHandler() 按照事件类型(apiserver watch 接口里就会返回事件类型), 写入 delta fifo 队列.
+
+另外, 开启定时器, 定时调用 Resync() 向 fifo 队列写入 Sync 类型的事件.

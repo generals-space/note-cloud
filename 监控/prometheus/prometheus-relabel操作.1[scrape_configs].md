@@ -36,7 +36,7 @@ prmetheus从服务暴露出的`/metrics`接口中获得的进程状态信息, �
         regex: default;kubernetes;https
 ```
 
-## 2. 使用方法
+## 2. action使用方法
 
 ### 2.1 replace替换
 
@@ -50,6 +50,8 @@ relabel_configs:
   replacement: /api/v1/nodes/${1}/proxy/metrics
 ```
 
+上面配置块的作用是, 把`__meta_kubernetes_node_name`的值, 全部提取出来(通过regex匹配), 改成`/api/v1/nodes/${1}/proxy/metrics`, 赋值给`__metrics_path__`标签(让 promethes 根据这个标签的地址去采集 node 信息).
+
 当然, `replace`操作可以不匹配`source_labels`, 而直接指定`target_label`和`replacement`完成替换.
 
 ```yaml
@@ -58,7 +60,11 @@ relabel_configs:
   replacement: kubernetes.default.svc:443
 ```
 
+直接把`__address__`标签赋值为"kubernetes.default.svc:443"
+
 > 默认操作为`replace`(不指定`action`时, 即为`replace`).
+
+注意: `replace`操作并不会把原本的 label 移除.
 
 ### 2.2 keep/drop
 

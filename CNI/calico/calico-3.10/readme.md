@@ -1,12 +1,12 @@
 参考文章
 
 1. [Configuring calico/node](https://docs.projectcalico.org/v3.10/reference/node/configuration#ip-setting)
-
 2. [k8s网络calico——BGP模式](https://www.cnblogs.com/jinxj/p/9414830.html)
     - calico默认为ipip网络模型, 提到了切换为BGP模型的方法.
 3. [calico网络模型中的路由原理](https://segmentfault.com/a/1190000016565044)
     - 关闭ipip网络的方法.
 4. [Calico网络方案](https://www.cnblogs.com/netonline/p/9720279.html)
+5. [Quickstart for Calico on Kubernetes](https://projectcalico.docs.tigera.io/archive/v3.10/getting-started/kubernetes/)
 
 **CIDR网段的配置在 04-ds.yaml 中, 部署前需要先修改04-ds中的`CALICO_IPV4POOL_CIDR`作为集群内部pod网段.**
 
