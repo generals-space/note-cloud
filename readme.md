@@ -26,4 +26,3 @@
 ## 大厂容器化经验
 
 1. [DockOne微信分享（一九二）：360搜索容器云探索与实践](http://www.dockerone.com/article/8353)
-

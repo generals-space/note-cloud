@@ -84,7 +84,6 @@ Pod被分配到一个Node上之后, 就不会离开这个Node, 直到被删除. 
 **生命周期回调函数**: 
 
 - `PostStart`(容器创建成功后调用该回调函数)
-
 - `PreStop`(在容器被终止前调用该回调函数)
 
 以下示例中, 定义了一个Pod, 包含一个JAVA的web应用容器, 其中设置了`PostStart`和`PreStop`回调函数. 即在容器创建成功后, 复制`/sample.war`到`/app`文件夹中. 而在容器终止之前, 发送HTTP请求到`http://monitor.com:8080/waring`, 即向监控系统发送警告. 具体示例如下: 

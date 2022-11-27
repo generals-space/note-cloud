@@ -41,7 +41,7 @@ k8s-master-01   Ready    master   47h   v1.16.2   aaa=ccc,kubernetes.io/hostname
 
 ## 删除
 
-就用一个减号`-`
+在目标标签名添加一个减号`-`即可
 
 ```console
 $ k label node k8s-master-01 aaa-
@@ -53,7 +53,7 @@ k8s-master-01   Ready    master   47h   v1.16.2   kubernetes.io/hostname=k8s-mas
 
 尝试删除一个不存在的 label 会报错.
 
-```
+```console
 $ k label node k8s-master-01 aaa-
 label "aaa" not found.
 node/k8s-master-01 not labeled

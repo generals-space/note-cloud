@@ -54,4 +54,3 @@ $ curl http://localhost:8080/api/
 
 > 当然, 也有通过curl工具访问apiserver的方法, 参考文章1中也有给出, 不过不在本文的讨论范围, 这里就不细说了.
 
-

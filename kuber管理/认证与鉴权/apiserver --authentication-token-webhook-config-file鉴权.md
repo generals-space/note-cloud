@@ -1,8 +1,12 @@
 # apiserver --authentication-token-webhook-config-file鉴权
 
+apiserver 启动参数中添加
+
 ```
     - --authentication-token-webhook-config-file=/etc/kubernetes/pki/webhook_config
 ```
+
+webhook_config文件的内容如下
 
 ```yaml
 # clusters refers to the remote service.

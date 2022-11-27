@@ -9,7 +9,6 @@
 3. [hostPort不生效](http://liupeng0518.github.io/2018/12/29/k8s/Network/%E5%BC%82%E5%B8%B8%E6%8E%92%E9%94%99/)
     - hostPort不生效的原因分析, 及使用iptables手动映射的解决方法
 
-
 - `targetPort`: 表示该service要映射的源端口, 比如一个容器里监听的是80端口, 那`targetPort`就是80. 
 - `port`: 是service监听的端口, pod中的服务相互访问时, 就是访问的其他pod绑定的service的端口.
 - `nodePort`: kuber集群负责的, 开放给集群外部访问的端口, 范围在30000-32767. 由`kube-proxy`服务处理, 由于实际上集群中每个节点(包括master和worker)都运行着这个服务, 所以在每个节点上访问这个端口, 都能访问到ta对应的pod中的服务. 

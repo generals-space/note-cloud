@@ -3,9 +3,7 @@
 参考文章
 
 1. [Kubernetes安装之证书验证](https://www.kubernetes.org.cn/1861.html)
-
 2. [和我一步步部署 kubernetes 集群](https://github.com/opsnull/follow-me-install-kubernetes-cluster)
-
 3. [Kubernetes集群安全配置案例](http://www.cnblogs.com/breg/p/5923604.html)
 
 kubernetes 系统的各组件需要使用 TLS 证书对通信进行加密. apiserver与etcd之间, apiserver与kubectl/controller-manager之间等. 本文介绍如何使用openssl工具为kuber集群生成自签名证书.
