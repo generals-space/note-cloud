@@ -4,7 +4,7 @@
 
 1. [consul 官方compose集群配置示例](https://github.com/hashicorp/consul/blob/master/demo/docker-compose-cluster/docker-compose.yml)
 
-```yml
+```yaml
 version: '3'
 
 services:

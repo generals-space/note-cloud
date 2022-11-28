@@ -18,7 +18,7 @@ Creating service celery_celery-worker
 
 `swarm.yml`的内容如下
 
-```yml
+```yaml
 version: '3'
 
 services:

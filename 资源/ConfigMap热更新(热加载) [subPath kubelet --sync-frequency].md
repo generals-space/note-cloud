@@ -10,3 +10,7 @@
     - kubelet有一个启动参数`--sync-frequency`，控制同步配置的时间间隔，它的默认值是1min，所以更新configmap的内容后，真正容器中的挂载内容变化可能在0~1min之后。
 
 `ConfigMap`通过`volume`挂载入`Pod`, 然后更新`ConfigMap`中的信息后, `Pod`内部的`ConfigMap`是会同步变动的, 但是由于Pod内的进程没有重启, 所以大部分场景还是需要重启一下Pod才会生效.
+
+但是, 这要求挂载方式为 volume, 且为目录类型, 即不可以为`subPath`形式.
+
+注意内容同步的延迟时间.

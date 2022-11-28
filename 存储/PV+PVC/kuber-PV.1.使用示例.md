@@ -21,7 +21,7 @@
 
 ### 1. 创建pv资源
 
-```yml
+```yaml
 ## postgres pv
 kind: PersistentVolume
 apiVersion: v1
@@ -56,7 +56,7 @@ spec:
 
 ### 2. 使用资源, 常规的pod添加上`volumes`声明即可.
 
-```yml
+```yaml
 volumes:
   - name: demo-vol
     persistentVolumeClaim:

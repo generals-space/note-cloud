@@ -88,7 +88,7 @@ Pod被分配到一个Node上之后, 就不会离开这个Node, 直到被删除. 
 
 以下示例中, 定义了一个Pod, 包含一个JAVA的web应用容器, 其中设置了`PostStart`和`PreStop`回调函数. 即在容器创建成功后, 复制`/sample.war`到`/app`文件夹中. 而在容器终止之前, 发送HTTP请求到`http://monitor.com:8080/waring`, 即向监控系统发送警告. 具体示例如下: 
 
-```yml
+```yaml
 ## ...
 containers:
 - image: sample:v2  
@@ -186,7 +186,7 @@ Service不仅可以代理Pod, 还可以代理任意其他后端, 比如运行在
 
 `redis-service.yaml`
 
-```yml
+```yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -200,7 +200,7 @@ spec:
 
 `redis-endpoints.yaml`
 
-```yml
+```yaml
 apiVersion: v1
 kind: Endpoints
 metadata:
@@ -280,7 +280,7 @@ Kubernetes提供了一种更加简单的更新RC和Pod的机制, 叫做Deploymen
 
 相比于`RC`, `Deployment`直接使用`kubectl edit deployment/deploymentName`或者`kubectl set`方法就可以直接升级(原理是`Pod`的`template`发生变化, 例如更新`label`、更新镜像版本等操作会触发`Deployment`的滚动升级). 操作示例——首先 我们同样定义一个`nginx-deploy-v1.yaml`的文件, 副本数量为2: 
 
-```yml
+```yaml
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:

@@ -31,7 +31,7 @@ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout server.key -out serv
 kubectl create secret tls https-certs -n harbor --key server.key --cert server.crt
 ```
 
-```yml
+```yaml
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:

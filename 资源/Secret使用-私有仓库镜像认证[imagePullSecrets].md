@@ -33,7 +33,7 @@ kubectl create secret docker-registry secret资源名称 --docker-server=仓库�
 
 然后在kubernetes配置文件中, 指定使用的`secret`资源. 如下
 
-```yml
+```yaml
 spec:
     imagePullSecrets:
     - name: secret资源名称

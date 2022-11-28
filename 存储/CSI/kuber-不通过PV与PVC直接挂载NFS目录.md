@@ -4,7 +4,7 @@
 
 1. [Configuring NFS Storage for Kubernetes](https://docs.docker.com/ee/ucp/kubernetes/storage/use-nfs-volumes/)
 
-```yml
+```yaml
 kind: Pod
 apiVersion: v1
 metadata:

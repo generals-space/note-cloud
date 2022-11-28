@@ -44,7 +44,7 @@ $ docker run -d --name testing-pg -v testing-pgdata:/var/lib/postgresql/data pos
 
 但是, 如果你使用`docker volume create`创建了一个挂载卷, 而你想在`docker-compose.yml`中使用时?
 
-```yml
+```yaml
 version: '3'
 services:
   postgres-svc:
@@ -64,7 +64,7 @@ ERROR: Named volume "testing-pgdata:/var/lib/postgresql/data:rw" is used in serv
 
 这样的操作是不对的, 正确的方法如下, 不需要事先手动创建挂载目录, 而是直接将其声明到yml文件中.
 
-```yml
+```yaml
 version: '3'
 services:
   postgres-svc:
@@ -89,7 +89,7 @@ Creating bootstrapmb-downloader-pyasync_postgres-svc_1 ... done
 
 但是这种做法也不是完美的. 除了数据目录, 也许我们还想挂载其他的目录, 但是这是不能与`volumes`挂载卷同时使用的.
 
-```yml
+```yaml
 version: '3'
 services:
   postgres-svc:

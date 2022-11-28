@@ -84,7 +84,7 @@ failed to open log file "/var/log/pods/b8012435-15fb-11ec-b6be-000af79b1e70/es-c
 
 经过漫长的搜索, 恰好发现了参考文章1, 其中提到了2种不同的`capabilities`的格式. 该issue中的kubernetes对于`rkt`的运行时, 权限配置是这样的
 
-```yml
+```yaml
       securityContext:
         capabilities:
           add: ["CAP_NET_ADMIN"]
@@ -92,7 +92,7 @@ failed to open log file "/var/log/pods/b8012435-15fb-11ec-b6be-000af79b1e70/es-c
 
 而对于`docker`运行时, 权限配置则需要是这样的
 
-```yml
+```yaml
        securityContext:
         capabilities:
           add: ["NET_ADMIN"]

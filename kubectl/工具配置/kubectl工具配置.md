@@ -44,7 +44,7 @@ localhost.localdomain   Ready       6d        v1.7.1-beta.0.2+09955ec93bcfc1
 
 看一下`~/.kube/config`的内容.
 
-```yml
+```yaml
 apiVersion: v1
 clusters:          ## 定义集群  
 - cluster:

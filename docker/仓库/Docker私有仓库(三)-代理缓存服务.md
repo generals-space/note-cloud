@@ -21,7 +21,7 @@ $ docker run -d \
 
 为了实现代理缓存的目的, 通过`proxy`字段配置pull源.
 
-```yml
+```yaml
 version: 0.1
 log:
     fields:

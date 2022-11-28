@@ -28,7 +28,7 @@
 
 参考文章1中**使用说明**部分说明了阿里云kubernetes集群中SLB的生成机制. 并且参考文章1和参考文章2都讲了可以通过`annotations`指定`LoadBalancer`类型的service对象所绑定的SLB. 如下
 
-```yml
+```yaml
 apiVersion: v1
 kind: Service
 metadata:

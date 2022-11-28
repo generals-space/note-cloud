@@ -10,7 +10,7 @@
 
 PV,PVC的配置这里不详细介绍, 踩坑本来是因为NFS. NFS对共享目录默认的权限设置为`no_all_squash,root_squash`
 
-```yml
+```yaml
   template:
     metadata:
       labels:
@@ -49,7 +49,7 @@ docker run -d --name some-postgres postgres -c 'shared_buffers=256MB' -c 'max_co
 
 但是在kubernetes配置时需要注意, 要在`command`中指定`postgres`, 否则无法找到执行文件.
 
-```yml
+```yaml
       containers:
       - name: postgres
         image: postgres:9.6-alpine
@@ -67,7 +67,7 @@ more information on how to properly start the server.
 
 我找了半天, 没有找到kubernetes配置中可以指定执行用户的方法. 后来在查看postgres的dockerfile时发现, ta的ENTRYPOINT设置为`docker-entrypoint.sh`, 所以可以通过这个脚本代为执行启动命令.
 
-```yml
+```yaml
       containers:
       - name: postgres
         image: postgres:9.6-alpine

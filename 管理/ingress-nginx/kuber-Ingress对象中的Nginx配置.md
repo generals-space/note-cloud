@@ -22,7 +22,7 @@ error parsing HTTP 413 response body: invalid character '<' looking for beginnin
 
 按照参考文章1的采纳答案, 可以在Ingress配置文件中添加注解
 
-```yml
+```yaml
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
