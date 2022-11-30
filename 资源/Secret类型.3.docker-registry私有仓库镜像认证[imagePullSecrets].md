@@ -13,13 +13,7 @@
 
 但是kubernetes是不行的, 但kubernetes针对这种有情况有专门的解决方法, 那就是`secret`资源对象.
 
-`secret`类型目前有3种: 
-
-1. docker-registry(仓库配置)
-2. generic(通用类型, 任意文件/目录/键值对)
-3. tls(密钥配置)
-
-创建`secret`资源
+创建示例
 
 ```
 kubectl create secret docker-registry secret资源名称 --docker-server=仓库地址(只要域名, 无需路径) --docker-username=用户名 --docker-password=密码 --docker-email=xxx@gmail.com
@@ -43,3 +37,16 @@ spec:
 ```
 
 `imagePullSecrets`块的认证配置可以被所有`containers[]`与`initContainers[]`共用.
+
+------
+
+type为`kubernetes.io/dockerconfigjson`.
+
+```console
+$ kubectl create secret docker-registry registry-secret --docker-server=192.168.1.1 --docker-username=admin --docker-password=123456 --docker-email=xxx@gmail.com
+secret/registry-secret created
+$ k get secret
+NAME               TYPE                              DATA   AGE
+registry-secret    kubernetes.io/dockerconfigjson    1      5s
+```
+

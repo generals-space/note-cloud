@@ -15,8 +15,10 @@
 
 
 [CKA考试经验总结](https://www.jianshu.com/p/135c1d618a79)
-    - CKA真题
     - 整体流程
+    - CKA真题
+    - 16.使用etcd 备份功能备份etcd
+    - 20.TLS bootstrapping
 [CKA认证经验贴（认证日期：20200817）](https://www.cnblogs.com/hyethebest/p/13547116.html)
     - CKA真题
 [CKS 认证备考指南 ](https://www.cnblogs.com/kubesphere/p/16696423.html)
