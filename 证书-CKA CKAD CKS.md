@@ -41,5 +41,3 @@
     - trivy进行漏洞扫描
     - Kubesec 进行静态分析
     - RuntimeClass 资源, 并给 pod 绑定指定运行时(gvisor)
-
-## --sort-by
