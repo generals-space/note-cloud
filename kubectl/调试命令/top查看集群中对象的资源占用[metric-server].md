@@ -14,7 +14,7 @@
 2. [container-monitor](https://yasongxu.gitbook.io/container-monitor/)
     - 容器监控方案.
 
-kuber 版本: 1.16.2 单节点集群, 宿主机配置 4C 8G.
+kube 版本: 1.16.2 单节点集群, 宿主机配置 4C 8G.
 
 `kubectl top`是基础命令, 但是需要部署配套的组件才能获取到监控值.
 

@@ -31,6 +31,8 @@
 kubectl create secret generic db-user-pass --from-file=./username.txt --from-file=./password.txt
 ```
 
+除了`--from-file`, 同样可以使用`--from-literal`, `--from-env-file`, 具体可见ConfigMap的文章.
+
 ## tls
 
 ```
