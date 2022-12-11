@@ -9,7 +9,7 @@
 
 环境
 
-- kuber v1.17.3, 单 master 节点
+- kube v1.17.3, 单 master 节点
 - 宿主机(master节点): 172.16.91.10
 - 宿主机 dns : 172.16.91.2 (vmware虚拟机的网关)
 
@@ -17,7 +17,7 @@
 
 在写扩展调度器时发现, 通过`hostNetwork`部署的`kube-scheduler`无法通过 Service 名称访问到`kueb-scheduler-extender`. 做了一些实验, 发现这是正常现象.
 
-`hostNetwork`模式直接使用宿主机网络, 而就算是在 kuber 宿主机上, 也没办法 ping 通 `Service`(不过可以 ping 通 `ServiceIP`).
+`hostNetwork`模式直接使用宿主机网络, 而就算是在 kube 宿主机上, 也没办法 ping 通 `Service`(不过可以 ping 通 `ServiceIP`).
 
 如下是直接使用`hostNetwork`部署的 Pod 中, `/etc/resolv.conf`文件的内容, 与该 Pod 所在的宿主机完全相同.
 
@@ -48,7 +48,7 @@ options ndots:5
 
 ## 原理解析
 
-kuber 内部的 Service 是通过 coredns 组件解析成 ServiceIP 的, 宿主机环境用的 dns 服务没有办法解析. 
+kube 内部的 Service 是通过 coredns 组件解析成 ServiceIP 的, 宿主机环境用的 dns 服务没有办法解析. 
 
 在宿主机环境执行如下命令
 
@@ -84,7 +84,7 @@ $ dig @10.254.0.10 kube-dns.kube-system.svc.cluster.local
 kube-dns.kube-system.svc.cluster.local.	30 IN A	10.96.0.10
 ```
 
-注意, 虽然指定了 coredns 的地址, 但是在 kuber 环境外(宿主机环境)进行解析, 需要为 Service 名称添加上全部的域名前缀, 默认为`cluster.local`.
+注意, 虽然指定了 coredns 的地址, 但是在 kube 环境外(宿主机环境)进行解析, 需要为 Service 名称添加上全部的域名前缀, 默认为`cluster.local`.
 
 ------
 
