@@ -4,6 +4,7 @@
     - bootstrap token 必须符合正则表达式 `[a-z0-9]{6}\.[a-z0-9]{16}`
 2. [Kubernetes - kubelet bootstrap 流程](https://lingxiankong.github.io/2018-09-18-kubelet-bootstrap-process.html)
     - 向集群新增节点时, kubelet 使用低权限的 bootstrap token 跟 api server 建立连接后, 要能够自动向 api server 申请自己的证书, 并且 api server 要能够自动审批证书.
+3. [kubeadm 工作原理 -kubeadm init 原理分析 -kubeadm join 原理分析](https://xie.infoq.cn/article/040212f39e0bcdac15f40f9b6)
 
 ## 介绍
 
@@ -62,5 +63,4 @@ bootstrap token 也是 token, 使用方法跟常规 bearer token 一样, 如下
 }
 ```
 
-认证通过了, 不过没权限, 毕竟 bootstrap token 不是用来发这种请求的.
-
+认证通过了, 不过没权限, 毕竟 bootstrap token 不是用来发这种请求的. 按照参考文章3中所说, bootstrap token 的权限是非常低的, 只能让客户端请求通过"认证"阶段, 只保留"authentication", "signing"权限.

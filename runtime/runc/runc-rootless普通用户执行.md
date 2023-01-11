@@ -2,7 +2,7 @@
 
 一般情况下, 普通用户是无法执行`runc`命令的, 因为权限不足, 而且也无法创建和启动容器.
 
-```
+```console
 $ useradd general
 $ su -l general
 $ cd /mycontainer
@@ -45,7 +45,7 @@ runc --root /tmp/runc run mycontainerid
 
 ...失败了?(`--root`的路径和`container id`换了也没用)
 
-```
+```log
 $ runc --root /tmp/runc run mycontainerid
 FATA[0000] nsexec:869 nsenter: failed to unshare user namespace: Invalid argument
 FATA[0000] nsexec:724 nsenter: failed to sync with child: next state: Success

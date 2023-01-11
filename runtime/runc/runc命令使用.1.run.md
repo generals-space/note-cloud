@@ -30,12 +30,18 @@ runc spec
 
 ## 不修改 config.json 直接 run
 
-```
-cd /mycontainer
-runc run mycontainerid
+```console
+$ cd /mycontainer
+$ runc run c01
+INFO[0000] setupIO: detach: false, sockpath:
+INFO[0000] wait for communicate with runc init golang part
+INFO[0000] child process in init()
+INFO[0000] os getwd: /home/project/mycontainer/rootfs
+INFO[0000] tty.forward pid1: 10208, notifySocket: <nil>
+sh-5.0#
 ```
 
-> `mycontainerid`可以是任意字符串.
+> `c01`可以是任意字符串.
 
 如果未修改上面生成的`config.json`文件, `run`子命令会打开一个`sh`会话.
 
@@ -43,8 +49,8 @@ runc run mycontainerid
 
 ```console
 $ runc list
-ID              PID         STATUS      BUNDLE             CREATED                          OWNER
-mycontainerid   89791       running     /mycontainer       2020-04-15T09:46:03.463907749Z   root
+ID     PID    STATUS     BUNDLE          CREATED                           OWNER
+c01    897    running    /mycontainer    2020-04-15T09:46:03.463907749Z    root
 ```
 
 > 使用`runc`启动的 container, 是没有办法使用`docker ps`查看到的.

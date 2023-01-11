@@ -1,0 +1,49 @@
+apiVersion: kubeadm.k8s.io/v1beta2
+kind: InitConfiguration
+localAPIEndpoint:
+  advertiseAddress:
+  bindPort: 6443
+bootstrapTokens:
+- groups:
+  - system:bootstrappers:kubeadm:default-node-token
+  ## 指定固定 token, 以后创建的 kube 集群, 都可以使用该 token 进行访问, 对于调试来说, 很方便.
+  token: abcdef.0123456789abcdef
+  ttl: 24h0m0s
+  usages:
+  - signing
+  - authentication
+nodeRegistration:
+  ## 默认通过 dockershim 与 dockerd 通信, 现在直接指定 containerd 服务, 绕过 dockerd.
+  ## criSocket: /var/run/dockershim.sock
+  ## containerd 随 docker 安装, 也随 docker 服务启动而启动.
+  criSocket: unix:///var/run/containerd/containerd.sock
+
+---
+apiVersion: kubeadm.k8s.io/v1beta2
+kind: ClusterConfiguration
+kubernetesVersion: v1.17.2
+clusterName: kubernetes
+apiServer:
+  timeoutForControlPlane: 4m0s
+certificatesDir: /etc/kubernetes/pki
+controlPlaneEndpoint: ${eth0_IP}:6443
+imageRepository: registry.cn-hangzhou.aliyuncs.com/google_containers
+dns:
+  type: CoreDNS
+etcd:
+  local:
+    dataDir: /var/lib/etcd
+networking:
+  dnsDomain: cluster.local
+  podSubnet: 10.254.0.0/16
+  serviceSubnet: 10.96.0.0/12
+controllerManager: {}
+scheduler: {}
+
+---
+apiVersion: kubeproxy.config.k8s.io/v1alpha1
+kind: KubeProxyConfiguration
+ipvs:
+  minSyncPeriod: 1s
+  syncPeriod: 10s
+mode: ipvs
