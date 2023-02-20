@@ -17,6 +17,7 @@ authorization:
     cacheUnauthorizedTTL: 30s
 cgroupDriver: cgroupfs
 cgroupsPerQOS: true
+## k8s 集群中, service IP 的地址范围
 clusterDNS:
 - 10.96.0.10
 clusterDomain: cluster.local

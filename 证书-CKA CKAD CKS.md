@@ -13,22 +13,23 @@
 4. [Candidate Identification & Authentication](https://docs.linuxfoundation.org/tc-docs/certification/lf-handbook2/candidate-identification-and-authentication)
     - 身份证件(护照, 国际)
 
-
 [CKA考试经验总结](https://www.jianshu.com/p/135c1d618a79)
     - 整体流程
     - CKA真题
-    - 16.使用etcd 备份功能备份etcd
-    - 20.TLS bootstrapping
+    - 16. 使用etcd 备份功能备份etcd
+    - 19. 使用systemd配置kubelet
+    - 20. TLS bootstrapping
 [CKA认证经验贴（认证日期：20200817）](https://www.cnblogs.com/hyethebest/p/13547116.html)
     - CKA真题
+    - 题目基本与前一篇一致, 可以互相借鉴
 [CKS 认证备考指南 ](https://www.cnblogs.com/kubesphere/p/16696423.html)
     - CKS真题
     - CKA/CKS 考试需要身份证+护照 / 信用卡
 
 [K8S容器技能认证 - CKA认证从零到一](https://zhuanlan.zhihu.com/p/138796893)
+    - 整体流程
     - 国际站报考要求护照 或者 港澳通行证 或者 驾驶证翻译件(支付宝可以免费申请) + 驾照原件
     - 国际站报考要求外币信用卡，用于报名费支付
-    - 整体流程
 [国际驾照翻译件如何免费申请办理](https://jingyan.baidu.com/article/4dc40848b8a0d489d946f1f2.html)
     - 支付宝
 
@@ -43,3 +44,17 @@
     - trivy进行漏洞扫描
     - Kubesec 进行静态分析
     - RuntimeClass 资源, 并给 pod 绑定指定运行时(gvisor)
+
+[好好當個老船長 KCNA/CKA/CKAD/CKS 認證考試心得](https://medium.com/@KimiHuang/%E5%A5%BD%E5%A5%BD%E7%95%B6%E5%80%8B%E8%80%81%E8%88%B9%E9%95%B7-kcna-cka-ckad-cks-%E8%AA%8D%E8%AD%89%E8%80%83%E8%A9%A6%E5%BF%83%E5%BE%97-846c83140920)
+
+## 环境
+
+Ubuntu 20.04
+
+kube: v1.25.0
+
+## 重点
+
+1. kubectl 常用选项 - kubectl cheatsheet
+2. jsonpath
+

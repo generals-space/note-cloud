@@ -1,6 +1,6 @@
 # kuber-controller revision.2.kcr中存储的内容不完整[kcr]
 
-kuber: 1.16.2
+kube: 1.16.2
 
 前面说到, `StatefulSet`和`DaemonSet`两种资源在被用户修改后, 会自动创建`ControllerRevision`对象作为备份, 可以用于回滚.
 

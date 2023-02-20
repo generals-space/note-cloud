@@ -14,7 +14,7 @@
 在 docker 18.03.6 下, 构建如下 dockerfile.
 
 ```dockerfile
-FROM registry.cn-hangzhou.aliyuncs.com/generals-space/centos:7:latest
+FROM registry.cn-hangzhou.aliyuncs.com/generals-space/centos:7
 ENTRYPOINT ["tail", "-f", "/etc/profile"]
 ```
 
@@ -43,7 +43,7 @@ sha256:4f47f76be97316   16 seconds ago      /bin/sh -c #(nop)  ENTRYPOINT ["/bin
 我找到参考文章1, 尝试使用`shell`的格式重新构建.
 
 ```dockerfile
-FROM registry.cn-hangzhou.aliyuncs.com/generals-space/centos:7:latest
+FROM registry.cn-hangzhou.aliyuncs.com/generals-space/centos:7
 ENTRYPOINT tail -f /etc/profile
 ```
 
@@ -76,7 +76,7 @@ root      1      0  0 22:42 ?     00:00:00 /bin/sh /docker-entrypoint.sh
 没想到最终用这种方式成功了.
 
 ```dockerfile
-FROM registry.cn-hangzhou.aliyuncs.com/generals-space/centos:7:latest
+FROM registry.cn-hangzhou.aliyuncs.com/generals-space/centos:7
 ENTRYPOINT ["/docker-entrypoint.sh"]
 ```
 

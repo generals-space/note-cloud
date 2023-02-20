@@ -5,7 +5,14 @@
 
 在不预先查出一个对象列表时, 直接删除
 
+
+
 ```go
+// controller-runtime:pkg/client/example_test.go
+
+import (
+	"sigs.k8s.io/controller-runtime/pkg/client"
+)
 // This example shows how to use the client with typed and unstrucurted objects to delete collections of objects.
 func ExampleClient_deleteAllOf() {
 	// Using a typed object.

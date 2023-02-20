@@ -1,6 +1,6 @@
 # kuber-controller revision
 
-kuber: 1.16.2
+kube: 1.16.2
 
 我试了下, 只有`Daemonset`和`StatefulSet`在创建的时候会自动创建相应的`ControllerRevision`对象, `Deployment`都没有.
 
