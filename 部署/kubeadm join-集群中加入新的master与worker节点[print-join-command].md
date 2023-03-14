@@ -16,7 +16,7 @@ TOKEN                     TTL         EXPIRES                     USAGES        
 
 如下生成worker节点的join命令
 
-```
+```console
 $ kubeadm token create --print-join-command
 kubeadm join k8s-master-7-13:8443 --token fw6ywo.1sfp61ddwlg1we27     --discovery-token-ca-cert-hash sha256:52cab6e89be9881e2e423149ecb00e610619ba0fd85f2eccc3137adffa77bb04
 ```

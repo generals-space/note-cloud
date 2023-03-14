@@ -1,25 +1,36 @@
 apiVersion: v1
 clusters:
 - cluster:
-    certificate-authority: certs.d/kuber.centos7/ca.crt
-    server: https://k8s-server-lb:8443
-  name: kuber
+    certificate-authority: /etc/kubernetes/pki/ca.crt
+    server: https://k8s-server-lb:6443
+  name: main
 contexts:
 - context:
-    cluster: kuber
+    cluster: main
     namespace: default
-    user: kuber-admin
-  name: kube-def
+    user: main-admin
+  name: def
 - context:
-    cluster: kuber
+    cluster: main
     namespace: kube-system
-    user: kuber-admin
-  name: kube-sys
-current-context: kube-def
+    user: main-admin
+  name: sys
+- context:
+    cluster: main
+    namespace: monitoring
+    user: main-admin
+  name: mor
+- context:
+    cluster: main
+    namespace: test
+    user: main-admin
+  name: test
+current-context: def
 kind: Config
 preferences: {}
 users:
-- name: kuber-admin
+- name: main-admin
   user:
-    client-certificate: certs.d/kuber.centos7/client.crt
-    client-key: certs.d/kuber.centos7/client.key
+    ## 没有合适的
+    client-certificate: /etc/kubernetes/pki/
+    client-key: /etc/kubernetes/pki/

@@ -47,10 +47,23 @@
 
 [好好當個老船長 KCNA/CKA/CKAD/CKS 認證考試心得](https://medium.com/@KimiHuang/%E5%A5%BD%E5%A5%BD%E7%95%B6%E5%80%8B%E8%80%81%E8%88%B9%E9%95%B7-kcna-cka-ckad-cks-%E8%AA%8D%E8%AD%89%E8%80%83%E8%A9%A6%E5%BF%83%E5%BE%97-846c83140920)
 
+[如何注册及预约CKA考试？＞＞实操版](https://blog.csdn.net/shenhonglei1234/article/details/111318308)
+    - 张小三的英文名正确写法是：Xiaosan Zhang
+    - 常见错误写法是：Zhang Xiaosan（中国顺序），XiaoSan Zhang（S大写了），Xiao San Zhang（Xiao与San之间空格了）
+
+[Linux基金会认证考试监考平台迁移的补充说明](https://training.linuxfoundation.cn/news/289)
+    - 不再需要与监考官共享桌面
+    - 考生不需要等待监考官，便可以自助签到
+    - 只容许单个显示器 (内置或外接)
+    - 考试使用PSI安全浏览器，取代了Chrome
+    - 个人书签/ Chrome浏览器不再可用
+
+[CKA经验](https://devpress.csdn.net/cicd/62ed9d44c6770329307f2986.html)
+    - killer模拟比真实考试要难很多
+
 ## 环境
 
-Ubuntu 20.04
-
+ubuntu 20.04.5 LTS
 kube: v1.25.0
 
 ## 重点
