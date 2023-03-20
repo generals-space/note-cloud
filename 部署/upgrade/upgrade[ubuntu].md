@@ -2,6 +2,7 @@
 
 1. [kubeadm upgrade](https://kubernetes.io/zh-cn/docs/reference/setup-tools/kubeadm/kubeadm-upgrade/#cmd-upgrade-apply)
 
+这里是尝试从 1.26.1 降成了 1.26.0.
 
 ```
 controlplane $ k get node -owide
@@ -50,7 +51,7 @@ controlplane $ kubeadm version
 kubeadm version: &version.Info{Major:"1", Minor:"26", GitVersion:"v1.26.0", GitCommit:"b46a3f887ca979b1a5d14fd39cb1af43e7e5d12d", GitTreeState:"clean", BuildDate:"2022-12-08T19:57:06Z", GoVersion:"go1.19.4", Compiler:"gc", Platform:"linux/amd64"}
 ```
 
-
+```
 $ kubeadm upgrade apply 1.26.0
 [upgrade/successful] SUCCESS! Your cluster was upgraded to "v1.26.0". Enjoy!
 
@@ -71,8 +72,11 @@ kube-system          kube-proxy-jdqgh                           1/1     Running 
 kube-system          kube-proxy-lm47w                           1/1     Running   0               26s
 kube-system          kube-scheduler-controlplane                1/1     Running   0               46s
 local-path-storage   local-path-provisioner-8bc8875b-7f4nb      1/1     Running   0               16d
+```
 
+但上面只更新了kube-system的系统组件, 但是使用`kubectl get nodes`查看时, 看到的还是`1.26.1`, 所以还需要一个一个到各Node上更新`kubelet`组件并重启.
 
+```
 controlplane $ apt install kubelet=1.26.0
 Reading package lists... Done
 Building dependency tree       
