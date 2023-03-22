@@ -30,24 +30,24 @@ k create deploy mydeploy --image=registry.cn-hangzhou.aliyuncs.com/generals-spac
 `--dry-run`只创建对象但不提交到 apiserver.
 
 ```yaml
-## k create deploy hjl-deploy --image=k8s-deploy/centos --dry-run -oyaml
+## k create deploy general-deploy --image=k8s-deploy/centos --dry-run -oyaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: hjl-deploy
-  name: hjl-deploy
+    app: general-deploy
+  name: general-deploy
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: hjl-deploy
+      app: general-deploy
   strategy: {}
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: hjl-deploy
+        app: general-deploy
     spec:
       containers:
       - image: k8s-deploy/centos

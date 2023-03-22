@@ -55,7 +55,7 @@ io.kubernetes.client.ApiException: Bad Request
 然后就可以打印出请求 apiserver 的参数, 请求体, 以及响应体信息了.
 
 ```
---> GET https://172.22.248.183:6443/api/v1/namespaces/zjjpt-es/persistentvolumeclaims/hjl-es-0524-01--claim?exact=true&export=true HTTP/1.1
+--> GET https://172.22.248.183:6443/api/v1/namespaces/zjjpt-es/persistentvolumeclaims/general-es-0524-01--claim?exact=true&export=true HTTP/1.1
 authorization: Bearer 证书信息
 Accept: application/json
 User-Agent: Swagger-Codegen/1.0-SNAPSHOT/java

@@ -24,27 +24,27 @@ kubectl run mypod -it --image=registry.cn-hangzhou.aliyuncs.com/generals-space/c
 `--dry-run`只创建对象但不提交到 apiserver.
 
 ```yaml
-## k run hjl-pod --image=k8s-deploy/centos --requests='cpu=100m,memory=256Mi' --dry-run -oyaml
+## k run general-pod --image=k8s-deploy/centos --requests='cpu=100m,memory=256Mi' --dry-run -oyaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    run: hjl-pod
-  name: hjl-pod
+    run: general-pod
+  name: general-pod
 spec:
   replicas: 1
   selector:
     matchLabels:
-      run: hjl-pod
+      run: general-pod
   strategy: {}
   template:
     metadata:
       labels:
-        run: hjl-pod
+        run: general-pod
     spec:
       containers:
       - image: k8s-deploy/centos
-        name: hjl-pod
+        name: general-pod
         resources:
           requests:
             cpu: 100m
