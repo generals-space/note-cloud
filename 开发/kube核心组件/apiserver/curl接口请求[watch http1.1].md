@@ -1,3 +1,12 @@
+参考文章
+
+1. [Resource URIs](https://kubernetes.io/docs/reference/using-api/api-concepts/#resource-uris)
+    - 官方文档
+    - apiserver http 原生接口访问路径
+        - list /api/v1/namespaces/my-namespace/pods
+        - list /apis/apps/v1/namespaces/my-namespace/deployments
+        - get /apis/apps/v1/namespaces/my-namespace/deployments/my-deployment
+
 apimachinery/pkg/apis/meta/internalversion/types.go -> ListOptions{}
 
 - limit: int

@@ -1,4 +1,4 @@
-# kubernetes版本与CAP_配置的格式[memlock CAP_SYS_RESOURCE]
+# kube版本与CAP_配置的格式[memlock CAP_SYS_RESOURCE]
 
 参考文章
 
@@ -102,7 +102,7 @@ failed to open log file "/var/log/pods/b8012435-15fb-11ec-b6be-000af79b1e70/es-c
 
 同时在上面出现`RunContainerError`的容器所在主机的`/var/log/message`中, 发现与参考文章1中提到的异常日志
 
-```
+```log
 Sep 15 19:37:07 ly-xjf-r021110-gyt dockerd: time="2021-09-15T19:37:07.025393994+08:00" level=error msg="Handler for POST /v1.38/containers/21c865364925ff782dc85ab8773d12c65fcf93e7dde31f3160bad26aee3cfa21/start returned error: linux spec capabilities: Unknown capability to add: \"CAP_CAP_SYS_RESOURCE\""
 Sep 15 19:37:07 ly-xjf-r021110-gyt kubelet: E0915 19:37:07.050323  189742 remote_runtime.go:213] StartContainer "21c865364925ff782dc85ab8773d12c65fcf93e7dde31f3160bad26aee3cfa21" from runtime service failed: rpc error: code = Unknown desc = failed to start container "21c865364925ff782dc85ab8773d12c65fcf93e7dde31f3160bad26aee3cfa21": Error response from daemon: linux spec capabilities: Unknown capability to add: "CAP_CAP_SYS_RESOURCE"
 Sep 15 19:37:07 ly-xjf-r021110-gyt kubelet: E0915 19:37:07.050402  189742 kuberuntime_manager.go:749] container start failed: RunContainerError: failed to start container "21c865364925ff782dc85ab8773d12c65fcf93e7dde31f3160bad26aee3cfa21": Error response from daemon: linux spec capabilities: Unknown capability to add: "CAP_CAP_SYS_RESOURCE"
@@ -113,7 +113,7 @@ Sep 15 19:37:07 ly-xjf-r021110-gyt kubelet: E0915 19:37:07.050439  189742 pod_wo
 
 于是我将`capabilities`的配置改为如下
 
-```
+```yaml
         securityContext:
           capabilities:
             add:

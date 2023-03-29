@@ -65,13 +65,13 @@ spec:
         imagePullPolicy: IfNotPresent
         command: ["tail", "-f", "/etc/os-release"]
       topologySpreadConstraints:
-      ## maxSkew 表示各Node节点上 Pod 数量的差值最大为1, 不能出现某些主机2个, 而某些主机0个的情况.
+      ## maxSkew 表示各Node节点上 Pod 数量的差值最大为1, 不能出现某些节点上2个, 而某些节点上0个的情况.
       ## 不均匀分布的最大程度, 该值必须大于0.
       - maxSkew: 1
         ## 对符合 nodeSelector/nodeAffinity 的主机, 按照 topologyKey 进行区分, 
         topologyKey: kubernetes.io/hostname
         ## 如果出现了无法实现 n:n:n-1:n-1 比例的调度场景, 比如某些节点资源不足, 余下的 Pod 的调度方式
-        ## ScheduleAnyway 表示可以按照实际资源进行调度,
+        ## ScheduleAnyway 表示可以按照实际资源进行调度(此时各节点上的Pod数量差值会超过 maxSkew 值),
         ## 还有一个 DoNotSchedule 选项表示剩下的 Pod 就 Pending 着吧.
         whenUnsatisfiable: ScheduleAnyway
         ## 表示被此约束限制的 Pod, 用于计算 maxSkew 的值, 一般与 Pod 自身的 label 保持一致即可.
@@ -79,6 +79,12 @@ spec:
           matchLabels: 
             app: general-sts
 ```
+
+**注意**
+
+在资源充足的情况下, 调度器会尽量使所有 Pod 均匀地分布, 各节点上的 Pod 数量差值很小. 
+
+当某些节点上资源不足以实现完全均匀分布时, 才开始尝试在`maxSkew`允许范围内打散调度.
 
 ## zone
 

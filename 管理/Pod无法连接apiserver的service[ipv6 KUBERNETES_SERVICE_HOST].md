@@ -38,9 +38,9 @@ subsets:
 ```yaml
     env:
     - name: KUBERNETES_SERVICE_HOST
-        value: 2409:808e:4980:730::183
+      value: 2409:808e:4980:730::183
     - name: KUBERNETES_SERVICE_PORT
-        value: "6443"
+      value: "6443"
 ```
 
 这样, 容器内的程序在通过`InClusterConfig()`方法, 获取apiserver的地址时, 就是从环境变量里取了.
