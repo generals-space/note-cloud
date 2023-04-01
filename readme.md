@@ -29,3 +29,7 @@
 
 [10+ 款 Redis 容器化技术选型对比，K8S 并非万金油](https://zhuanlan.zhihu.com/p/390294943)
 
+[谷歌每年节省上亿美金，资源利用率高达60%，用的技术有多厉害！](https://www.cnblogs.com/tencent-cloud-native/archive/2021/08/27/15192674.html)
+
+[在 Kubernetes 中运行 Kubernetes](https://www.qikqiak.com/post/k8s-in-k8s/)
+
