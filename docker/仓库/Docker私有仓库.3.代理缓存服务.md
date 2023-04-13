@@ -1,10 +1,7 @@
 # docker代理缓存
 
 ```
-$ docker run -d \
-    -p 443:443 \
-    --name registry \
-    --restart=always \
+docker run -d -p 443:443 --name registry --restart=always \
     -v /opt/docker/data:/var/lib/registry \
     -v /opt/docker/config.yml:/etc/docker/registry/config.yml \
     -v /opt/docker/certs:/certs \

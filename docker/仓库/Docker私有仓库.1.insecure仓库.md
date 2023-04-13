@@ -7,7 +7,6 @@
 ## 1. 环境准备
 
 - Docker私有仓库服务端: A
-
 - Docker客户端: B
 
 > 注意关掉两者的防火墙与SELinux
@@ -30,7 +29,6 @@ docker run -d --name docker-registry -p 5000:5000 -v /opt/docker/registry:/tmp/r
 ```
 
 - `-p`是端口映射, 访问A上的5000端口就相当于访问仓库容器的5000端口.
-
 - `-v`挂载共享分区, 这里注意, `/opt/registry`为仓库容器宿主机上的路径, 可以随意指定; `/tmp/registry`是仓库容器内部的路径, **不要更改**, 因为之后`docker push`的镜像都将保存在这个地方, 这样就可以不进入容器也能看到上传的镜像了.
 
 ### 2.3 测试查询与上传
@@ -72,7 +70,6 @@ systemctl restart docker
 ```
 
 下面尝试上传...
-
 
 ```
 docker push 127.0.0.1:5000/centos6

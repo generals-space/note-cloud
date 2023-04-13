@@ -3,27 +3,16 @@
 参考文章
 
 1. [官方文档 - Docker Registry](https://docs.docker.com/registry/)
-
 2. [Registry镜像的Dockerfile](https://github.com/docker/distribution-library-image/blob/master/Dockerfile)
-
 3. [官方文档 - 详细配置](https://docs.docker.com/registry/configuration/#list-of-configuration-options)
-
 4. [centos7 docker1.12安装私有仓库](http://blog.csdn.net/kadiya2011/article/details/443344337)
-
 5. [搭建Docker私有仓库--自签名方式](http://www.cnblogs.com/li-peng/p/6511331.html)
-
 6. [Registry as a pull through cache](https://docs.docker.com/registry/recipes/mirror/)
-
 7. [如何使用Docker开源仓库建立代理缓存仓库](http://dockone.io/article/774?utm_source=tuicool&utm_medium=referral)
-
 8. [docker registry v2 配置 (REGISTRY_PROXY_REMOTEURL) 解释 + docker pull/push 动作简析](http://www.open-open.com/lib/view/open1456893590796.html)
-
 9. [Docker私有仓库Registry V2 搭建(附带CA证书自签名)](https://my.oschina.net/yyflyons/blog/656278)
-
 10. [搭建Docker私有仓库Registry-v2](http://www.tuicool.com/articles/6jEJZj)
-
 11. [Docker认证自签名证书-Using self-signed certificates](https://docs.docker.com/registry/insecure/#using-self-signed-certificates)
-
 12. [Verify repository client with certificates](https://docs.docker.com/engine/security/certificates/)
 
 ## 1. registry认识
