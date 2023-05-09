@@ -9,3 +9,5 @@ done;
 ## 如果
 ## $ bash ./mem.sh
 ## ./mem.sh: xrealloc: cannot allocate 18446744071562068096 bytes (32768 bytes allocated)
+
+## 20230421 更新, 可以考虑使用 memtester, 看起来会更直观, 可控性也更高.
