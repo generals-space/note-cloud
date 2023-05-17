@@ -1,4 +1,4 @@
-# kube版本与CAP_配置的格式[memlock CAP_SYS_RESOURCE]
+# kube版本与CAP_配置的格式-runuser：cannot open session：Permission denied[memlock CAP_SYS_RESOURCE su]
 
 参考文章
 
