@@ -1,4 +1,4 @@
-# SA[ServiceAccount Bearer Token secret]
+# ServiceAccount[SA Bearer Token secret curl]
 
 参考文章
 

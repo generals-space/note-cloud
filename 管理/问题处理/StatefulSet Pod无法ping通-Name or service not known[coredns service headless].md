@@ -6,6 +6,8 @@
 
 `pod名称.service名称.ns名称.svc.cluster.local`
 
+不只是这几个 pod 之间无法互相ping通, 在宿主机上也无法 ping 通这些 pod, ta们只能自己 ping 自己.
+
 coredns功能没有问题, 因为其他ns中的 sts pod 是可以ping通的.
 
 ## 解决方法

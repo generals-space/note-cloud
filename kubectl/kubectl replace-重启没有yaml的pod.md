@@ -14,7 +14,6 @@ kubectl get pod Pod名 -n 命名空间 -o yaml | kubectl replace --force -f -
 
 有一个pod的状态变成了`CrashLoopBackOff`, 想用这条命令重启.
 
-
 ```
 # k get pod coredns-6967fb4995-w4pgk -n kube-system -o yaml | k replace -f -
 pod/coredns-6967fb4995-w4pgk replaced
