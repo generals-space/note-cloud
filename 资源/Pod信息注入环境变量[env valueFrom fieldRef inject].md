@@ -42,6 +42,10 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: spec.nodeName
+        - name: POD_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
 ```
 
 这样, 在flannel的pod启动后, 可以从环境变量里得到`POD_NAME`, `POD_NAMESAPCE`, `NODE_NAME`等信息.

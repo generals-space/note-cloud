@@ -40,6 +40,10 @@ services:
     - standbyhosts=172.12.0.3,172.12.0.4
     - standbynames=standby1,standby2
     - GS_PASSWORD=test@123
+    ulimits:
+      nofile:
+        soft: "640000"
+        hard: "640000"
     sysctls:
       kernel.sem: "250 6400000 1000 25600"
     security_opt: 
@@ -53,11 +57,15 @@ services:
     volumes:
     - /data/opengauss_volume:/volume
     environment:
-    - primaryhost=172.12.0.3
+    - primaryhost=172.12.0.2
     - primaryname=primary
     - standbyhosts=172.12.0.3,172.12.0.4
     - standbynames=standby1,standby2
     - GS_PASSWORD=test@123
+    ulimits:
+      nofile:
+        soft: "640000"
+        hard: "640000"
     sysctls:
       kernel.sem: "250 6400000 1000 25600"
     security_opt: 
@@ -71,11 +79,15 @@ services:
     volumes:
     - /data/opengauss_volume:/volume
     environment:
-    - primaryhost=172.12.0.4
+    - primaryhost=172.12.0.2
     - primaryname=primary
     - standbyhosts=172.12.0.3,172.12.0.4
     - standbynames=standby1,standby2
     - GS_PASSWORD=test@123
+    ulimits:
+      nofile:
+        soft: "640000"
+        hard: "640000"
     sysctls:
       kernel.sem: "250 6400000 1000 25600"
     security_opt: 

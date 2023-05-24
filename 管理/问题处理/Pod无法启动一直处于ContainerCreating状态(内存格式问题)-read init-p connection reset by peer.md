@@ -1,4 +1,4 @@
-# Kubernetes因限制内存配置引发的错误-read init-p connection reset by peer
+# Pod无法启动一直处于ContainerCreating状态-read init-p connection reset by peer
 
 参考文章
 
