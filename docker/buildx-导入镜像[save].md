@@ -16,7 +16,7 @@ docker buildx build --platform linux/arm64,linux/amd64 -t hello-go:v0.0.1 --outp
 
 这样生成的tar包并不是常规合法镜像tar包, 无法被`import`
 
-```
+```console
 $ docker load < hello-go.tar
 open /var/lib/docker/tmp/docker-import-2688680514/linux_amd64/json: no such file or directory
 ```

@@ -187,7 +187,7 @@ Dec 15 15:14:08 k8s-master-01 containerd: time="2022-12-15T15:14:08.838780081+08
 
 kubeadm-config.yaml 中通过`imageRepository`定义了镜像源, 但无法对 pause 生效(kubelet有一个`--pod-infra-container-image`选项专门额外配置)
 
-按照参考文章6, 7, 可以在 containerd 的配置文件(/etc/kubernetes/manifests)中定义 pause 的镜像源
+按照参考文章6, 7, 可以在 containerd 的配置文件(/etc/containerd/config.toml)中定义 pause 的镜像源
 
 ```yaml
 ## disabled_plugins = ["cri"]
