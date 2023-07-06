@@ -31,11 +31,9 @@ https://hub.helm.sh/charts/stable/prometheus-re...      3.2.0           1.0.4   
 
 1. `stable`:     https://kubernetes-charts.storage.googleapis.com
 2. `bitnami`:    https://charts.bitnami.com/bitnami
-3. `aliyuncs`:   https://apphub.aliyuncs.com
+3. `azure`:      http://mirror.azure.cn/kubernetes/charts
+    - 这个速度不错
 
 `helm repo add stable https://kubernetes-charts.storage.googleapis.com`即可添加新的源.
 
 `helm repo ls`: 可以查看本地存在的源.
-
-`stable`可能add的时候太慢, 可以添加为azure的镜像仓库`http://mirror.azure.cn/kubernetes/charts`.
-
