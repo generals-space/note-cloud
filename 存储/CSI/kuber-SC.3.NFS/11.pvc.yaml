@@ -5,7 +5,7 @@ metadata:
   name: nfs-pvc
 spec:
   accessModes:
-  ## 只接受ReadWriteOnce模式, ReadWriteMany会无法创建PV.
+  ## 只接受ReadWriteMany模式, ReadWriteOnce会无法创建PV.
   - ReadWriteMany
   resources:
     requests:

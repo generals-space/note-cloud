@@ -14,9 +14,9 @@ spec:
         app: nfs-pv-pod
     spec:
       volumes:
-        - name: data-vol
-          persistentVolumeClaim:
-            claimName: nfs-pvc
+      - name: data-vol
+        persistentVolumeClaim:
+          claimName: nfs-pvc
       containers:
       - name: centos7
         image: registry.cn-hangzhou.aliyuncs.com/generals-space/centos:7

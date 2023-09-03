@@ -3,6 +3,7 @@
 参考文章
 
 1. [external-storage/nfs-client](https://github.com/kubernetes-incubator/external-storage/tree/master/nfs-client)
+2. [k8s中使用nfs共享存储](https://zhuanlan.zhihu.com/p/578935706)
 
 `externl-storage`项目中有`nfs-client`的子工程, 可以用来当作sc的实际提供者.
 
@@ -14,7 +15,7 @@
 
 另外, 在移除挂载了NFS类型PV的Pod时, 必须保证NFS服务器存在, 否则Pod的删除会无法正常结束. 这一点在本地实验时一定要注意.
 
-```
+```log
 Events:
   Type     Reason         Age                  From                    Message
   ----     ------         ----                 ----                    -------
