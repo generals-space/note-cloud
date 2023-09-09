@@ -4,6 +4,9 @@
     - PATCH_FORMAT_JSON_PATCH
     - PATCH_FORMAT_STRATEGIC_MERGE_PATCH
     - PATCH_FORMAT_APPLY_YAML
+2. [k8s-client(java)从6.0.1升级到11.0.0出现patch问题may not be specified for non-apply patch/cannot unmarshal...](https://blog.csdn.net/qq_33999844/article/details/115279872)
+    - 一般的jsonPatch（标准规则）是有5种，add/remove/move/replace/copy，k8s是不支持move/copy的
+3. [11.0.0 patchNamespacedCustomObject exception “PatchOptions.meta.k8s.io...”](https://github.com/kubernetes-client/java/issues/1575)
 
 java client: 9.0.0
 

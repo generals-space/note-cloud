@@ -55,6 +55,8 @@ kubectl patch node k8s-master-01 --type merge -p '{"metadata": {"labels": {"key0
 kubectl patch node k8s-master-01 --type json -p '[{"op": "add", "path": "/metadata/labels/key01", "value": "val01"}]'
 ```
 
+add 也可以变更, 但是无法实现清空.
+
 更新
 
 ```
@@ -67,4 +69,14 @@ kubectl patch node k8s-master-01 --type json -p '[{"op": "replace", "path": "/me
 kubectl patch node k8s-master-01 --type json -p '[{"op": "remove", "path": "/metadata/labels/key01"}]'
 ```
 
-与`merge`和`strategic`相比, `json`方式拥有了删除字段的能力, 就是使用起来可能不太灵活, `path`路径需要预先确定好, 在程序中只能实现特定功能, 不好通用.
+替换
+
+如下命令可以把节点上的所有标签清空掉, 即完全替换.
+
+```
+kubectl patch node k8s-master-01 --type json -p '[{"op":"replace","path":"/metadata/labels","value":{}}]'
+```
+
+注意: `value`部分并不是字符串, 而是 object 对象类型.
+
+> 与`merge`和`strategic`相比, `json`方式拥有了删除字段的能力, 就是使用起来可能不太灵活, `path`路径需要预先确定好, 在程序中只能实现特定功能, 不好通用.

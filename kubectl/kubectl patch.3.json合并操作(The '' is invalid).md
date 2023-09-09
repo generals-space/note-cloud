@@ -57,7 +57,7 @@ $ kubectl patch sts logstash-0321-01 --type json -p '[{"op":"add","path":"/spec/
 The  "" is invalid
 ```
 
-## The  "" is invalid
+## The "" is invalid
 
 由于向一个超过索引的位置插入新成员都会报这个错, 所以patch语句也需要根据情况进行调整, 如果statefulset的结构如下所示
 
