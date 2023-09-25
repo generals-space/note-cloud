@@ -8,4 +8,5 @@
 3. [详解 DNS 与 CoreDNS 的实现原理](https://draveness.me/dns-coredns/)
     - 工作原理+源码分析
 4. [Linux网络学习笔记（二）：域名解析(DNS)——以 CoreDNS 为例](https://www.debugger.wiki/article/html/1585468925262819)
-
+5. [DNS for Services and Pods](https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/)
+6. [Kubernetes DNS-Based Service Discovery](https://github.com/kubernetes/dns/blob/master/docs/specification.md)
