@@ -4,6 +4,8 @@
 
 1. [k8s给pod添加hosts](https://www.cnblogs.com/route/p/16119323.html)
 
+注意: 这里配置 hosts 只是指的 /etc/hosts 配置文件, 并不是指定 hostname 主机名.
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
