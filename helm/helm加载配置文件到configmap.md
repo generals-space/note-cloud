@@ -24,7 +24,7 @@ POSTGRES_PASSWORD=123456
 kubectl create configmap my-env --from-env-file=./env
 ```
 
-```
+```yaml
 data:
   POSTGRES_USER: "wordpress" 
   POSTGRES_PASSWORD: "123456" 
