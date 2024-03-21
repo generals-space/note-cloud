@@ -25,7 +25,22 @@ kubernetesVersion: v1.17.2
 clusterName: kubernetes
 apiServer:
   timeoutForControlPlane: 4m0s
+  extraArgs:
+    enable-admission-plugins: NodeRestriction
+    authorization-mode: "Node,RBAC"
+    endpoint-reconciler-type: lease
+  ## kubectl 所用的 kubeconfig 中, cluster.server 的地址必须是该列表中的其中一个才能够访问.
+  ## 比如, 在阿里云上创建 kube 集群, 公网IP是会变化的, controlPlaneEndpoint 只能写内网地址,
+  ## 但是在本地开发时, kubeconfig 中如果写公网IP是无法访问集群的, 会被拒绝. 
+  ## 因此这里最好设置一个域名, 本地将该域名与公网IP写入 hosts, IP变化就无法影响了.
+  ## 默认一定会包含 control plane 的 hostname 值.
+  certSANs:
+  - kubernetes
+  - k8s-master-01
+  - ${eth0_IP}
 certificatesDir: /etc/kubernetes/pki
+## 这里的 ${eth0_IP} 也可以写成域名, 比如 k8s-master-01.
+## 但是要求所有节点能通过该域名访问到 apiserver, 一般需要写入 /etc/hosts
 controlPlaneEndpoint: ${eth0_IP}:6443
 imageRepository: registry.cn-hangzhou.aliyuncs.com/google_containers
 dns:
