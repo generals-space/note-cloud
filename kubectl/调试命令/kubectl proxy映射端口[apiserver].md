@@ -28,13 +28,13 @@ $ curl -k https://k8s-server-lb:6443/api/
 
 使用proxy将apiserver的端口映射到本地的8080端口
 
-```
+```log
 $ k proxy --port=8080
 Starting to serve on 127.0.0.1:8080
 ## 阻塞
 ```
 
-```console
+```json
 $ curl http://localhost:8080/api/
 {
   "kind": "APIVersions",
@@ -53,4 +53,14 @@ $ curl http://localhost:8080/api/
 > 注意: 映射出来的端口已经不再是https类型, 所以访问协议应为http.
 
 > 当然, 也有通过curl工具访问apiserver的方法, 参考文章1中也有给出, 不过不在本文的讨论范围, 这里就不细说了.
+
+------
+
+上述代理只能在本机上访问, 如果要将该端口开放到公网(仅供测试), 可以使用如下命令.
+
+```
+kubectl proxy --port=6444 --address='0.0.0.0' --api-prefix=/ --accept-hosts='^*$' &
+```
+
+kubectl proxy命令是在执行者所在终端搭建了一个 http server, ta的后端就是 kubectl 通过 /root/.kube/config 与 apiserver 鉴权后建立的连接, 因此 proxy 所暴露出的权限最大就是该 kubeconfig 中配置的权限.
 

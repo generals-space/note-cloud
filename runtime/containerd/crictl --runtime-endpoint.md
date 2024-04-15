@@ -9,3 +9,10 @@
 ```
 crictl --runtime-endpoint unix:///var/run/containerd/containerd.sock ps -a
 ```
+
+设置默认值
+
+```
+echo 'export CONTAINER_RUNTIME_ENDPOINT=unix:///var/run/containerd/containerd.sock' >> ~/.bashrc
+source ~/.bashrc
+```
