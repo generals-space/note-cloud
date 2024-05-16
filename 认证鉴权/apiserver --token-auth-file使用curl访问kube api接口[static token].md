@@ -37,7 +37,7 @@ xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx,cluster-admin,1
 
 上面两个token都可以使用.
 
-```
+```bash
 curl -k -H 'Content-Type: application/json' -H 'Authorization: Bearer xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' 'https://127.0.0.1:6443/api/v1/namespaces/kube-system/pods'
 curl -k -H 'Content-Type: application/json' -H 'Authorization: Bearer 79e5a71195692f0fd989275b3ddfb4a4' 'https://127.0.0.1:6443/api/v1/namespaces/kube-system/pods'
 ```
@@ -46,7 +46,7 @@ curl -k -H 'Content-Type: application/json' -H 'Authorization: Bearer 79e5a71195
 
 关于上述第2点, 有几点需要注意, 该字段不是 Role/ClusterRole 类型(加了没用), 而是确确实实的"User"对象(也不是"Group"对象).
 
-```console
+```bash
 $ curl -k -H 'Content-Type: application/json' -H 'Authorization: Bearer xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' 'https://127.0.0.1:6443/api/v1/namespaces/kube-system/pods/kube-apisrer-k8s-master-01'
 {
   "message": "pods \"kube-apiserer-k8s-master-01\" is forbidden: User \"cluster-admin\" cannot get resource \"pods\" in API group \"\" in the namespace \"kube-system\"",

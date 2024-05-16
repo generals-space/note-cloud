@@ -2,7 +2,7 @@
 
 使用 kubectl get pod 可以看到容器的资源大于0, 进而使用 kubectl logs -p pod名称, 查看容器重启前发生了什么, 尤其是得到最后一条日志发生的时间.
 
-```
+```log
 Caused by: org.elasticsearch.common.util.concurrent.EsRejectedExecutionException: rejected execution of org.elasticsearch.transport.TransportService$7@6f3e918 on EsThreadPoolExecutor[search, queue capacity = 5000, org.elasticsearch.common.util.concurrent.EsThreadPoolExecutor@430f230[Running, pool size = 13, active threads = 13, queued tasks = 5000, completed tasks = 8773540]]
 ```
 

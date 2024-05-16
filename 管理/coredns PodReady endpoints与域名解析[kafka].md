@@ -22,7 +22,7 @@ statefulset 中是通过对 kafka 监听的 tcp 端口的检测作为健康检�
 
 kafka 需要注册到 zk 做服务发现, 但是各实例所在 Pod 用来注册的地址写成了自己的域名地址, 日志如下
 
-```
+```log
 Registered broker 0 at path /brokers/ids/0 with addresses: PLAINTEXT -> EndPoint(test-01-0.test-01-svc.kube-system.svc.cluster.local,9092,PLAINTEXT) (kafka.utils.ZkUtils)
 ```
 

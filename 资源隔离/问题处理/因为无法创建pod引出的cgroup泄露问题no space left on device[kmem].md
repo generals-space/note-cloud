@@ -11,13 +11,15 @@
 6. [cgroup limit reached - no space left on device](https://stackoverflow.com/questions/45278379/cgroup-limit-reached-no-space-left-on-device)
 7. [K8S 问题排查： cgroup 内存泄露问题 - kmem](https://www.cnblogs.com/leffss/p/15019898.html)
 
-场景描述
+## 场景描述
 
 某个开发团队在用kuber集群, 把pod删除后突然不再新建, 给我整懵了. 很突然, 之前还好好的.
 
 最初以为是node上的label被误删, 导致无法找到合适的节点去调度ta, 我手动添加了一下, 但还是没有新的pod创建.
 
 于是我新开了一个命名空间testns, 在其中创建了一个pod资源, 仍然无法创建. 所以这其实并不是偶然事件, 一定是哪里出问题了.
+
+## 排查思路
 
 但是目前最重要的是把开发想要创建的pod启动起来, 先不管其他pod的问题, 想着既然之前还可以重建, 现在不行, 那么需要查一下对应的deploy资源. 我describe了一下, 看到如下部分的结果, 觉得很可疑.
 
@@ -34,7 +36,7 @@ No events.
 
 于是我又查了一个kube-system空间下的情况, 发现controller和scheduler都处于CrashBackoff的状态, 且已经重启了几百次. 我describe了一下这两个对象, 发现有如下明显的报错:
 
-```
+```log
 oci runtime error: process_linux.go:258: applying cgroup configuration for process caused "mkdir /sys/fs/cgroup/memory/docker/406cfca0c0a597091854c256a3bb2f09261ecbf86e98805414752150b11eb13a: no space left on device"
 ```
 

@@ -33,7 +33,7 @@ cordon/uncordon 只修改node状态(`SchedulingDisabled`不可调度), 不涉及
 
 ### drain驱散操作失败分析及解决
 
-```
+```log
 $ kubectl drain k8s-worker-7-17
 node/k8s-worker-7-17 cordoned
 error: unable to drain node "k8s-worker-7-17", aborting command...

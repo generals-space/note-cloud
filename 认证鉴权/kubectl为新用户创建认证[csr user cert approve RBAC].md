@@ -7,13 +7,13 @@
 
 在kube集群的`RBAC`框架下, 可以通过创建`ServiceAccount`, 实现赋权及鉴权. 认证凭据为token(Bearer Token)+ca.crt(SA的Secret中有保存), 对应到curl底层命令, 为
 
-```
+```bash
 curl -k -H 'Content-Type: application/json' -H 'Authorization: Bearer xxxxxx' 'https://127.0.0.1:6443/api/v1/namespaces/default/pods'
 ```
 
 权限的主体还有其他选择: `User`及`Group`, 基于ca.crt, user.key与user.crt的证书链机制, 对应到curl命令是
 
-```
+```bash
 curl -k -H 'Content-Type:application/json' --cacert /etc/kubernetes/pki/ca.crt --cert user.crt --key user.key 'https://127.0.0.1:6443/api/v1/namespaces/default/pods'
 ```
 
@@ -27,7 +27,7 @@ curl -k -H 'Content-Type:application/json' --cacert /etc/kubernetes/pki/ca.crt -
 
 创建新用户要求先准备好一个key, 以及csr文件, 见参考文章1, 2.
 
-```
+```log
 $ openssl genrsa -out myuser.key 2048
 $ openssl req -new -key myuser.key -out myuser.csr
 Country Name (2 letter code) [AU]:

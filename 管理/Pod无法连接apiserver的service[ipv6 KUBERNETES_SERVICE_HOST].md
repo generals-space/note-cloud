@@ -4,7 +4,7 @@
 
 IPv4/IPv6双栈环境中, 某pod启动时, 有如下报错, 并不断重启.
 
-```
+```log
 panic: unable to load configmap based request-header-client-ca-file: Get https://[2409:808e:4980:330::1:1]:443/api/v1/namespaces/kube-system/configmaps/extension-apiserver-authentication: dial tcp [2409:808e:4980:330::1:1]:443: connect: connection refused
 ```
 

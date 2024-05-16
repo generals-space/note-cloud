@@ -64,7 +64,7 @@ spec:
 
 `scheduler`, `controller-manager`, `kubelet`都通过`--kubeconfig`参数指定yaml文件进行认证的.
 
-```console
+```log
 $ ll /etc/kubernetes/
 -rw------- 1 root root 5453 Sep 24 13:02 admin.conf
 -rw------- 1 root root 5489 Sep 24 13:02 controller-manager.conf
@@ -95,7 +95,7 @@ users:
 
 对`kubelet.conf`中的`client-certificate-data`字段进行`base64`解码, 然后保存为`kubelet.crt`, 并使用`openssl`命令查看证书信息.
 
-```console
+```log
 $ openssl x509 -noout -subject -issuer -in kubelet.crt
 subject= /O=system:nodes/CN=system:node:k8s-master-01
 issuer= /CN=kubernetes
@@ -108,7 +108,7 @@ issuer= /CN=kubernetes
 
 认证方式如下
 
-```console
+```log
 $ openssl verify -CAfile /etc/kubernetes/pki/ca.crt /etc/kubernetes/kubelet.crt
 /etc/kubernetes/kubelet.crt: OK
 ```

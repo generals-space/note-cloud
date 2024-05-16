@@ -3,7 +3,7 @@
 1. [Certificate Management with kubeadm](https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-certs/#manual-certificate-renewal)
 2. [grpc、https、oauth2等认证专栏实战7：使用cfssl来制作证书介绍](https://blog.csdn.net/u011582922/article/details/126339600)
 
-```
+```log
 $ kubeadm certs check-expiration
 CERTIFICATE                EXPIRES                  RESIDUAL TIME   CERTIFICATE AUTHORITY   EXTERNALLY MANAGED
 admin.conf                 Mar 09, 2024 06:28 UTC   364d            ca                      no      
@@ -22,7 +22,7 @@ front-proxy-ca          Feb 20, 2033 12:52 UTC   9y              no
 
 上面列出的crt证书, 及证书的签发机构ca, 对应的都是`/etc/kubernetes/pki`目录下的内容.
 
-```console
+```log
 $ ll /etc/kubernetes/pki | grep crt
 -rw-r--r-- 1 root root 1155 Mar 10 06:28 apiserver-etcd-client.crt
 -rw-r--r-- 1 root root 1164 Mar 10 06:28 apiserver-kubelet-client.crt
@@ -34,7 +34,7 @@ $ ll /etc/kubernetes/pki | grep crt
 
 使用openssl查看某一证书文件的信息, 是可以对应起来的, 以apiserver.crt文件为例.
 
-```console
+```log
 $ openssl x509 -in apiserver.crt -noout -text
 Certificate:
     Data:
@@ -47,7 +47,7 @@ Certificate:
 
 apiserver.crt 由 ca.crt 签发, ta的 Issuer 即为 ca.crt 的 Subject 值.
 
-```console
+```log
 $ openssl x509 -in ca.crt -noout -text 
 Certificate:
     Data:

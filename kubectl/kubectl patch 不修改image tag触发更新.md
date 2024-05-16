@@ -4,7 +4,7 @@
 
 1. [k8s使用技巧](https://blog.csdn.net/rariki/article/details/78595830)
 
-在 kuber 集群中, 修改了 configmap 变量后, 相关的 Pod 并不会自动重启, 需要我们手动完成.
+在 kube 集群中, 修改了 configmap 变量后, 相关的 Pod 并不会自动重启, 需要我们手动完成.
 
 一般这种场景就是 daemonset, deployment 等, 且 replicas 数值比较大, 一个一个删除重建太麻烦, 是否有一个办法能够触发重启机制呢?
 

@@ -7,7 +7,7 @@ crictl 创建一个容器, 比 docker 麻烦了很多啊...所有容器都都运
 
 需要先创建一个 sandbox.
 
-```
+```json
 cat <<EOF | tee sandbox.json
 {
     "metadata": {

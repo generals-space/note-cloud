@@ -3,7 +3,6 @@
 参考文章
 
 1. [Mounting data volume for Postgres in docker for Windows doesn't work](https://github.com/docker/for-win/issues/445)
-
 2. [Data directory “/var/lib/postgresql/data/pgdata” has wrong ownership](https://forums.docker.com/t/data-directory-var-lib-postgresql-data-pgdata-has-wrong-ownership/17963/31)
 
 在win10下创建postgres容器, 希望能够挂载目录防止数据丢失, 按照如下命令启动(`testing-pgdata`目录需要事先存在), 但是会出错退出.
