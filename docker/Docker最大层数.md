@@ -1,4 +1,4 @@
-```
+```log
 Step 1/11 : FROM hub.c.163.com/sunfmin/loraiotbase as builder
  ---> 94de96069609
 Step 2/11 : WORKDIR ${GOPATH}/src/github.com/sunfmin/hupan3/backend/bms/anningAPP

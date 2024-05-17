@@ -2,13 +2,9 @@
 
 1. [80道kubenetes高频面试题汇总（带答案）](https://blog.51cto.com/yw666/4559012)
 
-rs与rc并没有本质上的不同, 只是名字不一样而已.
-
 既然rs可以单独使用, 为什么还要使用deploy等包裹? 
 
 rs不支持rolling-update, 也不像deploy支持版本记录, 回滚, 暂停升级等高级特性.
-
-docker 创建的ns 无法通过 ip ns 查看到, 那么ta把ns保存在哪了?
 
 openapi 是什么
 

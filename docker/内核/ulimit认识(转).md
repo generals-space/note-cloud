@@ -68,8 +68,8 @@ TODO
 
 ### 进程能力调试:
 
-```
-cat /proc/<pid>/status
+```log
+$ cat /proc/<pid>/status
 
 CapInh:	0000000000000000
 CapPrm:	0000003fffffffff
@@ -95,7 +95,7 @@ CapBnd:	0000003fffffffff 系统的边界能力
 
 ### Linux能力机制的继承:
 
-```
+```log
 P'(permitted) = (P(inheritable) & F(inheritable)) |
                      (F(permitted) & cap_bset)              //新进程的permitted有老进程的和新进程的inheritable和可执行文件的permitted及cap_bset运算得到.
 P'(effective) = F(effective) ? P'(permitted) : 0            //新进程的effective依赖可执行文件的effective位，使能：和新进程的permitted一样，负责为空

@@ -10,7 +10,7 @@
 
 使用`docker exec {containerID} env`即可查看容器中生效的环境变量
 
-```console
+```ini
 $ docker exec 984 env
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/java/default/bin
 TERM=xterm
@@ -34,7 +34,7 @@ cat /proc/{pid}/environ
 
 ## xargs+export
 
-```console
+```bash
 $ ## cat /proc/1/environ |tr '\0' '\n' | xargs export
 $ cat /proc/1/environ |tr '\0' '\n' | xargs -i export {}
 xargs: export: No such file or directory

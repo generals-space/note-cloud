@@ -1,4 +1,4 @@
-# dockerfile指令-CMD与ENTRYPOINT
+# dockerfile指令-CMD与ENTRYPOINT的区别
 
 参考文章
 
@@ -31,6 +31,8 @@ ENTRYPOINT command param1 param2
 ```
 
 ## 两种格式的区别
+
+> `ENTRYPOINT`与`CMD`同时使用时, 只能都用列表形式(没试过都用shell命令格式的, 但一个列表一个shell命令的肯定不行)
 
 按照参考文章1所说, docker 会自动将字符串形式的`ENTRYPOINT`与`CMD`转换成数组形式.
 

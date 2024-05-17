@@ -90,3 +90,10 @@ virtualbox   -        virtualbox   Running   tcp://192.168.99.100:2376          
 
 > `docker-machine`创建的虚拟机与 docker desktop 的不互通, 镜像与容器也是不互通的, 所以需要单独下载镜像.
 
+------
+
+将本地目录拷贝到目标 docker 虚拟机中
+
+```
+docker-machine scp -r ./scripts/ virtualbox:/root/
+```

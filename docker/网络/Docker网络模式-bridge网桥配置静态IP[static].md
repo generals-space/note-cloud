@@ -8,7 +8,7 @@ Docker守护进程启动以后会创建默认网桥`docker0`，其IP网段通常
 
 但在这之前我们要首先创建一个docker网络(不能指定默认的名称为`bridge`的网络). 这个网络与`bridge`, `none`, `host`和`container`同级.
 
-```
+```log
 $ docker network create --subnet=172.18.0.0/16 mynet
 dd8fa1e40dc39844c3990578cde1a21135b538efcb73da4b620f3387c0cd16c6
 $ docker network ls
@@ -28,5 +28,5 @@ dd8fa1e40dc3        mynet               bridge              local
 之后启动容器可以使用`--net`指定目标网络, 并使用`--ip`选项指定目标网络中的某个IP, 通过这种方式启动的容器退出后再使用`start`命令启动, 其IP不变.
 
 ```
-$ docker run -it --net=mynet --ip=172.18.0.2 daocloud.io/centos:6 /bin/bash
+docker run -it --net=mynet --ip=172.18.0.2 daocloud.io/centos:6 /bin/bash
 ```

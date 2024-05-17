@@ -19,7 +19,7 @@ docker image history 镜像ID
 
 以下以`registry.cn-hangzhou.aliyuncs.com/generals-space/centos:7:devops`镜像为例
 
-```
+```log
 $ docker history registry.cn-hangzhou.aliyuncs.com/generals-space/centos:7:devops --no-trunc
 IMAGE           CREATED             CREATED BY                                                                                                                              SIZE                COMMENT
 sha256:xxxxxx   7 months ago        /bin/sh -c #(nop)  CMD ["tail" "-f" "/etc/profile"]                                                                                                                                                                   0B

@@ -11,7 +11,7 @@
 
 有一些自建的私有仓库使用的是自签发的证书, 在使用docker pull时会被(docker客户端)拒绝掉.
 
-```
+```log
 $ docker pull www.test.com/library/terway-vlan
 Error response from daemon: Get https://www.test.com/v2/: x509: certificate signed by unknown authority
 ```
