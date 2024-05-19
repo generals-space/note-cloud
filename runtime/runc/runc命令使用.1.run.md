@@ -30,7 +30,7 @@ runc spec
 
 ## 不修改 config.json 直接 run
 
-```console
+```log
 $ cd /mycontainer
 $ runc run c01
 INFO[0000] setupIO: detach: false, sockpath:

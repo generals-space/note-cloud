@@ -6,7 +6,7 @@
 
 2. [docker: Error response from daemon: service endpoint with name XXX already exists.](http://blog.csdn.net/awewong/article/details/78516926)
 
-```
+```log
 $ docker run --name task-server --net=cpo --ip=172.18.1.12 -p 8202:8112 -d --rm -v /logs/cpo/task-server:/logs reg01.sky-mobi.com/cpo/task-server:1.0.0 --eureka.client.service-url.defaultZone=http://172.16.4.40:8761/eureka/,http://172.16.4.40:8762/eureka/ --spring.cloud.config.enabled=true --spring.cloud.config.discovery.enabled=true --spring.cloud.config.discovery.service-id=config-server --spring.cloud.config.username=user --spring.cloud.config.password=123456 --spring.profiles.active=test
 41ef624105a50583343bcd9ba033f2d4f7beed9552c8c5f08c720ec1e3690717
 docker: Error response from daemon: endpoint with name task-server already exists in network cpo.

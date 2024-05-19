@@ -2,7 +2,7 @@
 
 1. [Docker已经再见，替代 Docker 的五种容器选择](https://cloud.tencent.com/developer/article/1422822)
     - [apache/mesos](https://github.com/apache/mesos) C++
-    - [rkt/rkt](https://github.com/rkt/rkt) 该项目已结束, CoreOS公司最早发起.
+    - ~~[rkt/rkt](https://github.com/rkt/rkt)~~ 该项目已结束, CoreOS公司最早发起.
     - [docker/docker-ce](https://github.com/docker/docker-ce)
     - LXC 容器. 不支持与 kuber 整合, 没有实现 OCI 的标准
 2. [opencontainers/runc](https://github.com/opencontainers/runc)
@@ -46,7 +46,7 @@ $ ls /usr/bin/ | grep runc
 runc
 ```
 
-```console
+```log
 $ ps -ef | grep containerd
 root       1258      1  0 05:58 ?        00:00:44 /usr/bin/containerd
 root       1263      1  1 05:58 ?        00:06:17 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
@@ -57,7 +57,7 @@ root       1942   1258  0 05:58 ?        00:00:04 containerd-shim -namespace mob
 
 如下, 容器`ad7a7a5952fd0`中的nginx进程就是对应`container-shim`的子进程.
 
-```console
+```log
 $ ps -ef | grep 1942
 root       1942   1258  0 05:58 ?        00:00:04 containerd-shim -namespace moby -workdir /var/lib/containerd/io.containerd.runtime.v1.linux/moby/ad7a7a5952fd0f1b6637d49cdb673d73b73b65d750f21a734b133d8e07e25b98 -address /run/containerd/containerd.sock -containerd-binary /usr/bin/containerd -runtime-root /var/run/docker/runtime-runc -systemd-cgroup
 root       1961   1942  0 05:58 ?        00:00:00 nginx: master process nginx -g daemon off;

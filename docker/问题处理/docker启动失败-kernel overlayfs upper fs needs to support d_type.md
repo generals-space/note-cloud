@@ -12,7 +12,7 @@ docker: 20.10.12
 
 在使用kubeadm部署kube集群前, 先安装docker, 但是按照之前文档中修改的`daemon.json`内容, docker却启动失败
 
-```console
+```log
 $ journalctl -xe
 Feb  7 19:28:17 k8s-master-01 kernel: overlayfs: upper fs needs to support d_type.
 Feb  7 19:28:17 k8s-master-01 dockerd: failed to start daemon: error initializing graphdriver: overlay2: the backing xfs filesystem is formatted without d_type support, which leads to incorrect behavior. Reformat the filesystem with ftype=1 to enable d_type support. Backing filesystems without d_type support are not supported.

@@ -13,7 +13,7 @@ docker run -d --name testing-pg -v d:\dockerdata\testing-pgdata:/var/lib/postgre
 
 使用`docker logs`查看容器日志发现有如下报错.
 
-```
+```log
 2019-04-27 03:59:53.364 UTC [79] FATAL:  data directory "/var/lib/postgresql/data" has wrong ownership
 2019-04-27 03:59:53.364 UTC [79] HINT:  The server must be started by the user that owns the data directory.
 child process exited with exit code 1

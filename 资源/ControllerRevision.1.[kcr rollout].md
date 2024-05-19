@@ -8,7 +8,7 @@ kube: 1.16.2
 
 > 以下将`ControllerRevision`简称为`kcr`
 
-```console
+```log
 $ k get $kcr
 NAME                               CONTROLLER                             REVISION   AGE
 kube-flannel-ds-amd64-67f65bfbc7   daemonset.apps/kube-flannel-ds-amd64   1          16m

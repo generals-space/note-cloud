@@ -6,7 +6,7 @@
 
 docker版本
 
-```
+```log
 $ docker version
 Client:
  Version:      17.09.1-ce
@@ -32,7 +32,7 @@ docker的存储路径在一块独立硬盘上, 不过fstab文件貌似有点问�
 
 关闭docker, 手动挂载硬盘, 启动docker...失败了. 查看日志, 报了如下错误.
 
-```
+```log
 Error starting daemon: couldn't create plugin manager: error setting plugin manager root to private: invalid argument
 ```
 
