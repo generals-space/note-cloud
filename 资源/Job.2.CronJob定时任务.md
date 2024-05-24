@@ -33,7 +33,7 @@ spec:
 
 创建的cronjob并不会立刻创建pod容器, 而是在第一次触发的时间开始创建并执行第一次任务.
 
-```console
+```log
 $ k get cronjob
 NAME    SCHEDULE      SUSPEND   ACTIVE   LAST SCHEDULE   AGE
 hello   */1 * * * *   False     0        <none>          16s
@@ -41,7 +41,7 @@ hello   */1 * * * *   False     0        <none>          16s
 
 之后该 cronjob 会自动创建 Job 资源对象.
 
-```console
+```log
 $ k get job
 NAME               COMPLETIONS   DURATION   AGE
 hello-1594731900   1/1           18s        98s
@@ -50,7 +50,7 @@ hello-1594731960   1/1           24s        38s
 
 一个`*/30 * * * *`的job, 状态变化如下
 
-```console
+```log
 $ k get pod
 hello-1594731900-vsgj9                  0/1     Completed   0          2m18s
 hello-1594731960-8kz78                  0/1     Completed   0          78s

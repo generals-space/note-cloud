@@ -20,7 +20,7 @@ ENTRYPOINT ["tail", "-f", "/etc/profile"]
 
 使用`docker history`子命令查看镜像层历史信息, 会发现为`ENTRYPOINT ["tail" "-f" "/etc/profile"]`
 
-```console
+```log
 $ docker history 镜像名 --no-trunc
 IMAGE                   CREATED             CREATED BY                                                      SIZE                COMMENT
 sha256:4f47f76be97316   16 seconds ago      /bin/sh -c #(nop)  ENTRYPOINT ["tail" "-f" "/etc/profile"]      0B
@@ -28,7 +28,7 @@ sha256:4f47f76be97316   16 seconds ago      /bin/sh -c #(nop)  ENTRYPOINT ["tail
 
 然而我在 arm64v8 平台下(docker 19.03.7), 构建同样的`dockerfile`, 其镜像层历史如下
 
-```console
+```log
 $ docker history 镜像名 --no-trunc
 IMAGE                   CREATED             CREATED BY                                                                              SIZE                COMMENT
 sha256:4f47f76be97316   16 seconds ago      /bin/sh -c #(nop)  ENTRYPOINT ["/bin/sh", "-c", "[\"tail\" \"-f\" \"/etc/profile\"]"]    0B
@@ -49,7 +49,7 @@ ENTRYPOINT tail -f /etc/profile
 
 这次的结果为
 
-```console
+```log
 $ docker history 镜像名 --no-trunc
 IMAGE                   CREATED             CREATED BY                                                                          SIZE                COMMENT
 sha256:4f47f76be97316   16 seconds ago      /bin/sh -c #(nop)  ENTRYPOINT ["/bin/sh", "-c", "tail -f /etc/profile"]             0B
@@ -63,7 +63,7 @@ sha256:4f47f76be97316   16 seconds ago      /bin/sh -c #(nop)  ENTRYPOINT ["/bin
 
 `ENTRYPOINT /docker-entrypoint.sh`的形式也不行, 这个脚本根本没办法接收到来自`CMD`, 或是`docker run`中接的命令行参数.
 
-```console
+```log
 $ ps -ef
 UID     PID   PPID  C STIME TTY       TIME CMD
 root      1      0  0 22:42 ?     00:00:00 /bin/sh /docker-entrypoint.sh
@@ -83,7 +83,7 @@ ENTRYPOINT ["/docker-entrypoint.sh"]
 这个 dockerfile 构建的镜像内容如下
 
 
-```console
+```log
 $ docker history 镜像名 --no-trunc
 IMAGE                   CREATED             CREATED BY                                                                          SIZE                COMMENT
 sha256:4f47f76be97316   16 seconds ago      /bin/sh -c #(nop)  ENTRYPOINT ["/docker-entrypoint.sh"]             0B

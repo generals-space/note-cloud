@@ -40,7 +40,7 @@ services:
 
 ## 查看当前集群中的stack(命名空间)
 
-```console
+```log
 $ docker stack ls
 NAME                SERVICES            ORCHESTRATOR
 celery              1                   Swarm
@@ -48,7 +48,7 @@ celery              1                   Swarm
 
 ## 查看名为celery的stack中运行的任务
 
-```console
+```log
 $ docker stack services celery
 ID                  NAME                   MODE                REPLICAS            IMAGE                                                                  PORTS
 ibzem7b6r32c        celery_celery-worker   replicated          4/4                 registry.cn-hangzhou.aliyuncs.com/generals-space/wuhou-spider:latest   
@@ -56,7 +56,7 @@ ibzem7b6r32c        celery_celery-worker   replicated          4/4              
 
 ## 查看名为celery的stack中的容器在各worker节点上的运行状态(本例中只有一个worker节点, 复制了4份)
 
-```console
+```log
 $ docker stack ps celery
 ID                  NAME                         IMAGE                                NODE                    DESIRED STATE       CURRENT STATE             PORTS
 v1xqjnuop3g3        celery_celery-worker.1       generals-space/wuhou-spider:latest   linuxkit-00155de8010d   Running             Running 11 minutes ago
@@ -67,7 +67,7 @@ rpejuxy81iek        celery_celery-worker.4       generals-space/wuhou-spider:lat
 
 ## 移除stack, 各节点上的容器也会被停止
 
-```console
+```log
 $ docker stack rm celery
 Removing service celery_celery-worker
 Removing network celery_default

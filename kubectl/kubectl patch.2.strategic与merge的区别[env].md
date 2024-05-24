@@ -68,14 +68,14 @@ spec:
 
 下面的示例是为`centos7`这个容器指定`env`参数(可与原`env`进行合并, 而非单纯替换)
 
-```console
+```log
 $ k patch ds test-ds -p '{"spec":{"template":{"spec":{"containers":[{"env":[{"name":"updateTime","value":"123456"}]}]}}}}'
 Error from server: map: map[env:[map[name:updateTime value:123456]]] does not contain declared merge key: name
 ```
 
 这是因为策略合并在合并`containers`部分时, 需要指定`contaners[n].name`字段, 以确定合合并的是`containers`数组中的哪个容器, 如下
 
-```console
+```log
 $ k patch ds test-ds -p '{"spec":{"template":{"spec":{"containers":[{"name":"centos7","env":[{"name":"updateTime","value":"123456"}]}]}}}}'
 daemonset.apps/test-ds patched
 ```
@@ -95,7 +95,7 @@ daemonset.apps/test-ds patched
 
 与`strategic`相比, `merge`的操作就非常单纯了, 对于数组中的成员, 全部都是直接替换.
 
-```console
+```log
 $ k patch ds test-ds --type merge -p '{"spec":{"template":{"spec":{"containers":[{"env":[{"name":"updateTime","value":"123456"}]}]}}}}'
 The DaemonSet "test-ds" is invalid:
 * spec.template.spec.containers[0].name: Required value

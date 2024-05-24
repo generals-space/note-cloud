@@ -10,14 +10,14 @@ Error from server: map: map[env:map[updateTime:123456]] does not contain declare
 
 后来我对比了一下`kubectl patch -h`中的示例, 发现好像还要在`containers`数组中添加一个`name`字段(由于`containers`是一个数组, 在对其中一个`container`做出修改时, 需要添加`name`字段定位目标).
 
-```console
+```log
 $ k patch pod Pod名称 -p '{"spec":{"containers":[{"name":"centos7","env":[{"name":"updateTime","value":"123456"}]}]}}'
 The Pod "test-ds-sbj8g" is invalid: spec: Forbidden: pod updates may not change fields other than `spec.containers[*].image`, `spec.initContainers[*].image`, `spec.activeDeadlineSeconds` or `spec.tolerations` (only additions to existing tolerations)
 ```
 
 还是失败了, 因为Pod资源只能修改`image`, `tolerations`等有限个字段.
 
-```console
+```log
 $ k patch pod Pod名称 -p '{"spec":{"containers":[{"name":"centos7","image":"registry.cn-hangzhou.aliyuncs.com/generals-space/centos:7-devops"}]}}'
 pod/test-ds-sbj8g patched
 ```

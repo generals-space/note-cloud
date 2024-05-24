@@ -42,7 +42,7 @@ spec:
 
 type为`kubernetes.io/dockerconfigjson`.
 
-```console
+```log
 $ kubectl create secret docker-registry registry-secret --docker-server=192.168.1.1 --docker-username=admin --docker-password=123456 --docker-email=xxx@gmail.com
 secret/registry-secret created
 $ k get secret

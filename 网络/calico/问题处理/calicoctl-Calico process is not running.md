@@ -4,7 +4,7 @@
 
 1. [calicoctl as a pod: Calico process is not running](https://github.com/projectcalico/calicoctl/issues/1594)
 
-```console
+```log
 $ calicoctl node status
 Calico process is not running.
 ```
@@ -15,7 +15,7 @@ Calico process is not running.
 
 但又出现了如下错误
 
-```console
+```log
 $ calicoctl node status
 Calico process is running.
 
@@ -27,7 +27,7 @@ Error querying BIRD: unable to connect to BIRDv6 socket: dial unix /var/run/bird
 
 使用ps查看bird进程
 
-```console
+```log
 $ ps -ef | grep bird
  8750 root      0:00 runsv bird
  8751 root      0:00 runsv bird6
@@ -54,7 +54,7 @@ $ ps -ef | grep bird
 
 重新部署后可正常执行
 
-```console
+```log
 $ calicoctl node status
 Calico process is running.
 

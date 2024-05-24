@@ -28,7 +28,7 @@ B: 172.16.42.38
 
 #### 路由
 
-```console
+```log
 $ ip r
 default via 172.16.159.253 dev eth0
 10.254.0.0/24 dev cni0 proto kernel scope link src 10.254.0.1
@@ -39,7 +39,7 @@ default via 172.16.159.253 dev eth0
 
 #### 转发表
 
-```console
+```log
 $ bridge fdb
 1a:7e:bf:63:36:ad dev flannel.1 dst 172.16.42.38 self permanent
 ```
@@ -50,7 +50,7 @@ $ bridge fdb
 
 #### 路由
 
-```console
+```log
 $ ip r
 default via 172.16.47.253 dev eth0
 10.254.0.0/24 via 10.254.0.0 dev flannel.1 onlink

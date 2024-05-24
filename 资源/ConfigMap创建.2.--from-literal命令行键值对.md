@@ -7,7 +7,7 @@
 
 ## 1. 从命令行指定键值对
 
-```console
+```log
 kubectl create configmap myconfig --from-literal=name=general --from-literal=age=21
 ```
 
@@ -28,7 +28,7 @@ metadata:
 
 `--from-literal`, `--from-file`可以组合使用, 还可以多次使用.
 
-```console
+```log
 kubectl create configmap myconfig --from-literal=sex=male --from-file=config_dir/config.cfg --from-env-file=config_dir/config2.cfg
 ```
 

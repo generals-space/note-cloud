@@ -2,7 +2,7 @@
 
 一般情况下, 普通用户是无法执行`runc`命令的, 因为权限不足, 而且也无法创建和启动容器.
 
-```console
+```log
 $ useradd general
 $ su -l general
 $ cd /mycontainer

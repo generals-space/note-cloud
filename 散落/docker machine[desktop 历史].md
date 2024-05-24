@@ -36,7 +36,7 @@ docker-machine 的安装步骤中, 第1步就写着先安装 docker, 不过看ta
 
 在一个只安装了 desktop 的 mac 系统中, 执行如下命令失败了, 应该是因为我没有安装`virtualbox`吧.
 
-```console
+```log
 $ docker-machine create --driver virtualbox default
 Creating CA: /Users/general/.docker/machine/certs/ca.pem
 Creating client certificate: /Users/general/.docker/machine/certs/cert.pem
@@ -46,7 +46,7 @@ Error with pre-create check: "exit status 126"
 
 安装`virtualbox`后, 再次执行创建命令
 
-```console
+```log
 $ docker-machine create --driver virtualbox virtualbox
 Running pre-create checks...
 (virtualbox) Image cache directory does not exist, creating it at /Users/general/.docker/machine/cache...

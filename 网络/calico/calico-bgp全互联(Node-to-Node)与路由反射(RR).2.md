@@ -34,7 +34,7 @@ spec:
 2. `netstat -anp | grep bird`之前与其他节点已经建立的连接也将消失.
 3. 此时各 Pod 之间, Pod 与各宿主机节点之间的网络将会断开.
 
-```console
+```log
 $ calicoctl node status
 Calico process is running.
 
@@ -99,7 +99,7 @@ spec:
 2. 用`netstat`查看, km01 `192.168.80.121`节点上将出现与其他节点的连接, 其他节点之间只连接 km01, 不再两两相互连接.
 3. 此时 Pod 与 Pod 之间, Pod 与集群中其余宿主机节点间便可相互通信.
 
-```console
+```log
 $ calicoctl node status
 Calico process is running.
 

@@ -21,7 +21,7 @@
 
 实际上, k8s在RBAC认证系统中, 并不存在`User`和`Group`的用户类型.
 
-```console
+```log
 $ k api-resources | grep rbac
 clusterrolebindings    rbac.authorization.k8s.io    false    ClusterRoleBinding
 clusterroles           rbac.authorization.k8s.io    false    ClusterRole
@@ -142,7 +142,7 @@ kya clusterrolebindings | grep 'system:masters' -B30
 
 上面`admin.conf`与`kubelet`虽然有对应的`User`主体, 但实际上只有`Group`的绑定.
 
-```console
+```log
 $ kya clusterrolebindings | grep 'kubernetes-admin'
 ## 无输出
 $ kya clusterrolebindings | grep 'system:node:k8s-master-01'

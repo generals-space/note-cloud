@@ -57,7 +57,7 @@ Kubernetes 提供了一个 certificates.k8s.io API，可以使用配置的 CA �
 
 正常状态下 controller-manager 的参数应该为
 
-```console
+```log
 $ kubectl get pod -n kube-system kube-controller-manager-hua-dlzx1-i1108-gyt -oyaml | grep sign
     - --cluster-signing-cert-file=/etc/kubernetes/pki/ca.crt # 用于签发证书的 CA 根证书
     - --cluster-signing-key-file=/etc/kubernetes/pki/ca.key # 用于签发证书的 CA 根证书的私钥

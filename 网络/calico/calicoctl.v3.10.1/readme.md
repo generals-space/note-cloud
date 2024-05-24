@@ -23,7 +23,7 @@
 
 `calicoctl get node [-o wide]`: 查看集群中的节点信息
 
-```console
+```log
 $ calicoctl get node -o wide
 NAME            ASN       IPV4                IPV6   
 k8s-master-01   (64512)   192.168.80.121/24          

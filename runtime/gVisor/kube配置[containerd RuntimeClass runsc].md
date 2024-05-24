@@ -10,7 +10,7 @@
 
 在containerd中配置gvisor, 还要求存在`containerd-shim-runsc-v1`, 我看了下, 直接用 yum 安装的 containerd 是没有这个包的.
 
-```console
+```log
 ## 这里按tab补全
 $ containerd
 containerd               containerd-shim          containerd-shim-runc-v1  containerd-shim-runc-v2  containerd-stress
@@ -30,7 +30,7 @@ sudo mv runsc containerd-shim-runsc-v1 /usr/local/bin
 
 可以使用 docker 直接调用 gvisor 作为 runtime, 需要先执行一下`runsc install`子命令行.
 
-```console
+```log
 $ /usr/local/bin/runsc install
 2023/03/11 08:56:58 Runtime runsc not found: adding
 2023/03/11 08:56:58 Successfully updated config.
@@ -75,7 +75,7 @@ EOF
 
 先创建 gvisor 的 runtime class.
 
-```console
+```log
 $ cat <<EOF | kubectl apply -f -
 apiVersion: node.k8s.io/v1
 kind: RuntimeClass

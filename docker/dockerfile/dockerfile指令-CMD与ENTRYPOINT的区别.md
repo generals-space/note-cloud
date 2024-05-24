@@ -62,7 +62,7 @@ docker run -d centos7:test tail -f /etc/hostname
 
 容器内的进程如下
 
-```console
+```log
 [root@deabb9078762 ~]# ps -ef
 UID        PID  PPID  C STIME TTY          TIME CMD
 root         1     0  0 07:16 ?        00:00:00 tail -f /etc/os-release tail -f /etc/hostname
@@ -77,7 +77,7 @@ ENTRYPOINT tail -f /etc/os-release
 
 那么在用与上面同样的方式构建镜像, 启动容器后, 容器内的进程将是这样的
 
-```console
+```log
 [root@deabb9078762 ~]# ps -ef
 UID        PID  PPID  C STIME TTY          TIME CMD
 root         1     0  0 07:16 ?        00:00:00 tail -f /etc/os-release
@@ -91,7 +91,7 @@ shell格式相当于在前面还要再添加`/bin/sh -c`, 所以app启动的进�
 
 为了验证参考文章1中所说, 使用 shell 模式构建的镜像, 在启动容器时 pid 不为1的情况, 我试着启动了下, 发现进入容器后ps有如下结果
 
-```console
+```log
 [root@0d80a96f4bf6 /]# ps -ef
 UID         PID   PPID  C STIME TTY          TIME CMD
 root          1      0  0 15:08 ?        00:00:00 tail -f /etc/profile

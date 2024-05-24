@@ -4,7 +4,7 @@
 
 1. [watch.NewStreamer error](https://github.com/kubernetes/client-go/issues/584)
 
-```console
+```log
 $ go run main.go controller.go 
 # k8s.io/client-go/rest
 /usr/local/gopath/pkg/mod/k8s.io/client-go@v11.0.0+incompatible/rest/request.go:598:31: not enough arguments in call to watch.NewStreamWatcher

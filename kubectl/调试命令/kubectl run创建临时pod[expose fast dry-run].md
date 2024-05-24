@@ -2,7 +2,7 @@
 
 这个手段类似于 docker run, 创建一个临时pod, 用来验证网络通不通, 能否通过yum安装上某些工具包等.
 
-```console
+```log
 kubectl run mypod -it --image=registry.cn-hangzhou.aliyuncs.com/generals-space/centos:7:latest /bin/bash
 kubectl run mypod -it --image=registry.cn-hangzhou.aliyuncs.com/generals-space/centos:7:latest -- /bin/bash
 ```

@@ -52,7 +52,7 @@ kube 内部的 Service 是通过 coredns 组件解析成 ServiceIP 的, 宿主�
 
 在宿主机环境执行如下命令
 
-```console
+```log
 $ dig kube-dns
 
 ;; QUESTION SECTION:

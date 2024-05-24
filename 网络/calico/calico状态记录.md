@@ -1,6 +1,6 @@
 进入到calico-node容器, 查看其中启动的进程.
 
-```console
+```log
 $ ps -ef
 UID         PID   PPID  C STIME TTY          TIME CMD
 root          1      0  0 04:20 ?        00:00:00 /usr/bin/runsvdir -P /etc/service/enabled

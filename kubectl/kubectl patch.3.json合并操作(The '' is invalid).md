@@ -52,7 +52,7 @@ kubectl patch sts logstash-0321-01 --type json -p '[{"op":"add","path":"/spec/te
 
 表示将新成员追加到第1个成员(索引是从0开始的), 但是这个值不能超过1, 否则会报如下错误
 
-```console
+```log
 $ kubectl patch sts logstash-0321-01 --type json -p '[{"op":"add","path":"/spec/template/spec/affinity/nodeAffinity/requiredDuringSchedulingIgnoredDuringExecution/nodeSelectorTerms/0/matchExpressions/2","value":{"key":"mcp.logstash.log/pool","operator":"Exists"}}]'
 The  "" is invalid
 ```
@@ -98,12 +98,12 @@ The  "" is invalid
 
 下面的语句会直接把"podAntiAffinity"换成"nodeAffinity"🤨, 并不是我们想要的.
 
-```console
+```log
 $ kubectl patch sts logstash-0321-01 --type json -p '[{"op":"add","path":"/spec/template/spec/affinity", "value":{"nodeAffinity": {"requiredDuringSchedulingIgnoredDuringExecution": {"nodeSelectorTerms": [{"matchExpressions": [{"key": "mcp.logstash.log/pool","operator": "Exists"}]}]}}}}]'
 ```
 
 要用下面的
 
-```console
+```log
 $ kubectl patch sts logstash-0321-01 --type json -p '[{"op":"add","path":"/spec/template/spec/affinity/nodeAffinity", "value": {"requiredDuringSchedulingIgnoredDuringExecution": {"nodeSelectorTerms": [{"matchExpressions": [{"key": "mcp.logstash.log/pool","operator": "Exists"}]}]}}}]'
 ```

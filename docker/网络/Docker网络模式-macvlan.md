@@ -38,7 +38,7 @@ docker network create -d macvlan --subnet=172.32.100.0/24 --gateway=172.32.100.2
 - `-o parent`: 则指定了出口网卡, 还是比较容易理解的.
 - `macnet`: 是网络名称, 可随意指定.
 
-```console
+```log
 $ docker network ls
 NETWORK ID          NAME                DRIVER              SCOPE
 ef2a68c1ca8d        bridge              bridge              local

@@ -20,7 +20,7 @@ spec:
 
 部署这个yaml之后我们可以通过`kubectl get PodGroup`获取这个类型的资源(当然, 此时是没有的).
 
-```console
+```log
 $ k apply -f crd.yaml
 customresourcedefinition.apiextensions.k8s.io/podgroups.testgroup.k8s.io created
 $ k get PodGroup
@@ -40,7 +40,7 @@ spec:
 
 其中`apiVersion`为`CustomResourceDefinition`部署文件中声明的, `PodGroup`资源所属的`group`与`version`字段的组合. 并且`spec`下的字段可以随便写, 因为此时还没有创建对应的`Controller`, 而字段的验证工作是要由`Controller`对象完成的.
 
-```console
+```log
 $ kap pg.yaml
 podgroup.testgroup.k8s.io/podgroup01 created
 $ k get podgroup

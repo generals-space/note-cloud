@@ -32,7 +32,7 @@ cgroup on /sys/fs/cgroup/net_cls,net_prio type cgroup (rw,nosuid,nodev,noexec,re
 
 按照参考文章1的说法, cgroup 树除了存在于`/sys/fs/cgroup`目录下, 还可以手动挂载到其他路径, 如下
 
-```console
+```log
 $ mkdir -p /tmp/mycpuset
 $ mount -t cgroup -o cpuset mycpuset /tmp/mycpuset
 $ mount | grep cpuset

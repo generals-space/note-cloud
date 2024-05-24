@@ -13,7 +13,7 @@ etcdctl get --prefix --keys-only $dir | sed -n "s#$dir\/\([^\/]*\).*#\1#p" | uni
 
 > `sed`中使用`#`为分隔符, 是因为`sed`的pattern中存在变量`$dir`, 且`$dir`中包含`/`字符.
 
-```console
+```log
 $ dir=/registry/services
 $ etcdctl get --prefix --keys-only $dir | sed -n "s#$dir\/\([^\/]*\).*#\1#p" | uniq
 endpoints
@@ -68,7 +68,7 @@ specs
 
 大致上, 不同资源下面就都是按照ns来区分了.
 
-```console
+```log
 $ dir=/registry/pods
 $ etcdctl get --prefix --keys-only $dir | sed -n "s#$dir\/\([^\/]*\).*#\1#p" | uniq
 default

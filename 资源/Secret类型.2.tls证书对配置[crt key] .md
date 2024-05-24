@@ -13,7 +13,7 @@ k create secret tls etcd-certs --cert=/etc/kubernetes/pki/etcd/server.crt --key=
 
 这种Secret的type同样有问题, 叫`kubernetes.io/tls`.
 
-```console
+```log
 $ k get secret
 NAME          TYPE                 DATA   AGE
 etcd-certs    kubernetes.io/tls    2      4s

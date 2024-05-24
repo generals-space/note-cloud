@@ -4,7 +4,7 @@
 
 1. [docker下载私有仓库镜像失败：Error response from daemon: Get $ip:5000/v2/: http: server gave HTTP response to HT](https://blog.csdn.net/liurizhou/article/details/88192945)
 
-```console
+```log
 $ docker login 10.1.11.210
 Username: admin
 Password: 
@@ -21,7 +21,7 @@ Error response from daemon: Get https://10.1.11.210/v2/: x509: certificate signe
 
 重启docker, 再登录就可以了.
 
-```console
+```log
 $ docker login 10.1.11.210
 Username: admin
 Password: 

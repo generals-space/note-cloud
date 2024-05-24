@@ -24,14 +24,14 @@ May 15 10:13:50 k8s-master-01 containerd: time="2023-05-15T10:13:50.753873854+08
 
 不过`containerd`服务是正常的...
 
-```console
+```log
 $ ps -ef | grep containerd
 root       2161      1  0 20:47 ?        00:00:00 /usr/local/bin/containerd
 ```
 
 按照参考文章1中所说
 
-```console
+```log
 $ ctr plugins list
 TYPE                            ID                       PLATFORMS      STATUS
 io.containerd.snapshotter.v1    aufs                     linux/amd64    skip

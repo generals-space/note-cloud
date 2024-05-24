@@ -7,7 +7,7 @@
 
 ## 获取容器中的所有事件
 
-```console
+```log
 controlplane $ crictl ps
 CONTAINER        IMAGE            CREATED        STATE      NAME              ATTEMPT    POD ID           POD
 c462b68c60170    deb04688c4a35    2 weeks ago    Running    kube-apiserver    2          c6b23d817f742    kube-apiserver-controlplane
@@ -47,7 +47,7 @@ By default, sysdig prints the information for each captured event on a single
 
 ## -l 获取所有过滤条件(可展示列名)
 
-```console
+```log
 $ sysdig -l
 
 Field Class: process

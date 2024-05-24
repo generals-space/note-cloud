@@ -15,7 +15,7 @@
 
 A
 
-```console
+```log
 $ ip r add 10.10.0.2 dev vetha1
 $ ip netns exec netns01 ip r add 172.16.91.0/24 dev veth1a
 $ ip r add 10.10.1.0/24 dev ens33 via 172.16.91.202
@@ -27,7 +27,7 @@ $ ip netns exec netns01 ip r
 
 B
 
-```console
+```log
 $ ip r add 10.10.1.2 dev vethb3
 $ ip netns exec netns03 ip r add 172.16.91.0/24 dev veth3b
 $ ip r add 10.10.0.0/24 dev ens33 via 172.16.91.201
@@ -43,7 +43,7 @@ $ ip netns exec netns03 ip r
 
 这下我们发现, 问题就出在`netns01`没办法以其宿主机`A`为网关, 将请求转发到其他宿主机节点. 因为我们在`netns01`中设置了到宿主机网络的路由`ip r add 172.16.91.0/24 dev veth1a`, 怎么还可能再将主机`A`当作网关呢?
 
-```console
+```log
 $ ip netns exec netns01 ip r add 172.16.91.0/24 via 172.16.91.201 dev veth1a
 RTNETLINK answers: File exists
 ```
@@ -56,7 +56,7 @@ OK, 如果单独把`netns01`到主机的路由拿出来呢? 将到`172.16.91.201
 
 A
 
-```console
+```log
 $ ip netns exec netns01 ip r del 172.16.91.0/24 dev veth1a
 $ ip netns exec netns01 ip r add 172.16.91.201 dev veth1a
 $ ip netns exec netns01 ip r add 172.16.91.0/24 dev veth1a via 172.16.91.201
@@ -69,7 +69,7 @@ $ ip netns exec netns01 ip r
 
 B
 
-```console
+```log
 $ ip netns exec netns03 ip r del 172.16.91.0/24 dev veth3b
 $ ip netns exec netns03 ip r add 172.16.91.202 dev veth3b
 $ ip netns exec netns03 ip r add 172.16.91.0/24 dev veth3b via 172.16.91.202

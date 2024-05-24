@@ -64,7 +64,7 @@ initial-cluster: k8s-master-43-101=https://172.16.43.101:2380,k8s-master-43-102=
 
 在statefulset中, headless service也是非常重要的一个点. 其实headless service就是普通的`Service`资源, 且类型为`ClusterIP`, 只不过把`clusterIP`字段显示地设置为了`None`(注意这里两个`clusterIP`大小写不一样). 
 
-```console
+```log
 $ kubectl get svc redis-service
 NAME            TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)    AGE
 redis-service   ClusterIP   None         <none>        6379/TCP   53s
@@ -78,7 +78,7 @@ redis-service   ClusterIP   None         <none>        6379/TCP   53s
 
 但是访问一个`headless service`, 其实是随机且直接访问到后端`Pod`, 比如多次`ping redis-service`, 你会发现解析出来的地址是不同的, 而这些地址都是Pod的地址.
 
-```console
+```log
 $ ping redis-service
 PING redis-service.default.svc.cluster.local (10.254.0.215) 56(84) bytes of data.
 64 bytes from redis-app-5.redis-service.default.svc.cluster.local (10.254.0.215): icmp_seq=3 ttl=64 time=0.081 ms

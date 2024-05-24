@@ -33,7 +33,7 @@ docker info: 19.03.5
 
 相关的可执行文件有:
 
-```console
+```log
 $ ls /usr/bin/ | grep docker
 docker
 dockerd

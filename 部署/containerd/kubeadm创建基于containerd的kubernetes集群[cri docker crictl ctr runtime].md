@@ -72,7 +72,7 @@ ctr是containerd自带的CLI命令行工具, 可以单独下载镜像, 启动容
 
 crictl, 顾名思义, 只要是实现了 CRI 接口的 runtime, 都可以通过该命令行管理.
 
-```console
+```log
 $ crictl ps
 WARN[0000] runtime connect using default endpoints: [unix:///var/run/dockershim.sock unix:///run/containerd/containerd.sock unix:///run/crio/crio.sock unix:///var/run/cri-dockerd.sock]. As the default settings are now deprecated, you should set the endpoint instead.
 ERRO[0000] unable to determine runtime API version: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing dial unix /var/run/dockershim.sock: connect: no such file or directory"
@@ -90,7 +90,7 @@ f0a1eacd820ff    303ce5db0e90d    20 minutes ago    Running    etcd             
 
 由于我们是直接使用的 containerd 服务, 可以让 crictl 指定其连接的 sock 地址.
 
-```console
+```log
 $ crictl --runtime-endpoint unix:///var/run/containerd/containerd.sock ps -a
 CONTAINER        IMAGE            CREATED           STATE      NAME                      ATTEMPT    POD ID           POD
 8d5cb5cd82e4e    cba2a99699bdf    22 minutes ago    Running    kube-proxy                0          062cc1b19a0ea    kube-proxy-xxcqd

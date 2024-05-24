@@ -25,7 +25,7 @@
 
 ...错了, 理论上来说要先升级`kubeadm`工具, 再执行`upgrade plan`. 所以当告诉你`Awesome, you're up-to-date! Enjoy!`的时候, 是可以升级的时候.
 
-```console
+```log
 ## 两者的输出几乎一样, upgrade plan 并不检查具体参数.
 ## kubeadm upgrade plan v1.17.2 
 $ kubeadm upgrade plan --config ./kubeadm-config.v1.17.2.yaml
@@ -67,7 +67,7 @@ Note: Before you can perform this upgrade, you have to update kubeadm to v1.17.2
 
 `diff`需要我们使用`--config`选项传入作为对比的配置文件, 不支持在命令行传入. 这里使用`kubeadm-config.v1.17.2.yaml`为例, 开启了双栈.
 
-```console
+```log
 $ kubeadm upgrade diff --config ./kubeadm-config.v1.17.2.yaml 
 --- /etc/kubernetes/manifests/kube-apiserver.yaml
 +++ new manifest
@@ -149,7 +149,7 @@ kubeadm upgrade apply --config ./kubeadm-config.v1.17.2.yaml
 
 当 control plane 与 非 control plane 的 master 节点升级完成后, 便可以一台一台升级 worker 节点了. 无需再执行 `kubeadm upgrade plan`.
 
-```console
+```log
 $ kubeadm upgrade node
 [upgrade] Reading configuration from the cluster...
 [upgrade] FYI: You can look at this config file with 'kubectl -n kube-system get cm kubeadm-config -oyaml'

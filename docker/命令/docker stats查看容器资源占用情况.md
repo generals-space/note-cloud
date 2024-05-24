@@ -12,7 +12,7 @@
 
 如果不加任何限制, docker 容器将共享宿主机的资源: CPU/内存, 没有限制.
 
-```console
+```log
 # 启动一个容器
 $ docker run -d redis                                                                        
 c98c9831ee73e9b71719b404f5ecf3b408de0b69aec0f781e42d815575d28ada

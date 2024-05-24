@@ -35,7 +35,7 @@ md 下面的都是废话.
 
 对于裸docker容器, 可以直接查看`/sys/fs/cgroup/memory/docker/${containerID}/cgroup.procs`的文件内容, 如下
 
-```console
+```log
 $ cat cgroup.procs
 58384
 61533
@@ -55,7 +55,7 @@ root      61533  58365  0 18:45 pts/0    00:00:00 sh
 
 使用`docker top`可以查看容器内的进程列表, 而且进程`PID`是按宿主机的`PID`显示的.
 
-```console
+```log
 $ docker top 470a404d9538
 UID                 PID                 PPID                C                   STIME               TTY                 TIME                CMD
 root                58384               58365               0                   15:36               ?                   00:00:01            tail -f /etc/profile
@@ -66,7 +66,7 @@ root                61533               58365               0                   
 
 如果你仔细观察进程`PID`与`PPID`的话, 就会发现ta们是基于同一个`PPID`创建的.
 
-```console
+```log
 $ ps -ef| grep 58365
 root      58365   1285  0 15:36 ?        00:00:01 containerd-shim -namespace moby -workdir /var/lib/containerd/io.containerd.runtime.v1.linux/moby/470a404d95381d66c3eced7c02594a14589c66849fac50ef5332d74d3f83f9ae -address /run/containerd/containerd.sock -containerd-binary /usr/bin/containerd -runtime-root /var/run/docker/runtime-runc -systemd-cgroup
 root      58384  58365  0 15:36 ?        00:00:01 tail -f /etc/profile

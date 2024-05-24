@@ -66,7 +66,7 @@ spec:
 
 `general-test`命名空间下的资源如下
 
-```console
+```log
 $ k get svc -n general-test
 NAME           TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)   AGE
 nginx-svc-01   ClusterIP   10.100.180.6     <none>        80/TCP    6m45s

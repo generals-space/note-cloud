@@ -74,7 +74,7 @@ metadata:
 
 假设存在如下目录
 
-```console
+```log
 $ ls config_dir/
 config1.cfg	config2.cfg
 ## 两个文件的内容一样

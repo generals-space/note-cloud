@@ -31,7 +31,7 @@ staticPodPath: /etc/kubernetes/manifests
 
 在master节点的该目录下, 存在如下文件
 
-```console
+```log
 $ pwd
 /etc/kubernetes/manifests
 $ ll

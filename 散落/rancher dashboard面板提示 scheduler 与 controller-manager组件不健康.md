@@ -17,7 +17,7 @@ kube是通过`kubeadm`创建的集群, 然后通过rancher的"添加已有集群
 
 查看`contrller-manager`的可用参数
 
-```console
+```log
 $ k exec -it kube-controller-manager-k8s-master-1 -n kube-system -- kube-controller-manager --help
       --port int
                 The port on which to serve unsecured, unauthenticated access. Set to 0 to disable. (default 10252) (DEPRECATED: see --secure-port instead.)

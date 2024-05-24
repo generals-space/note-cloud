@@ -55,7 +55,7 @@ spec:
       path: /opt/nginx
 ```
 
-```console
+```log
 $ k apply -f pod.yaml 
 Error from server (Forbidden): error when creating "pod.yaml": pods "nginx" is forbidden: violates PodSecurity "baseline:latest": hostPath volumes (volume "data")
 ```
@@ -72,7 +72,7 @@ kubectl label --overwrite ns enforced pod-security.kubernetes.io/audit=baseline
 
 再次创建上面的 Pod.
 
-```console
+```log
 $ k apply -f pod.yaml 
 Warning: would violate PodSecurity "baseline:latest": hostPath volumes (volume "data")
 pod/nginx created
@@ -87,7 +87,7 @@ nginx   1/1     Running   0          10s
 
 注意, 对已经拥有违反 baseline 策略的 Pod 的 namespace 添加`enforce=baseline`标签是可以成功的, 且不会影响到原本正常运行的 Pod.
 
-```console
+```log
 $ kubectl label --overwrite ns enforced pod-security.kubernetes.io/enforce=baseline
 Warning: existing pods in namespace "enforced" violate the new PodSecurity enforce level "baseline:latest"
 Warning: nginx: hostPath volumes

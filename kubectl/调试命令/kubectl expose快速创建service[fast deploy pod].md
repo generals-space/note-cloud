@@ -14,7 +14,7 @@ k expose deploy mydeploy --name mysvc --port 8080
 
 可以被 expose 的有 `pod`, `deploy`, 只要指定目标资源的名字即可, 但是不支持`sts`, `ds`.
 
-```console
+```log
 $ k expose sts 目标sts名称 --name test-svc --port 9092 --target-port=9092
 error: cannot expose a StatefulSet.apps
 $ k expose ds 目标ds名称 --name test-svc --port 9092 --target-port=9092

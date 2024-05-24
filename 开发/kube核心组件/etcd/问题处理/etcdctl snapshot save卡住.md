@@ -11,7 +11,7 @@
 
 进入到etcd容器内部执行如下命令进行备份, 但是一直卡住...
 
-```console
+```log
 $ ETCDCTL_API=3 etcdctl --endpoints=127.0.1:2379 snapshot save snapshotdb
 {"level":"info","ts":"2023-03-10T02:14:08.257Z","caller":"snapshot/v3_snapshot.go:65","msg":"created temporary db file","path":"snapshotdb.part"}
 ```

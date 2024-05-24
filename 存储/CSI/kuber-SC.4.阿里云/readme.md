@@ -23,7 +23,7 @@
 
 依次创建后可以得到创建好的PVC和PV对象
 
-```console
+```log
 $ k get pvc
 NAME       STATUS   VOLUME                                         CAPACITY   ACCESS MODES   STORAGECLASS                   AGE
 disk-pvc   Bound    pv-disk-87a1abb7-1b0c-11ea-8adf-7eab48cdc50c   25Gi       RWO            alicloud-disk-ssd-hangzhou-g   27m
@@ -42,7 +42,7 @@ pv名称的生成由插件定义, 目前不清楚具体的格式, 可能可以�
 
 另外, 云盘也有分类: 高效云盘, ssd云盘, essd云盘, 下面是provisioner组件自行提供的(`alicloud-disk-ssd-hangzhou-g`是我们刚才手动创建的), 其中`alicloud-disk-available`会通过`高效云盘`、`ssd云盘`、`普通云盘`的顺序依次尝试创建云盘.
 
-```console
+```log
 $ k get sc
 NAME                           PROVISIONER                       AGE
 alicloud-disk-available        alicloud/disk                     171m
@@ -54,7 +54,7 @@ alicloud-disk-ssd-hangzhou-g   diskplugin.csi.alibabacloud.com   132m
 
 如果指定`alicloud-disk-efficiency`创建pvc, 可以得到如下结果.
 
-```console
+```log
 $ k get pvc
 NAME                  STATUS   VOLUME                                         CAPACITY   ACCESS MODES   STORAGECLASS                   AGE
 disk-pvc              Bound    d-bp18shveit3grcs4sht3                         25Gi       RWO            alicloud-disk-efficiency       2m21s

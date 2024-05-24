@@ -114,7 +114,7 @@ root:gopls cpu,cpuset gopls
 
 `cpuset`就是核心集配置, 你可以使用如下命令查看自己机器上的cpu核心数量
 
-```console
+```log
 $ cat /sys/fs/cgroup/cpuset/cpuset.cpus
 0-7
 ```

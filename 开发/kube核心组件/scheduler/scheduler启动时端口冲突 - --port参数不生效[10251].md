@@ -12,7 +12,7 @@ kube: 1.17.2
 
 由于 kubeadm 创建的 k8s 集群中, kube-scheduler 已经占用了2个原生端口(10251与10259), 所以需要为我们的工程指定其他端口防止冲突.
 
-```console
+```log
 $ netstat -nlpt | grep schedule
 tcp     0    0 127.0.0.1:10259    0.0.0.0:*    LISTEN    76970/kube-schedule
 tcp6    0    0 :::10251           :::*         LISTEN    76970/kube-schedule

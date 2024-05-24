@@ -25,7 +25,7 @@
 
 正常运行的docker容器中, 是不能修改任何sysctl内核参数的. 因为`/proc/sys`是以只读方式挂载到容器里面的. 在容器中执行如下命令
 
-```console
+```log
 $ mount | grep proc
 proc on /proc type proc (ro,nosuid,nodev,noexec,relatime)
 ```
@@ -40,7 +40,7 @@ docker run --privileged -it ubuntu bash
 
 整个`/proc`目录都是以`rw`权限挂载的
 
-```console
+```log
 $ mount | grep proc
 proc on /proc type proc (rw,nosuid,nodev,noexec,relatime)
 ```
@@ -65,7 +65,7 @@ docker run -v /proc/sys:/proc/sys -it ubuntu bash
 
 使用`docker`提供的`--sysctl`指定内核参数.
 
-```console
+```log
 $ docker run -it --sysctl 'net.ipv4.ip_default_ttl=63' ubuntu sysctl net.ipv4.ip_default_ttl
 net.ipv4.ip_default_ttl = 63
 ```

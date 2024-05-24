@@ -11,7 +11,7 @@
 
 前面在尝试CRD开发的时候, 发现`code-generator`生成的代码, 目标路径总是在`GOPATH`目录下, 并且没有办法写绝对路径.
 
-```console
+```log
 $ bash vendor/k8s.io/code-generator/generate-groups.sh all $(pwd)/pkg/client $(pwd)/pkg/apis mycrdgroup:v1
 Generating deepcopy funcs
 F1224 04:39:46.533441  125875 main.go:82] Error: Failed making a parser: unable to add directory "/home/project/mycrd/pkg/apis/mycrdgroup/v1": unable to import "/home/project/mycrd/pkg/apis/mycrdgroup/v1": import "/home/project/mycrd/pkg/apis/mycrdgroup/v1": cannot import absolute path

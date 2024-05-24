@@ -8,7 +8,7 @@
 
 rancher提供了一个`local pv`的`provisioner`插件, 其本质也是用`hostPath`做的. 在创建PVC的时候, 只要指定rancher提供的sc, 就可以自动创建PV且创建宿主机目录, 然后可以直接被挂载到Pod对象中.
 
-```console
+```log
 $ k get sc
 NAME         PROVISIONER             AGE
 local-path   rancher.io/local-path   44m
@@ -18,7 +18,7 @@ local-path   rancher.io/local-path   44m
 
 pvc和deploy创建成功后, Pod被调度到哪个节点上, provisioner就会在此节点上的`/opt/local-path-provisioner`目录下创建子目录, 同时也会创建PV资源, 目录名称与PV对象的名称相同.
 
-```console
+```log
 $ k get pod -o wide
 NAME                              READY   STATUS    RESTARTS   AGE     IP             NODE            NOMINATED NODE   READINESS GATES
 local-pv-deploy-79c9f76b9-fcxd5   1/1     Running   0          20m     10.23.36.247   k8s-worker-01   <none>           <none>
@@ -30,7 +30,7 @@ NAME                                       CAPACITY   ACCESS MODES   RECLAIM POL
 pvc-90ab9d86-cb83-407d-823c-f7e62b9d5636   1Gi        RWO            Retain           Bound    default/local-pvc   local-path              15m
 ```
 
-```console
+```log
 $ pwd
 /opt/local-path-provisioner
 $ ls

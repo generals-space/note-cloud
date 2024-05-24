@@ -50,7 +50,7 @@ E0826 04:25:37.762890       1 controller.go:114] loading OpenAPI spec for "v1bet
 
 `metrics-server`的Pod异常, 所以Endpoint也是异常, 所以ta对应的APIService资源是False状态.
 
-```console
+```log
 $ kubectl get apiservice | grep metrics
 NAME                        SERVICE                        AVAILABLE                 AGE
 v1beta1.metrics.k8s.io      kube-system/metrics-server     False (MissingEndpoints)  15m

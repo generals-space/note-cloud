@@ -55,14 +55,14 @@ spec:
       mountPath: /root/config
 ```
 
-```console
+```log
 $ kubectl create -f pod_configmap.yml 
 pod "test-pod" created
 ```
 
 进去看看.
 
-```console
+```log
 $ kubectl exec -it test-pod -- /bin/bash
 [root@test-pod /]# cd /root/config
 [root@test-pod config]# ls
@@ -86,7 +86,7 @@ age=21
 
 ConfigMap映射的目录是只读的, 不可再创建其他文件.
 
-```console
+```log
 [root@test-pod config]# touch test
 touch: cannot touch 'test': Read-only file system
 ```

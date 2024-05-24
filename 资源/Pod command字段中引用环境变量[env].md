@@ -19,7 +19,7 @@
 
 进入到容器内部, 使用`ps`查看进程列表, 会发现进程的启动命令中, 环境变量已经被替换掉了.
 
-```console
+```log
 sh-4.2# ps -ef
 UID         PID   PPID  C STIME TTY          TIME CMD
 root          1      0  0 15:37 ?        00:00:00 tail -f /etc/os-release

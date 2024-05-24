@@ -22,7 +22,7 @@ Build Cache         0                   0                   0B                  
 
 ## prune
 
-```console
+```log
 $ docker system prune
 WARNING! This will remove:
         - all stopped containers

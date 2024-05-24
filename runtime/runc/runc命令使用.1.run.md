@@ -47,7 +47,7 @@ sh-5.0#
 
 新开一个终端, 可以使用`runc list`子命令查看正在运行的容器.
 
-```console
+```log
 $ runc list
 ID     PID    STATUS     BUNDLE          CREATED                           OWNER
 c01    897    running    /mycontainer    2020-04-15T09:46:03.463907749Z    root

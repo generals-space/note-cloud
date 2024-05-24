@@ -60,7 +60,7 @@ Certificate:
 
 ## renew 更新证书
 
-```console
+```log
 $ kubeadm certs renew apiserver 
 certificate for serving the Kubernetes API renewed
 

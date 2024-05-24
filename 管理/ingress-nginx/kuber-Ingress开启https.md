@@ -25,7 +25,7 @@ ingress-controller的pod中日志如下.
 
 后来怀疑是证书格式的问题, 按照参考文章2中, 也就是官方文档中生成证书的方法, 终于成功了.
 
-```console
+```log
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout server.key -out server.crt -subj "/CN=harbor.generals.space/O=harbor.generals.space"
 
 kubectl create secret tls https-certs -n harbor --key server.key --cert server.crt

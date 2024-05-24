@@ -20,7 +20,7 @@ watch 操作可以监听任意 key, 即使这个 key 不存在也不会报错.
 
 ## version
 
-```console
+```log
 # etcdctl get '/registry/statefulsets/default/test-sts' --write-out="fields" | grep -v Value
 "ClusterID" : 6138936026546267994
 "MemberID" : 4601696108602649857

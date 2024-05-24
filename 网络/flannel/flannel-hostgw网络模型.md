@@ -32,7 +32,7 @@ vm1上的容器获得IP `172.17.1.2`, vm2上的容器获得IP `172.17.2.2`.
 
 以vm1为例, 默认路由如下
 
-```console
+```log
 $ ip r 
 default via 172.16.91.2 dev ens33 proto static metric 100
 172.16.91.0/24 dev ens33 proto kernel scope link src 172.16.91.128 metric 100
@@ -98,7 +98,7 @@ sysctl -w net.ipv4.ip_forward=1
 
 另外, 可能还需要`iptables`做一些事情. 由于访问目标是容器, 不在宿主机自身, 所以数据包到达宿主机后, 会进入`filter`表的`FORWARD`链, 需要查看该链的默认规则是否为`ACCEPT`.
 
-```console
+```log
 $ iptables -nvL | grep FORWARD
 Chain FORWARD (policy DROP 0 packets, 0 bytes)
 ```

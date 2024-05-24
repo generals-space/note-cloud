@@ -38,7 +38,7 @@ networks:
 
 但在执行up命令时报错
 
-```console
+```log
 $ dc up -d mcp-redis
 WARNING: Some services (mcp-redis) use the 'deploy' key, which will be ignored. Compose does not support 'deploy' configuration - use `docker stack deploy` to deploy to a swarm.
 Creating network "middleware_mcp" with driver "bridge"

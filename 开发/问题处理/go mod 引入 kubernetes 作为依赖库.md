@@ -14,7 +14,7 @@ kuber: v1.17.3
 
 于是我在命令行使用`go get`尝试下载 kuber 工程, 但是却报如下错误.
 
-```console
+```log
 $ go get -v k8s.io/kubernetes@v1.17.3
 go: finding k8s.io v1.17.3
 go get: k8s.io/kubernetes@v1.17.3 requires

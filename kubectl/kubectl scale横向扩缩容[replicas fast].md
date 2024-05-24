@@ -10,7 +10,7 @@ k scale --replicas=4 deploy mydeploy
 
 除了可以指定资源对象的目标节点数外, 还可以预选进行筛选, 只扩缩符合条件的对象.
 
-```console
+```log
 $ k scale deploy esrally --replicas=1 --current-replicas=3
 error: Expected replicas to be 3, was 2
 ```

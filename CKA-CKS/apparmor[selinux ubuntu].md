@@ -71,7 +71,7 @@ container.apparmor.security.beta.kubernetes.io/container名称: localhost/profil
 
 进入目标容器, 尝试写入文件, 会发现会失败.
 
-```console
+```log
 controlplane $ k exec -it hello-apparmor sh
 / # touch abc
 touch: abc: Permission denied
@@ -85,7 +85,7 @@ sh: can't create /etc/hosts: Permission denied
 
 ### apparmor profile not found
 
-```console
+```log
 controlplane $ k get pod -owide
 NAME             READY   STATUS                 RESTARTS   AGE   IP            NODE     NOMINATED NODE   READINESS GATES
 hello-apparmor   0/1     CreateContainerError   0          5s    192.168.1.3   node01   <none>           <none>

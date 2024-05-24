@@ -4,7 +4,7 @@
 
 coredns有一个Pod一直处于`ContainerCreating`状态.
 
-```console
+```log
 $ kwd pod
 NAME                                    READY   STATUS              RESTARTS   AGE    IP                NODE            NOMINATED NODE   READINESS GATES
 coredns-67c766df46-2dmd9                0/1     Running             2339       25d    10.254.0.5        k8s-master-01   <none>           <none>

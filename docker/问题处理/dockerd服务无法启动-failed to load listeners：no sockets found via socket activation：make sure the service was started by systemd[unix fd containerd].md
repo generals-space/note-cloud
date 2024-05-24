@@ -10,7 +10,7 @@
 
 某天电脑重启后, 发现`dockerd`服务启动不了了, 很突然.
 
-```console
+```log
 $ systemctl restart docker
 Job for docker.service failed because the control process exited with error code. See "systemctl status docker.service" and "journalctl -xe" for details.
 ```

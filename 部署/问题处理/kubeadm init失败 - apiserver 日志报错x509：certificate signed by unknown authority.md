@@ -23,7 +23,7 @@ Sep 22 19:15:01 ubuntu kubelet[10156]: E0922 19:15:01.275082   10156 kubelet.go:
 
 由于之前的问题, 我们知道这是因为 kubelet 请求 apiserver 失败(不过这次已经不再是"connection refused"), 于是查看 apiserver 容器的日志, 看看有什么问题.
 
-```console
+```log
 $ crictl logs -f apiserver-xxx
 E0923 02:12:23.620666       1 authentication.go:63] "Unable to authenticate the request" err="[x509: certificate signed by unknown authority, verifying certificate SN=1707380803054755332, SKID=, AKID=0B:15:61:12:EE:8E:8B:DF:E3:41:59:5A:67:2A:5C:11:02:AE:71:4D failed: x509: certificate signed by unknown authority (possibly because of \"crypto/rsa: verification error\" while trying to verify candidate authority certificate \"kubernetes\")]"
 ```

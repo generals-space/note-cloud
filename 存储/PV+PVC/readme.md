@@ -2,7 +2,7 @@
 
 1. [Persistent Volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/)
 
-```console
+```log
 $ k get pv
 NAME       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                          STORAGECLASS   REASON   AGE
 pv-mysql   16Gi       RWO            Retain           Bound    default/data-mariadb-slave-0                           2m6s

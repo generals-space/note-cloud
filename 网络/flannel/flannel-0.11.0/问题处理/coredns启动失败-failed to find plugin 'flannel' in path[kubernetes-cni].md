@@ -9,7 +9,7 @@
 3. [kubernetes入门：使用kubeadm搭建单机master，亲测无异常，建议收藏](https://bbs.huaweicloud.com/blogs/306548)
     - 与1是同一篇文章
 
-```console
+```log
 $ kwd pod
 NAME                                    READY   STATUS              RESTARTS   AGE   IP               NODE            NOMINATED NODE   READINESS GATES
 coredns-7f9c544f75-9qn66                0/1     ContainerCreating   0          21m   <none>           k8s-master-01   <none>           <none>
@@ -30,7 +30,7 @@ Events:
 
 我看了下`/opt/cni/bin`目录, 的确没有`flannel`文件. 
 
-```console
+```log
 $ pwd
 /opt/cni/bin
 $ ls
@@ -43,7 +43,7 @@ bandwidth  bridge  dhcp  dummy  firewall  host-device  host-local  ipvlan  loopb
 
 而按照参考文章2, `flannel`本来应该包含在`kubernetes-cni`包中的, 这个包会随着`kubelet`一起安装.
 
-```console
+```log
 $ rpm -qa | grep cni
 kubernetes-cni-1.2.0-0.x86_64
 ```

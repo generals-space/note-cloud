@@ -20,7 +20,7 @@ cgcreate -g cpu,cpuset:gopls
 
 系统中的控制组可以使用`lscgroup`查看
 
-```console
+```log
 $ lscgroup | grep gopls
 cpuset:/gopls
 cpu,cpuacct:/gopls

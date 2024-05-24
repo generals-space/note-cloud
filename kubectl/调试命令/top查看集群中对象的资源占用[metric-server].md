@@ -23,7 +23,7 @@ kube 版本: 1.16.2 单节点集群, 宿主机配置 4C 8G.
 
 如果不部署监控服务, 执行`top`命令会失败.
 
-```console
+```log
 $ k top pod
 Error from server (NotFound): the server could not find the requested resource (get services http:heapster:)
 ```
@@ -40,7 +40,7 @@ metric-server 从 kubelet 收集资源信息, 并通过 apiserver 暴露出来. 
 
 到 1.16.2, `top`子命令只支持2种资源: `node`和`pod`, 每种资源3个指标: `CPU`, 内存和硬盘.
 
-```console
+```log
 $ k top node
 NAME            CPU(cores)   CPU%   MEMORY(bytes)   MEMORY%
 k8s-master-01   394m         9%     3191Mi          41%

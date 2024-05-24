@@ -44,7 +44,7 @@ mount /demo/1.iso /mnt/iso1
 
 在当前 mount ns 下, 挂载了 iso1, 而没有挂载 iso2, 执行`mount`命令可以看到.
 
-```console
+```log
 $ mount | grep iso
 /demo/1.iso on /mnt/iso1 type iso9660 (ro,relatime)
 ```
@@ -63,7 +63,7 @@ mount /demo/2.iso /mnt/iso2
 
 在执行完`unshare`与`readlink`命令后, 执行`mount`命令, 可以看到与原 mount ns 一样的挂载情况, 因为新的 ns 继承了原有的 ns.
 
-```console
+```log
 $ unshare --mount
 $ readlink /proc/$$/ns/mnt
 $ mount | grep iso
@@ -72,7 +72,7 @@ $ mount | grep iso
 
 然后在新的 mount ns 中, 执行`umount`与`mount`, 卸载 iso1, 挂载 iso2, 现在再查看`mount`情况.
 
-```console
+```log
 $ umount /mnt/iso1
 
 $ mount /demo/2.iso /mnt/iso2
@@ -83,7 +83,7 @@ $ mount | grep iso
 
 此时, 回到第1个shell(原 mount ns), 再次查看`mount`情况.
 
-```console
+```log
 $ mount | grep iso
 /demo/1.iso on /mnt/iso1 type iso9660 (ro,relatime)
 ```
@@ -111,7 +111,7 @@ mkdir /mnt/iso
 
 先 mount 一次, 看看效果.
 
-```console
+```log
 $ mount /demo/1.iso /mnt/iso
 mount: /dev/loop2 is write-protected, mounting read-only
 /mnt
@@ -124,7 +124,7 @@ $ mount | grep iso
 
 在当前 shell 再挂载一次.
 
-```console
+```log
 $ mount /demo/2.iso /mnt/iso
 mount: /dev/loop3 is write-protected, mounting read-only
 /mnt
@@ -141,7 +141,7 @@ $ mount | grep iso
 
 不过`mount`显示的挂载信息却同时包含`iso1`和`iso2`, 很神奇, 这样的话, `umount`也需要执行2次才行.
 
-```console
+```log
 $ mount | grep iso
 /demo/1.iso on /mnt/iso type iso9660 (ro,relatime)
 /demo/2.iso on /mnt/iso type iso9660 (ro,relatime)
@@ -159,7 +159,7 @@ $ mount | grep iso
 
 现在重新来一次, 在当前 ns 下, 挂载`1.iso`到`/mnt/iso`.
 
-```console
+```log
 $ mount /demo/1.iso /mnt/iso
 mount: /dev/loop2 is write-protected, mounting read-only
 
@@ -173,7 +173,7 @@ $ mount | grep iso
 
 ok, 接下来在另一个 shell 中, 创建独立的 mount ns, 并将`2.iso`也挂载到`/mnt/iso`目录. 当然, 要先卸载继承上一个 ns 的`iso1`挂载点.
 
-```console
+```log
 $ unshare --mount
 $ readlink /proc/$$/ns/mnt
 $ mount | grep iso

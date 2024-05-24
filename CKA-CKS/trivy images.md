@@ -4,7 +4,7 @@
 
 trivy 可以扫描多种场景下的漏洞, 包括容器镜像, 整个k8s集群, 及本地文件系统等.
 
-```console
+```log
 $ trivy
 
 Usage:
@@ -27,7 +27,7 @@ Available Commands:
 
 ## 扫描镜像
 
-```console
+```log
 $ trivy image docker.io/calico/cni:v3.24.1 -q
 
 opt/cni/bin/host-local (gobinary) ## 容器中的二进制文件
@@ -71,7 +71,7 @@ ta扫描了此镜像中所有可执行文件, 并分别给出了ta们拥有的�
 -s, --severity string        severities of security issues to be displayed (comma separated) (default "UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL")
 ```
 
-```console
+```log
 $ trivy image docker.io/calico/cni:v3.24.1 -q -s 'HIGH,CRITICAL'
 
 opt/cni/bin/install (gobinary) ## 容器中的二进制文件

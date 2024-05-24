@@ -28,7 +28,7 @@ users:
 
 而`set-credentials`可以指定不同的认证方式, 使用`-h`选项可以查看到如下帮助信息
 
-```console
+```log
 $ kubectl config set-credentials -h
 
 Sets a user entry in kubeconfig

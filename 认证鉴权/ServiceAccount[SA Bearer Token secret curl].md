@@ -11,7 +11,7 @@
 
 在kuber中, 每创建一个ns, 都会在该ns下默认创建一个名为`default`的SA对象.
 
-```console
+```log
 $ k get sa -n default
 NAME      SECRETS   AGE
 default   1         18d
@@ -72,7 +72,7 @@ spec:
 
 pod在启动时都会挂载包含该`SA`相关信息的`volume`, 位置在pod内部的`/var/run/secrets/kubernetes.io/serviceaccount`.
 
-```console
+```log
 $ pwd
 /var/run/secrets/kubernetes.io/serviceaccount
 $ ll

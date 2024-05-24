@@ -23,7 +23,7 @@
 
 但是目前最重要的是把开发想要创建的pod启动起来, 先不管其他pod的问题, 想着既然之前还可以重建, 现在不行, 那么需要查一下对应的deploy资源. 我describe了一下, 看到如下部分的结果, 觉得很可疑.
 
-```console
+```log
 $ kubectl describe deploy 目标deploy资源
 OldReplicaSets:		fika-io-749979362 (3/3 replicas created)
 NewReplicaSet:		<none>

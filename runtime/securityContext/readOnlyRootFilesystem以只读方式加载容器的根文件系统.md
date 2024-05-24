@@ -44,7 +44,7 @@ spec:
 
 配置`readOnlyRootFilesystem: true`后, 容器内部无法对文件系统做任何修改, 但是无法影响通过`volumeMounts`挂载的目录.
 
-```console
+```log
 $ k -n default exec mydeploy-5b7ff8d464-j2nrj -- touch /abc.txt
 touch: /abc.txt: Read-only file system
 command terminated with exit code 1

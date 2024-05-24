@@ -11,7 +11,7 @@
 
 查看日志如下
 
-```console
+```log
 $ k logs -f kube-flannel-ds-amd64-mng7n
 ...
 I0424 10:54:03.024305       1 main.go:386] Found network config - Backend type: udp
@@ -29,7 +29,7 @@ mknod /dev/net/tun c 10 200
 
 ...我错了
 
-```console
+```log
 $ mknod /dev/net/tun c 10 200
 mknod: "/dev/net/tun": 文件已存在
 ```

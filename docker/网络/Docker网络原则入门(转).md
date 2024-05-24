@@ -86,7 +86,7 @@ e18a76da06b3af7708792765745466ed485a69afaedfd7e561cf3645d1aa7149
 
 还是使用上文的`no-exposed-ports`镜像, 在运行时添加`-p`参数, 但是不添加任何`expose`规则. 在`config.ExposedPorts`里重新查看`--expose`参数或者`EXPOSE`指令的结果.
 
-```console
+```log
 $ docker run -d --name no-exposed-ports-with-p-flag -p 8888:8888 no-exposed-ports
 c876e590cfafa734f42a42872881e68479387dc2039b55bceba3a11afd8f17ca
 $ docker port no-exposed-ports-with-p-flag

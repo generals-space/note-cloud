@@ -17,7 +17,7 @@
 
 支持的运算符有`=`, `!=`, `==`, `in`, `notin`. `k get --help`信息中没有介绍, 我是在错误信息里找到的...
 
-```console
+```log
 $ k get pod -l 'component not in (kube-apiserver)'
 Error from server (BadRequest): Unable to find "/v1, Resource=pods" that match label selector "component not in (kube-apiserver)", field selector "": unable to parse requirement: found 'not', expected: '=', '!=', '==', 'in', notin'
 ```

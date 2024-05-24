@@ -6,7 +6,7 @@
 2. [Kubeadm DualStack Support for List of Service IPs](https://github.com/kubernetes/kubernetes/pull/82473/files)
   - 单元测试代码中给出了合法的 IPv6 网段示例, 掩码位为 112.
 
-```console
+```log
 $ kubeadm upgrade apply --config ./kubeadm-config.v1.17.2.yaml 
 W0605 11:40:18.853549   50129 validation.go:28] Cannot validate kube-proxy config - no validator is available
 W0605 11:40:18.853598   50129 validation.go:28] Cannot validate kubelet config - no validator is available
@@ -26,7 +26,7 @@ To see the stack trace of this error execute with --v=5 or higher
 
 开了日志
 
-```console
+```log
 $ kubeadm upgrade apply --config ./kubeadm-config.v1.17.2.yaml -v 5
 [upgrade/staticpods] This might take a minute or longer depending on the component/version gap (timeout 5m0s)
 Static pod: kube-apiserver-k8s-master-01 hash: 8810a8c8d7f86ec2518c4cae06f33257
@@ -40,7 +40,7 @@ couldn't upgrade control plane. kubeadm has tried to recover everything into the
 
 好在升级时用的新版本 apiserver 的 docker 容器还在, 于是查看 ta 的日志.
 
-```console
+```log
 $ d logs k8s_kube-apiserver_kube-apiserver-k8s-master-01_kube-system_b46fbe29509e9b523b237db7c4fe7c6f_5
 Flag --insecure-port has been deprecated, This flag will be removed in a future version.
 I0605 05:41:43.755378       1 server.go:596] external host was not specified, using 192.168.80.121

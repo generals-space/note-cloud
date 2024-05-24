@@ -64,7 +64,7 @@ spec:
   - client auth
 ```
 
-```console
+```log
 $ k apply -f csr.yaml 
 certificatesigningrequest.certificates.k8s.io/myuser created
 $ k get csr
@@ -86,7 +86,7 @@ kubectl certificate approve myuser
 
 批准完成后, 新用户的证书可以在该csr资源的`.status.certificate`字段中获取, 该csr资源的状态也会发生变化.
 
-```console
+```log
 $ k get csr
 NAME     AGE     SIGNERNAME                            REQUESTOR          REQUESTEDDURATION   CONDITION
 myuser   7m58s   kubernetes.io/kube-apiserver-client   kubernetes-admin   24h                 Approved,Issued
@@ -98,7 +98,7 @@ myuser   7m58s   kubernetes.io/kube-apiserver-client   kubernetes-admin   24h   
 
 其实kube的签发, 底层也是 openssl 那一套, 我们也可以通过类似如下的命令去验证证书链
 
-```console
+```log
 $ openssl verify -CAfile /etc/kubernetes/pki/ca.crt ./myuser.crt 
 ./myuser.crt: OK
 ```

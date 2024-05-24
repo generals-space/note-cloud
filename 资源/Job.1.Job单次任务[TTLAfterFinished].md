@@ -41,7 +41,7 @@ spec:
 
 在 command 执行过程中, job 状态如下.
 
-```console
+```log
 $ k get job
 NAME    COMPLETIONS   DURATION   AGE
 myjob   0/1           15m        15m
@@ -49,7 +49,7 @@ myjob   0/1           15m        15m
 
 完成后则如下
 
-```console
+```log
 $ k get job
 NAME    COMPLETIONS   DURATION   AGE
 myjob   1/1           15m        16m

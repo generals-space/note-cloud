@@ -74,7 +74,7 @@ E0724 03:07:01.961412       1 manager.go:111] unable to fully collect metrics: u
 
 ### 
 
-```console
+```log
 $ k logs -f metrics-server-7cb45bbfd5-l42jm
 kubelet_summary:k8s-master-01: unable to fetch metrics from Kubelet k8s-master-01 (k8s-master-01): Get https://k8s-master-01:10250/stats/summary?only_cpu_and_memory=true: dial tcp: lookup k8s-master-01 on 10.96.0.10:53: no such host
 ```

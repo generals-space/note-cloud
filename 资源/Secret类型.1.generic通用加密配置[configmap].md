@@ -17,7 +17,7 @@ kubectl create secret generic db-user-pass --from-file=./username.txt --from-fil
 
 不过要注意, 这种方式创建出来的Secret的type字段其实是`Opaque`, 不明白为什么.
 
-```console
+```log
 $ k get secret
 NAME            TYPE      DATA   AGE
 db-user-pass    Opaque    1      385d

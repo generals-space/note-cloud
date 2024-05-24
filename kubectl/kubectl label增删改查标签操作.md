@@ -9,14 +9,14 @@
 
 ## 添加
 
-```console
+```log
 $ k label node k8s-master-01 aaa=bbb
 node/k8s-master-01 labeled
 ```
 
 ## 查看
 
-```console
+```log
 $ k get node --show-labels
 NAME            STATUS   ROLES    AGE   VERSION   LABELS
 k8s-master-01   Ready    master   47h   v1.16.2   aaa=bbb,kubernetes.io/hostname=k8s-master-01,node-role.kubernetes.io/master=
@@ -24,14 +24,14 @@ k8s-master-01   Ready    master   47h   v1.16.2   aaa=bbb,kubernetes.io/hostname
 
 ## 更新
 
-```console
+```log
 $ k label node k8s-master-01 aaa=ccc
 error: 'aaa' already has a value (bbb), and --overwrite is false
 ```
 
 需要加`--overwrite`参数
 
-```console
+```log
 $ k label node k8s-master-01 aaa=ccc --overwrite
 node/k8s-master-01 labeled
 $ kgl node
@@ -43,7 +43,7 @@ k8s-master-01   Ready    master   47h   v1.16.2   aaa=ccc,kubernetes.io/hostname
 
 在目标标签名添加一个减号`-`即可
 
-```console
+```log
 $ k label node k8s-master-01 aaa-
 node/k8s-master-01 labeled
 $ kgl node
@@ -53,7 +53,7 @@ k8s-master-01   Ready    master   47h   v1.16.2   kubernetes.io/hostname=k8s-mas
 
 尝试删除一个不存在的 label 会报错.
 
-```console
+```log
 $ k label node k8s-master-01 aaa-
 label "aaa" not found.
 node/k8s-master-01 not labeled

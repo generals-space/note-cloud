@@ -11,7 +11,7 @@
 
 不过字段选择器是有限制的, 不同类型的资源支持的字段选择器不同, 使用不支持的字段选择器会出错. 比如我想筛选`status.hostIP`为`192.168.10.101`的所有Pod(即查询某主机上的所有Pod).
 
-```console
+```log
 $ k get pod --field-selector status.hostIP=192.168.10.101
 Error from server (BadRequest): Unable to find "/v1, Resource=pods" that match label selector "", field selector "status.hostIP=192.168.10.101": field label not supported: status.hostIP
 ```
