@@ -4,7 +4,7 @@
 
 ## 1. Pod 内的网络信息
 
-```console
+```log
 $ ip a
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
@@ -37,7 +37,7 @@ default via fe80::ecee:eeff:feee:eeee dev eth0 metric 1024 pref medium
 
 ## 2. 宿主机上的网络信息.
 
-```console
+```log
 $ ip a
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00

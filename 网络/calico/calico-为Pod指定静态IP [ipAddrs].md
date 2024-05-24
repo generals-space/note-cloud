@@ -23,7 +23,7 @@ spec:
 
 `ipAddrs`可以是合法的, PodCIDR 中的任意 IP, 且**可以是当前集群中未被划分的网段中的 IP**. 
 
-```
+```log
 $ k get pod -o wide
 NAME            READY   STATUS    RESTARTS   AGE     IP               NODE            NOMINATED NODE   READINESS GATES
 centos7-pod     1/1     Running   0          4m17s   172.16.240.100   k8s-worker-01   <none>           <none>
@@ -34,4 +34,4 @@ test-ds-mc7m8   1/1     Running   0          38h     172.16.118.64    k8s-worker
 
 上面的`172.16.240.100`不属于3个节点中任何一个网段, 这种情况下 calico 将会进行随机调度, 其他节点将添加到此 IP 的黑洞路由`blackhole 172.16.240.64/26 proto bird`.
 
-另外, `ipAddrs`特性貌似只能用于 Pod 资源, 无法实现 [cni-terway](https://github.com/generals-space/cni-terway) 的`Deployment/DaemonSet` IP 池的功能.
+另外, `ipAddrs`特性貌似只能用于 Pod 资源, 不适用 Deployment DaemonSet StatefulSet.

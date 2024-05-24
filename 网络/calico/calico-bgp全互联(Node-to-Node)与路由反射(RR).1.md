@@ -25,7 +25,7 @@
 
 使用`calicoctl`查看当前集群中使用的连接模式. 如下命令在`calicoctl`所在Pod内部执行, 该Pod运行在km01.
 
-```console
+```log
 $ calicoctl get node -o wide
 NAME            ASN       IPV4                IPV6   
 k8s-master-01   (64512)   192.168.80.121/24          
@@ -33,7 +33,7 @@ k8s-worker-01   (64512)   192.168.80.124/24
 k8s-worker-02   (64512)   192.168.80.125/24     
 ```
 
-```console
+```log
 $ calicoctl node status
 Calico process is running.
 
@@ -53,7 +53,7 @@ No IPv6 peers found.
 
 如果我们在 km01 宿主机上使用`netstat`查看与`bird`建立的连接, 有如下输出.
 
-```console
+```log
 $ netstat -nap | grep bird
 tcp        0      0 0.0.0.0:179             0.0.0.0:*               LISTEN      31891/bird          
 tcp        0      0 192.168.80.121:179      192.168.80.124:60680    ESTABLISHED 31891/bird          
@@ -86,7 +86,7 @@ spec:
 2. `netstat -anp | grep bird`之前与其他节点已经建立的连接也将消失.
 3. 此时各 Pod 之间, Pod 与各宿主机节点之间的网络将会断开.
 
-```console
+```log
 $ calicoctl node status
 Calico process is running.
 
@@ -149,7 +149,7 @@ spec:
 1. `calicoctl node status`查看到的输出中, `Peer Type`的类型将为`node specific`
 2. 用`netstat`查看, km01 `192.168.80.121`节点上将出现与其他节点的连接, 其他节点之间只连接 km01, 不再两两相互连接.
 
-```console
+```log
 $ calicoctl node status
 Calico process is running.
 
@@ -175,7 +175,7 @@ No IPv6 peers found.
 
 km01 的路由如下
 
-```
+```log
 default via 192.168.80.2 dev ens33 proto static metric 100 
 172.16.36.192/26 via 192.168.80.124 dev ens33 proto bird 
 172.16.118.64/26 via 192.168.80.125 dev ens33 proto bird 
@@ -183,7 +183,7 @@ default via 192.168.80.2 dev ens33 proto static metric 100
 
 kw01 的路由如下
 
-```
+```log
 default via 192.168.80.2 dev ens33 proto static metric 100 
 blackhole 172.16.36.192/26 proto bird 
 172.16.118.64/26 via 192.168.80.125 dev ens33 proto bird
@@ -191,7 +191,7 @@ blackhole 172.16.36.192/26 proto bird
 
 kw02 的路由如下
 
-```
+```log
 default via 192.168.80.2 dev ens33 proto static metric 100 
 172.16.36.192/26 via 192.168.80.124 dev ens33 proto bird 
 blackhole 172.16.118.64/26 proto bird 
@@ -203,7 +203,7 @@ km01 上的 Pod 可以 ping 通所有其他的 Pod, 但是 kw01 和 kw02 上的 
 
 我在 km01 上用 netstat 查了一下, 有如下输出
 
-```console
+```log
 $ netstat -anp | grep bird
 tcp        0      0 0.0.0.0:179             0.0.0.0:*               LISTEN      31891/bird          
 tcp        0      0 192.168.80.121:41558    192.168.80.125:179      ESTABLISHED 31891/bird          

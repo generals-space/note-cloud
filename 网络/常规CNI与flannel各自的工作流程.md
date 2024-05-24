@@ -29,10 +29,10 @@ CNI: 容器网络接口.
 一般来说, CNI插件由`kubelet`组件调用, 当然, 这需要在setup集群时为`kubelet`指定`--network-plugin=cni`(如果你使用的是`kubeadm`工具, 这应该是个默认值).
 
 1. `kubelet`在接收到调度器新建Pod的指令后, 先创建`pause`容器, 完成后将**容器ID**, **netns路径**等信息, 再加上`/etc/cni/net.d/`目录下的配置文件内容(这里称为`netconf`)当作参数传给指定的CNI插件.
-2. CNI插件创建`veth pair`设备连接宿主机与 pause Pod, 同时按照`netconf`中的`ipam`配置为此Pod赋予IP. 
+2. CNI插件创建`veth pair`设备连接宿主机与 pause Pod, 同时按照`netconf`中的`ipam`配置为此Pod分配IP. 
 3. CNI插件为 pause Pod 分配完IP后, 再由`kubelet`继续创建业务Pod, 共享此`pause`容器的网络空间.
 
-连接宿主机与Pod的方式基本上全都靠`bridge`设备, 就如同`docker0`, 在CNI中, 默认为`cni0`.
+连接宿主机与Pod的方式大部分为`bridge`设备, 就如同`docker0`, 在CNI中, 默认为`cni0`.
 
 而为Pod赋予IP, 目前官方提供了3种方式: 
 

@@ -14,7 +14,7 @@
 
 更新了 ConfigMap, 然后重启各节点上的 calico-node. 不过重启失败了...
 
-```
+```log
 $ k logs -n kube-system calico-node-kk2wq
 2020-06-06 01:27:07.645 [INFO][8] startup.go 259: Early log level set to info
 2020-06-06 01:27:07.646 [INFO][8] startup.go 275: Using NODENAME environment for node name
@@ -34,7 +34,7 @@ Calico node failed to start
 
 日志信息不太全, 翻了翻官方文档, 找到了参考文章3, 添加了下`CALICO_STARTUP_LOGLEVEL`环境变量, 写为`DEBUG`, 重启目标 Pod, 这次终于有详细输出了.
 
-```
+```log
 2020-06-06 02:33:21.254 [DEBUG][8] interfaces.go 98: Found valid IP address and network CIDR=fe80::20c:29ff:fe81:97/64
 2020-06-06 02:33:21.254 [DEBUG][8] filtered.go 41: Check interface Name="ens33"
 2020-06-06 02:33:21.254 [DEBUG][8] filtered.go 43: Check address CIDR=fe80::20c:29ff:fe81:97/64

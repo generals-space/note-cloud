@@ -17,7 +17,7 @@
 
 calico在Pod内部创建了如下路由
 
-```
+```log
 default via 169.254.1.1 dev eth0
 169.254.1.1 dev eth0 scope link
 ```

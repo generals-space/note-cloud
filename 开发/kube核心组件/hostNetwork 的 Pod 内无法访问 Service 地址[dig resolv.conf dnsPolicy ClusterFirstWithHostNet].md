@@ -61,7 +61,7 @@ $ dig kube-dns
 
 没有结果, 但我们可以指定以 coredns 服务的地址进行解析.
 
-```console
+```log
 $ kwd pod | grep coredns
 coredns-67c766df46-2xsqh                  1/1     Running   1          5d22h   10.254.0.11    k8s-master-01   <none>           <none>
 coredns-67c766df46-xr7wb                  1/1     Running   1          5d22h   10.254.0.10    k8s-master-01   <none>           <none>

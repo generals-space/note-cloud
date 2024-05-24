@@ -2,14 +2,15 @@
 
 参考文章
 
-1. [kuber官方文档 Accessing Clusters](https://kubernetes.io/docs/tasks/access-application-cluster/access-cluster/)
+1. [Accessing Clusters](https://kubernetes.io/docs/tasks/access-application-cluster/access-cluster/)
+    - 官方文档
 
 虽然同是用于端口映射, `proxy`与`port-forward`的区别在于, 后者是用于映射端口到某个pod的, 前者是专用于映射端口到apiserver的.
 
 由于对于访问apiserver需要双向认证, 普通的http客户端工具无法附加ssl证书, 所以才提供了`proxy`这个命令, 通过kubectl进行映射, 实际上就是一个跳过了认证步骤的微服务网关.
 
-```console
-$ curl -k https://k8s-server-lb:6443/api/
+```json
+// curl -k https://k8s-server-lb:6443/api/
 {
   "kind": "Status",
   "apiVersion": "v1",
@@ -35,7 +36,7 @@ Starting to serve on 127.0.0.1:8080
 ```
 
 ```json
-$ curl http://localhost:8080/api/
+// curl http://localhost:8080/api/
 {
   "kind": "APIVersions",
   "versions": [

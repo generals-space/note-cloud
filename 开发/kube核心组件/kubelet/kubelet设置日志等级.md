@@ -53,7 +53,7 @@ KUBELET_EXTRA_ARGS= --v=5
 
 然后`systemctl restart kubelet`重启kubelet组件, 使用ps查看会发现, 多了`--v=5`选项.
 
-```
+```log
 $ ps -ef | grep kubelet
 root      31610      1  3 12:01 ?        00:00:00 /usr/bin/kubelet --bootstrap-kubeconfig=/etc/kubernetes/bootstrap-kubelet.conf --kubeconfig=/etc/kubernetes/kubelet.conf --config=/var/lib/kubelet/config.yaml --cgroup-driver=systemd --network-plugin=cni --pod-infra-container-image=registry.cn-hangzhou.aliyuncs.com/google_containers/pause:3.1 --v=5
 ```

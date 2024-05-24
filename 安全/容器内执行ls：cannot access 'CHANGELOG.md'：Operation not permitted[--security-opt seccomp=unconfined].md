@@ -10,7 +10,7 @@
 
 打完镜像后启动容器测试一下, 结果发现`ls`命令执行报错.
 
-```console
+```log
 [root@8276303295ba logstash]# ls
 ls: cannot access 'CHANGELOG.md': Operation not permitted
 ## 省略
@@ -45,7 +45,7 @@ d????????? ? ? ? ?            ? vendor
 
 我的宿主机系统的确开启了`secocmp`.
 
-```console
+```log
 $ cat /boot/config-$(uname -r) |grep CONFIG_SECCOMP
 CONFIG_SECCOMP=y
 ```
