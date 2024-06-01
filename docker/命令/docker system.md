@@ -11,7 +11,7 @@ system 有如下子命令
 
 ## df
 
-```
+```log
 $ docker system df
 TYPE                TOTAL               ACTIVE              SIZE                RECLAIMABLE
 Images              22                  4                   6.738GB             6.186GB (91%)

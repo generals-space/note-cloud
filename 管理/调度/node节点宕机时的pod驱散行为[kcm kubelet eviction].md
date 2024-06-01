@@ -22,7 +22,7 @@ Node 对于 Pod 的驱逐往往是因为资源压力, 比如磁盘空间不足(C
 
 `Evicted`的Pod的事件描述可能如下
 
-```
+```log
 Events:
   Type     Reason       Age     From                    Message
   ----     ------       ----    ----                    -------
