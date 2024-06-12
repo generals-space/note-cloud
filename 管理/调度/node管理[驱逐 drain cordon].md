@@ -55,7 +55,7 @@ cannot delete DaemonSet-managed Pods (use --ignore-daemonsets to ignore): kube-s
 
 注意: 即使drain失败, 也只是某些pod没有被删除, 但是该节点还是被修改为不可调度的状态.
 
-```
+```log
 $ kubectl get node
 k8s-worker-7-17   Ready,SchedulingDisabled   <none>   2d18h   v1.15.0
 ```

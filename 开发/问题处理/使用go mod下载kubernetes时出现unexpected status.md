@@ -49,7 +49,7 @@ func main(){
 
 工程目录下执行`go mod download`, 没反应...于是想手动执行`go get`, 结果...
 
-```
+```log
 $ go get -v k8s.io/kubernetes/pkg/proxy/ipvs
 go: k8s.io/kube-proxy@v0.0.0: unexpected status (https://goproxy.cn/k8s.io/kube-proxy/@v/v0.0.0.info): 404 Not Found
 ...
@@ -67,7 +67,7 @@ GOPROXY=https://goproxy.cn
 
 最开始以为可能是因为golang版本的问题, 好像网上大部分文章介绍的都是go1.13, go1.12可能会出现这样的问题. 于是我换了台电脑, `go env`不变, golang版本为`1.13.5`, 结果...
 
-```
+```log
 $ go get -v k8s.io/kubernetes/pkg/proxy/ipvs
 go get: k8s.io/kubernetes@v1.17.0 requires
 	k8s.io/api@v0.0.0: reading https://goproxy.io/k8s.io/api/@v/v0.0.0.mod: 410 Gone
@@ -87,7 +87,7 @@ go get: k8s.io/kubernetes@v1.17.0 requires
 
 但是又出现了如下问题.
 
-```
+```log
 $ go get -v k8s.io/kubernetes/pkg/proxy/ipvs
 go: k8s.io/cluster-bootstrap@v0.0.0: unknown revision v0.0.0
 ...
@@ -106,7 +106,7 @@ go: error loading module requirements
 
 另外, 参考文章6中也提到, kubernetes的`go.mod`文件中有很多依赖写成这种形式
 
-```
+```go
 require(
 	k8s.io/apimachinery v0.0.0
 	k8s.io/apiserver v0.0.0
