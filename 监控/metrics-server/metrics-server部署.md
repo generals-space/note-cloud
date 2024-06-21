@@ -10,7 +10,9 @@
 4. [no metrics known for pod](https://github.com/kubernetes-sigs/metrics-server/issues/237)
     - `no metrics known for pod`无法收集 Pod 指标
 
-kuber 版本: 1.16.2 单节点集群, 宿主机配置 4C 8G.
+kube 版本: 1.16.2 单节点集群
+
+宿主机配置 4C 8G.
 
 `https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.3.7/components.yaml`
 
@@ -20,7 +22,7 @@ kuber 版本: 1.16.2 单节点集群, 宿主机配置 4C 8G.
 
 ### 无法收集 Pod 信息
 
-```
+```log
 I0724 03:06:01.186860       1 serving.go:312] Generated self-signed cert (/tmp/apiserver.crt, /tmp/apiserver.key)
 I0724 03:06:01.941217       1 secure_serving.go:116] Serving securely on [::]:4443
 E0724 03:06:20.070557       1 reststorage.go:160] unable to fetch pod metrics for pod kube-system/metrics-server-7cb45bbfd5-l42jm: no metrics known for pod
@@ -85,7 +87,7 @@ kubelet_summary:k8s-master-01: unable to fetch metrics from Kubelet k8s-master-0
 
 ### 
 
-```
+```log
 E0724 03:23:50.470647       1 manager.go:111] unable to fully collect metrics: unable to fully scrape metrics from source kubelet_summary:k8s-master-01: unable to fetch metrics from Kubelet k8s-master-01 (192.168.80.10): Get https://192.168.80.10:10250/stats/summary?only_cpu_and_memory=true: x509: cannot validate certificate for 192.168.80.10 because it doesn't contain any IP SANs
 ```
 

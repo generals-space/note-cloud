@@ -26,7 +26,7 @@ kafka 需要注册到 zk 做服务发现, 但是各实例所在 Pod 用来注册
 Registered broker 0 at path /brokers/ids/0 with addresses: PLAINTEXT -> EndPoint(test-01-0.test-01-svc.kube-system.svc.cluster.local,9092,PLAINTEXT) (kafka.utils.ZkUtils)
 ```
 
-Pod-0, Pod-1, Pod-2 需要进行通信, 就只能通过这个地址来.
+Pod-0、Pod-1、Pod-2 需要进行通信, 就只能通过这个地址来.
 
 但这就导致了一个问题◑ˍ◐
 

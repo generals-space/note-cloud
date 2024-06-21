@@ -43,7 +43,7 @@ This is caused by depending on k8s.io/kubernetes directly as a library, which is
 
 参考文章2中指出, kubernetes 仓库本身将很多依赖指向了本地
 
-```
+```go
 require(
 	k8s.io/apimachinery v0.0.0
 	k8s.io/apiserver v0.0.0
@@ -74,7 +74,7 @@ replace k8s.io/api => k8s.io/api v0.17.3
 
 但是紧接着又出现了如下问题
 
-```
+```log
 $ go mod download
 go: k8s.io/kubernetes@v1.17.3 requires
 	k8s.io/apiextensions-apiserver@v0.0.0: reading k8s.io/apiextensions-apiserver/go.mod at revision v0.0.0: unknown revision v0.0.0

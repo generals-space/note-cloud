@@ -41,7 +41,7 @@ default via 172.16.91.2 dev ens33 proto static metric 100
 
 网络拓扑如下
 
-```
+```log
 +-------------------------------------+          +-------------------------------------+
 |  172.17.1.2/24     172.17.1.x/24    |          |    172.17.2.2/24     172.17.2.x/24  |
 |   +--------+        +--------+      |          |     +--------+        +--------+    |
@@ -70,13 +70,13 @@ default via 172.16.91.2 dev ens33 proto static metric 100
 
 `vm1`宿主机上执行
 
-```
+```log
 ip r add 172.17.2.0/24 dev ens33 via 172.16.91.129
 ```
 
 `vm2`宿主机上执行
 
-```bash
+```log
 ip r add 172.17.1.0/24 dev ens33 via 172.16.91.128
 ```
 
@@ -90,7 +90,7 @@ ip r add 172.17.1.0/24 dev ens33 via 172.16.91.128
 
 以下命令在`vm1`和`vm2`中都要执行.
 
-```bash
+```log
 sysctl -w net.ipv4.ip_forward=1
 ```
 
@@ -105,13 +105,13 @@ Chain FORWARD (policy DROP 0 packets, 0 bytes)
 
 如果为`DROP/REJECT`, 还需要执行如下命令.
 
-```bash
+```log
 iptables -P FORWARD ACCEPT
 ```
 
 上面的命令是全部放行, 也许不太合适, 可以单独对容器大子网开放.
 
-```bash
+```log
 iptables -A FORWARD -s 172.17.0.0/16 -j ACCEPT
 iptables -A FORWARD -d 172.17.0.0/16 -j ACCEPT
 ```

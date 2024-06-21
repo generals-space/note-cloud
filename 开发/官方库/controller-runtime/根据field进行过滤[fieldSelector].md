@@ -24,7 +24,7 @@ err := r.Client.List(ctx, podList, &client.ListOptions{
 
 在运行到`List()`的时候, 出现了如下错误
 
-```
+```log
 Index with name field:spec.nodeName does not exist
 ```
 

@@ -18,13 +18,13 @@ worker-0: 172.22.248.227
 
 某天早上上班后, 发现kubectl获取集群信息失败了, 显示如下报错
 
-```
+```log
 The connection to the server 172.22.248.239:6443 was refused - did you specify the right
 ```
 
 `172.22.248.239`是master前面的负载均衡服务器, 上去看了看, ta本身没什么问题. 于是将248.225上的`admin.conf`中, 集群的地址从`248.239`改成`248.225`, 然后重新发起请求.
 
-```
+```bash
 export KUBECONFIG=/etc/kubernetes/admin.conf
 ```
 
@@ -36,7 +36,7 @@ docker logs 查看日志, 发现有如下输出
 
 ![](https://gitee.com/generals-space/gitimg/raw/master/e11b626d2d063b3e4d2935a9d1f7ca7c.jpg)
 
-```
+```log
 E0826 04:25:37.762890       1 controller.go:114] loading OpenAPI spec for "v1beta1.metrics.k8s.io" failed with: failed to retrieve openAPI spec, http error: ResponseCode: 503, Body: service unavailable, Header: map[Content-Type:[text/plain; charset=utf-8] X-Content-Type-Options:[nosniff]]
 ```
 
