@@ -127,7 +127,7 @@ $ cat /sys/fs/cgroup/cpuset/cpuset.cpus
 
 在设置`cpuset`块之前, 可以看到每个核心都使用了50%左右(不过也不是每次都这么平均啦).
 
-```
+```log
 %Cpu0  :  0.8 us, 49.4 sy,  0.0 ni, 49.4 id,  0.0 wa,  0.0 hi,  0.4 si,  0.0 st
 %Cpu1  :  0.4 us, 51.1 sy,  0.0 ni, 48.6 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
 %Cpu2  :  0.0 us, 50.7 sy,  0.0 ni, 49.3 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
@@ -140,7 +140,7 @@ $ cat /sys/fs/cgroup/cpuset/cpuset.cpus
 
 设置后可以明显看到运算压力多被分配到了`0-3`号核心上.
 
-```
+```log
 %Cpu0  : 23.9 us, 62.1 sy,  0.0 ni,  0.7 id,  8.0 wa,  0.0 hi,  5.3 si,  0.0 st
 %Cpu1  : 31.5 us, 59.2 sy,  0.0 ni,  0.3 id,  5.1 wa,  0.0 hi,  3.8 si,  0.0 st
 %Cpu2  : 28.8 us, 54.3 sy,  0.0 ni,  0.0 id, 11.9 wa,  0.0 hi,  5.0 si,  0.0 st

@@ -10,5 +10,5 @@
 
 > Unless you absolutely need apiserver-aggregation, you are recommended to use [Kubebuilder](https://github.com/kubernetes-sigs/kubebuilder) instead of apiserver-builder for building Kubernetes APIs. Kubebuilder builds APIs using CRDs and addresses limitations and feedback from apiserver-builder. --参加文章1
 
-除非你非常清楚自己需要`aggregation`的功能, 否则一般情况下都建议使用`kubebuilder`来提供 kuber 的 api(`kubebuilder`就是用来创建`CRD`的工具库). 可以说, 使用`apiserver-builder`创建的服务比`kubebuilder`的服务更底层.
+除非你非常清楚自己需要`aggregation`的功能, 否则一般情况下都建议使用`kubebuilder`来提供 kube 的 api(`kubebuilder`就是用来创建`CRD`的工具库). 可以说, 使用`apiserver-builder`创建的服务比`kubebuilder`的服务更底层.
 

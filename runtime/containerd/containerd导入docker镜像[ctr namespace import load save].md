@@ -6,9 +6,9 @@
     - containerd 镜像有 namespace 的概念
 2. [containerd 导入镜像](https://www.cnblogs.com/dream397/p/13815280.html)
 
-虽然 kubernetes 已经支持多种 runtime(containerd, cri-o), 但 docker 仍然是本地开发时, 拉取, 构建, 管理镜像无敌的选择, ctr 和 crictl 还差得太远了, 我也没什么兴趣去学习 nerdctl 去替代 docker.
+虽然 kubernetes 已经支持多种 runtime(containerd, cri-o), 但 docker 仍然是本地开发时, 拉取、构建、管理镜像无敌的选择, ctr 和 crictl 还差得太远了, 我也没什么兴趣去学习 nerdctl 去替代 docker.
 
-于是 kubernetes 使用 containerd 作 runtime 后, 引发一个问题. containerd 的镜像无法直接引用 docker 构建的镜像, 这两个是完全不互通的.
+于是 kubernetes 使用 containerd 作 runtime 后, 引发一个问题: containerd 的镜像无法直接引用 docker 构建的镜像, 这两个是完全不互通的.
 
 ctr 也拥有 pull 的命令, 所以对于远程仓库的镜像, 可以 containerd 直接拉取.
 

@@ -9,6 +9,8 @@
 2. [How to elegantly solve the update conflict problem](https://github.com/kubernetes-sigs/controller-runtime/issues/1748)
     - Better solution, stop using Update(). I can't think of any reason to use it in controller code. 
     - Most requests should use Patch() with Server Side Apply and the few that can't use Apply should use auto-merge-patch.
+3. [client-go实战之八:更新资源时的冲突错误处理](https://cloud.tencent.com/developer/article/2216030)
+    - `RetryOnConflict()`重试机制
 
 ## 问题描述
 
@@ -30,4 +32,4 @@
 
 当然, 可以`Watch`到这样的变动, 更新失败返回错误后, 此事件变动还是会再次进入`Reconcile()`, 总有一次可以成功的.
 
-但是这样做其实是非常不"优雅"的, 建议 controller 使用`Patch()`代替`Update()`, 
+但是这样做其实是非常不"优雅"的, 建议 controller 使用`Patch()`代替`Update()`, 只变更自己关注的部分.

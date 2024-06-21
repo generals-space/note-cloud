@@ -14,7 +14,7 @@
 
 ## 备份
 
-```
+```bash
 export ETCDCTL_API=3
 export ETCDCTL_CACERT=/etc/kubernetes/pki/etcd/ca.crt
 export ETCDCTL_CERT=/etc/kubernetes/pki/etcd/server.crt
@@ -32,7 +32,7 @@ etcdctl snapshot save snapshot.db
 
 如果etcd是单节点, 可直接执行如下命令.
 
-```
+```bash
 export ETCDCTL_API=3
 export ETCDCTL_CACERT=/etc/kubernetes/pki/etcd/ca.crt
 export ETCDCTL_CERT=/etc/kubernetes/pki/etcd/server.crt

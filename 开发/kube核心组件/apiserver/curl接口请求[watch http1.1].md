@@ -15,7 +15,7 @@ apimachinery/pkg/apis/meta/internalversion/types.go -> ListOptions{}
 
 ## 常规获取 pod 列表
 
-```
+```log
 curl -k --max-time 3600 -H 'Content-Type:application/json' --cacert /etc/kubernetes/pki/ca.crt --cert /etc/kubernetes/pki/apiserver-kubelet-client.crt --key /etc/kubernetes/pki/apiserver-kubelet-client.key 'https://127.0.0.1:6443/api/v1/namespaces/default/pods?timeoutSeconds=3600'
 ```
 
@@ -51,4 +51,3 @@ curl -k --max-time 3600 -H 'Content-Type:application/json' --cacert /etc/kuberne
 ```
 
 > `object`字段包含该 Pod 对象的所有信息.
-

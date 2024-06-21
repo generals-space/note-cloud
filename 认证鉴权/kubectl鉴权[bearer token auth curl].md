@@ -9,9 +9,9 @@
     - Kubernetes 对 API 访问提供了三种安全访问控制措施: 认证、授权和 Admission Control
     - **认证**解决用户是谁的问题, **授权**解决用户能做什么的问题, **Admission Control**则是资源管理方面的作用
 4. [Kubernetes 中的用户与身份认证授权](https://jimmysong.io/kubernetes-handbook/guide/authentication.html)
-    - kuber中认证的多种手段
+    - kube 中认证的多种手段
 
-kuber集群对于API访问, 在认证阶段提供了多种方式(见参考文章4), 开发者在访问 kuber API 时可以自行选择认证手段, 只要一种成功就算成功. 
+kube 集群对于API访问, 在认证阶段提供了多种方式(见参考文章4), 开发者在访问 kube API 时可以自行选择认证手段, 只要一种成功就算成功. 
 
 `kubectl`本身支持其中的3种, ta的`config`子命令有一个`set-credentials`参数, 主要用于配置`kubeconfig`文件中的`user`字段, 如下
 

@@ -25,15 +25,15 @@ docker run -d --ulimit nofile=20480:40960 nproc=1024:2048 容器名
 
 > 冒号前面是 soft limit, 后面是 hard limit.
 > 
-> limit 值只接受数值类型, `unlimited`需要设置成`-1`.
+> `limit`值只接受数值类型, `unlimited`值需要设置成`-1`.
 
-## 2. kuber 中设置`ulimit`
+## 2. kube 中设置`ulimit`
 
 ## 3. memlock(max locked memory), `ulimit`命令
 
 在一个普通容器里执行`ulimit`是可行的, 就像在参考文章3中所说的那样.
 
-```
+```log
 [root@2ab83fdb2871 /]# ulimit -a
 max locked memory       (kbytes, -l) 82000
 open files                      (-n) 1048576
@@ -47,7 +47,7 @@ open files                      (-n) 65535
 
 但是在容器内修改`max locked memory`时, 报了如下错误
 
-```
+```log
 [root@2ab83fdb2871 /]# ulimit -l unlimited
 bash: ulimit: max locked memory: cannot modify limit: Operation not permitted
 ```
@@ -68,7 +68,7 @@ max locked memory       (kbytes, -l) unlimited
 
 不过这种方法貌似还有点问题.
 
-```
+```log
 $ docker run -it --name ulimit --ulimit memlock=100:100 registry.cn-hangzhou.aliyuncs.com/generals-space/centos:7-devops bash
 [root@78f42b22f00b /]# ulimit -a | grep locked
 max locked memory       (kbytes, -l) 0
@@ -109,7 +109,7 @@ max locked memory       (kbytes, -l) unlimited
 
 又由于在容器中`elasticsearch`需要使用一个普通用户启动, 所以我又建了个用户, 竟然可以.
 
-```
+```log
 [root@e598f55a2320 security]# ulimit -a
 max locked memory       (kbytes, -l) 82000
 [root@e598f55a2320 security]# useradd general

@@ -82,7 +82,7 @@ func getproccount() int32 {
 
 由于实验是利用 XPS-13 笔记本进行的, 所以 CPU 只有四核, 其具体的配置如下: 
 
-```
+```log
 Architecture:        x86_64
 CPU op-mode(s):      32-bit, 64-bit
 Byte Order:          Little Endian

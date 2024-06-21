@@ -3,7 +3,7 @@
 1. [container的构建镜像失败：snapshotter not loaded: overlayfs: invalid argument](https://blog.csdn.net/jieshibendan/article/details/122574854)
 
 
-```
+```log
 # ctr images pull registry.cn-hangzhou.aliyuncs.com/generals-space/centos:7
 registry.cn-hangzhou.aliyuncs.com/generals-space/centos:7:                        resolved       |++++++++++++++++++++++++++++++++++++++|
 layer-sha256:2d473b07cdd5f0912cd6f1a703352c82b512407db6b05b43f2553732b55df3bc:    done           |++++++++++++++++++++++++++++++++++++++|

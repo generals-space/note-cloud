@@ -107,7 +107,7 @@ EOF
 
 > 注意, 安装gvisor与配置containerd要在所有节点上进行, 否则pod被调度到的主机上没有启用gvisor的话, 就无法正常启动.
 
-```
+```log
 $ kubectl describe pod nginx-gvisor
 3m47s       Warning   FailedCreatePodSandBox   pod/nginx-gvisor    Failed to create pod sandbox: rpc error: code = Unknown desc = RuntimeHandler "runsc" not supported 
 ```

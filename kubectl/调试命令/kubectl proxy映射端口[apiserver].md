@@ -65,3 +65,12 @@ kubectl proxy --port=6444 --address='0.0.0.0' --api-prefix=/ --accept-hosts='^*$
 
 kubectl proxy命令是在执行者所在终端搭建了一个 http server, ta的后端就是 kubectl 通过 /root/.kube/config 与 apiserver 鉴权后建立的连接, 因此 proxy 所暴露出的权限最大就是该 kubeconfig 中配置的权限.
 
+## 扩展
+
+常规 operator , 不管是运行在 Pod 里还是 Pod 外, 都使用 ssl 证书与 apiserver 进行双向认证.
+
+有时我们希望调试 operator 与 apiserver 之间的通信数据, 但是通过 tcpdump 抓包, 再使用 wireshark 进行分析时, 界面上只能显示协议类型为`TLS`, 无法展示为 http, 也就无法查看 uri, query 等信息.
+
+此时就可以通过 kubectl proxy 将 apiserver 代理成 http 服务, 然后在 operator 使用的 kubeconfig 中, 将`clusters[].cluster.server`的地址, 由`https`改成`http`, 同时修改端口为 proxy 的端口. 
+
+然后再启动 operator, 此时双方就使用 http 协议进行通信了.

@@ -56,7 +56,7 @@ dlv dap (2749) exited with code: 0
 
 ...但是人家说的是 1.21 版本, 我的版本是 1.17.2, 启动参数里可没这么说.
 
-```
+```log
 Insecure serving flags:
     --address string
         DEPRECATED: the IP address on which to listen for the --port port (set to 0.0.0.0 for all IPv4 interfaces and :: for all IPv6 interfaces). See

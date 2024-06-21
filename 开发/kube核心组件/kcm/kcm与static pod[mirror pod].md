@@ -4,7 +4,7 @@
 
 1. [官方文档  Create static Pods](https://kubernetes.io/docs/tasks/configure-pod-container/static-pod/)
 
-kubernetes版本: v1.16.2(1主2从)
+kube版本: v1.16.2(1主2从)
 
 在研究`kube-controller-manager`源码的时候, 希望通过`go run main.go`执行测试程序. 不过由于分布式资源锁的存在, 只有成功获得锁的实例才能继续执行, 所以需要将主节点上运行着的`controller-manager`的pod删除. 
 
@@ -14,7 +14,7 @@ kubernetes版本: v1.16.2(1主2从)
 
 最后快绝望的时候, 查看了master节点上的kubelet的日志.
 
-```
+```log
 Jan  5 13:48:00 k8s-master-01 kubelet[888]: I0105 13:48:00.531576     888 kubelet.go:1647] Trying to delete pod kube-controller-manager-k8s-master-01_kube-system 7ef7f259-6c68-4986-8b69-a89887e19b19
 Jan  5 13:48:00 k8s-master-01 kubelet[888]: W0105 13:48:00.760125     888 kubelet.go:1651] Deleted mirror pod "kube-controller-manager-k8s-master-01_kube-system(7ef7f259-6c68-4986-8b69-a89887e19b19)" because it is outdated
 ```

@@ -11,7 +11,7 @@
 
 Linux对普通用户能够获取的资源进行了诸多限制, 比如能够启动的进程的最大进程数, 能够打开的最大文件数等, 使用`ulimit -a`可以看到这些配置项. 用户与用户间的限制可以不同, 要看指定用户的详细配置, 需要切换到这个用户下执行`ulimit`命令.
 
-```
+```log
 [root@localhost ~]# ulimit -a
 core file size          (blocks, -c) 0                      ## 程序能够产生的内存转储文件大小(一般只有进程意外崩溃时才会产生)
 data seg size           (kbytes, -d) unlimited              ## 进程数据段大小(貌似是限制代码中的局部变量<???>, 结构体变量太多会不会被限制...)
@@ -52,7 +52,7 @@ file locks                      (-x) unlimited
 
 示例:
 
-```
+```log
 log          soft    nproc     1024
 log          hard    nproc     10240
 root       soft    nproc     unlimited
@@ -65,4 +65,3 @@ root       soft    nproc     unlimited
 > 注意: 系统可能对`hard`的标准有默认限制, 自定义的设置如果单纯设置`soft`值将会无法越过默认值限制, 所以如果有需要, 可以同时设置`hard`标准.
 
 > **警告:** 对root所做的`hard`类型修改可能导致严重的结果, 但好在**只在新终端生效**, 所以保持编辑终端不要退出, 有问题可以及时撤销.
-

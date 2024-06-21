@@ -42,4 +42,3 @@ watch 操作可以监听任意 key, 即使这个 key 不存在也不会报错.
     - key 发生变更时的 Revision, 在 k8s 中, 由于 key 太多, 更新频繁, 所以该值应该是会"跳变"的.
     - 在 k8s 中, 资源的`metadata.resourceVersion`就是这个值.
 - Version: 作用域为 key, 这个key刚创建时Version为1, 之后每次更新都会自增, 即这个key从创建以来更新的总次数. 
-

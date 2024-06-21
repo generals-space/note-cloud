@@ -4,7 +4,7 @@
 
 1. [kubelet fails to get cgroup stats for docker and kubelet services](https://stackoverflow.com/questions/46726216/kubelet-fails-to-get-cgroup-stats-for-docker-and-kubelet-services)
 
-- kuber部署方式: kubeadm
+- kube部署方式: kubeadm
 - kubelet: 1.16.2
 
 `kubelet -h`输出中有`--v=5`的方法可设置日志级别, 而且这个选项不能写在`--config=/var/lib/kubelet/config.yaml`配置文件中.
@@ -41,13 +41,13 @@ ExecStart=/usr/bin/kubelet $KUBELET_KUBECONFIG_ARGS $KUBELET_CONFIG_ARGS $KUBELE
 
 我们不修改原来的`Environment`, 只在`EnvironmentFile=-/etc/sysconfig/kubelet`环境文件中做修改, 其默认内容如下
 
-```
+```ini
 KUBELET_EXTRA_ARGS=
 ```
 
 修改为如下
 
-```
+```ini
 KUBELET_EXTRA_ARGS= --v=5
 ```
 

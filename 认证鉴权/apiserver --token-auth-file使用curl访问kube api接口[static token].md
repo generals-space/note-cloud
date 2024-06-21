@@ -44,7 +44,7 @@ curl -k -H 'Content-Type: application/json' -H 'Authorization: Bearer 79e5a71195
 
 ## 补充
 
-关于上述第2点, 有几点需要注意, 该字段不是 Role/ClusterRole 类型(加了没用), 而是确确实实的"User"对象(也不是"Group"对象).
+关于static token的第2列, 有几点需要注意, 该字段不是 Role/ClusterRole 类型(加了没用), 而是确确实实的"User"对象(也不是"Group"对象).
 
 ```bash
 $ curl -k -H 'Content-Type: application/json' -H 'Authorization: Bearer xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' 'https://127.0.0.1:6443/api/v1/namespaces/kube-system/pods/kube-apisrer-k8s-master-01'
@@ -59,7 +59,7 @@ $ curl -k --max-time 3600 -H "$header_json" -H "$header_auth" 'https://127.0.0.1
 }
 ```
 
-当一个用户, 使用万对的static token和user信息(以cluster-admin为例), 访问一个资源, 通过了认证阶段后, 将进入了[kubernetes-1.16.0](https://github.com/kubernetes/kubernetes/blob/v1.16.0/pkg/registry/rbac/validation/rule.go#L186)中的鉴权逻辑.
+当一个用户, 使用成对的static token和user信息(以cluster-admin为例), 访问一个资源, 通过了认证阶段后, 将进入了[kubernetes-1.16.0](https://github.com/kubernetes/kubernetes/blob/v1.16.0/pkg/registry/rbac/validation/rule.go#L186)中的鉴权逻辑.
 
 ```go
 		for _, clusterRoleBinding := range clusterRoleBindings {

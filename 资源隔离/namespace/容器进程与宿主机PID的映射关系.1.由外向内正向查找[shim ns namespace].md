@@ -18,14 +18,14 @@
 
 通过`ps -ef`, 一直查找目标进程的父进程, 直到找到`containerd-shim`进程.
 
-```
+```log
 $ ps -ef| grep 58365
 root      58365   1285  0 15:36 ?        00:00:01 containerd-shim -namespace moby -workdir /var/lib/containerd/io.containerd.runtime.v1.linux/moby/470a404d95381d66c3eced7c02594a14589c66849fac50ef5332d74d3f83f9ae -address /run/containerd/containerd.sock -containerd-binary /usr/bin/containerd -runtime-root /var/run/docker/runtime-runc -systemd-cgroup
 root      58384  58365  0 15:36 ?        00:00:01 tail -f /etc/profile
 root      61533  58365  0 18:45 pts/0    00:00:00 sh
 ```
 
-其中`moby/470a40xxxxxxxxxxxxxxxxx`, 就是该进程所在的docker容器的pid, 使用`docker ps | grep `过滤一下, 就能知道目标进程在哪个容器里了.
+其中`moby/470a40xxxxxxxxxxxxxxxxx`, 就是该进程所在的docker容器的id, 使用`docker ps | grep `过滤一下, 就能知道目标进程在哪个容器里了.
 
 md 下面的都是废话.
 
