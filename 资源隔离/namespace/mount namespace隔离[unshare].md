@@ -26,11 +26,11 @@
 
 `mount ns`是用来隔离`mountpoint`挂载点的, 我们创建一个新的 mount ns, 这个新的ns会继承父ns的所有挂载点, 但是之后双方再进行挂载/卸载操作时, 就不会再互相影响了.
 
-## 示例1-`unshare --mount`的隔离表现
+## 1. `unshare --mount`的隔离表现
 
 示例来自参考文章5.
 
-```
+```bash
 mkdir /demo && sudo chmod 777 /demo && cd /demo
 mkdir -p iso1/subdir1
 mkdir -p iso2/subdir2
@@ -53,7 +53,7 @@ $ mount | grep iso
 
 以下在另一个shell中执行
 
-```
+```bash
 unshare --mount
 readlink /proc/$$/ns/mnt
 ## 此处 umount, 并不会影响到原 namespace 的 iso1 挂载点
@@ -90,11 +90,11 @@ $ mount | grep iso
 
 没有变化, 可以得出, 两个 mount ns 之间不会相互影响.
 
-## 示例2-不同 mount ns 挂载到同一目录
+## 2. 不同 mount ns 挂载到同一目录
 
-单纯从挂载点角度看好像没什么用, "挂载点"的概念还是太抽象. 其实"挂载点"就是挂载的"目标目录", 在同一个 mount ns 下, 将不同的源目录挂载到同一个"目标目录", "目标目录"的内容会被相互覆盖. 而如果创建独立的 mount ns 进行挂载, 则会出现, 在不同的 mount  中的同一目录下, 内容不同的情况.
+单纯从挂载点角度看好像没什么用, "挂载点"的概念还是太抽象. 其实"挂载点"就是挂载的"目标目录", 在同一个 mount ns 下, 将不同的源目录挂载到同一个"目标目录", "目标目录"的内容会被相互覆盖. 而如果创建独立的 mount ns 进行挂载, 则会出现, 在不同的 mount ns 中的同一目录下, 内容不同的情况.
 
-### 同一 mount ns 下多次 mount 相互覆盖
+### 2.1 同一 mount ns 下多次 mount 相互覆盖
 
 我们沿用上一个示例的命令.
 
@@ -155,7 +155,7 @@ $ umount /mnt/iso
 $ mount | grep iso
 ```
 
-### 不同 mount ns 下分别 mount 各自独立
+### 2.2 不同 mount ns 下分别 mount 各自独立
 
 现在重新来一次, 在当前 ns 下, 挂载`1.iso`到`/mnt/iso`.
 
@@ -168,7 +168,6 @@ subdir1
 
 $ mount | grep iso
 /demo/1.iso on /mnt/iso type iso9660 (ro,relatime)
-
 ```
 
 ok, 接下来在另一个 shell 中, 创建独立的 mount ns, 并将`2.iso`也挂载到`/mnt/iso`目录. 当然, 要先卸载继承上一个 ns 的`iso1`挂载点.

@@ -4,7 +4,7 @@
 docker run -d --name nfs-server --net host --pid host -v /opt/nfs:/opt/nfs --env nfspath="/opt/nfs 192.168.80.0/24" generals/nfs-server
 ```
 
-```
+```log
 Starting rpcbind: [  OK  ]
 FATAL: Could not load /lib/modules/3.10.0-1062.4.1.el7.x86_64/modules.dep: No such file or directory
 Starting NFS services:  [  OK  ]

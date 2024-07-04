@@ -13,7 +13,7 @@
 
 以如下env文件为例
 
-```
+```ini
 POSTGRES_USER=wordpress
 POSTGRES_PASSWORD=123456
 ```
@@ -42,4 +42,3 @@ data:
 ```
 
 但是helm并没有提供将`key=val`的格式转换成`key: val`格式的方法, 所以通过`envFrom`加载环境配置文件是不切实际的...
-

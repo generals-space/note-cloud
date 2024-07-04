@@ -13,7 +13,7 @@ kubernetes: 1.16.2
 
 `describe`查了下 pod 的信息, 发现没有绑定 pvc 对象.
 
-```
+```log
 $ k describe pod mysql
 ...省略
 Events:

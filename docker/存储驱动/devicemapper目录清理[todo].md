@@ -13,7 +13,7 @@
 
 docker 采用 devicemapper 存储驱动，容器内部读写、删除文件后，docker used space 未被释放，导致需要频繁删除、重建容器。
 
-```
+```bash
 docker ps -qa | xargs docker inspect --format='{{ .State.Pid }}' | xargs -IZ fstrim /proc/Z/root/
 ```
 

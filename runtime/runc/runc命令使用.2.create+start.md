@@ -2,7 +2,7 @@
 
 默认的`config.json`会创建 sh 会话, 这样只能用`run`子命令启动.
 
-```
+```log
 $ runc create c02
 ERRO[0000] cannot allocate tty if runc will detach without setting console socket
 cannot allocate tty if runc will detach without setting console socket

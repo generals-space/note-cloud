@@ -4,7 +4,8 @@
 
 1. [kubectl for Docker Users](https://kubernetes.io/docs/reference/kubectl/docker-cli-to-kubectl/)
 
-快速创建一个 deploy 资源, 仅指定有限个字段, 无需
+快速创建一个 deploy 资源, 仅指定有限个字段, 无需编写整个yaml.
+
 ```
 k create deploy mydeploy --image=registry.cn-hangzhou.aliyuncs.com/generals-space/centos:7:latest 
 ```
