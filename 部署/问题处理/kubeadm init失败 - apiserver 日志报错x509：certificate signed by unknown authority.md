@@ -14,11 +14,11 @@ kubernetes: v1.25.1
 
 查看系统日志, 发现 kubelet 还存在如下输出.
 
-```
+```log
 $ tail -f /var/log/syslog
-Sep 22 19:15:01 ubuntu kubelet[10156]: E0922 19:15:01.071785   10156 kubelet.go:2448] "Error getting node" err="node \"ubuntu\" not found"
-Sep 22 19:15:01 ubuntu kubelet[10156]: E0922 19:15:01.172783   10156 kubelet.go:2448] "Error getting node" err="node \"ubuntu\" not found"
-Sep 22 19:15:01 ubuntu kubelet[10156]: E0922 19:15:01.275082   10156 kubelet.go:2448] "Error getting node" err="node \"ubuntu\" not found"
+Sep 22 19:15:01 ubuntu kubelet[10156]: E0922 19:15:01.071785   10156 kubelet.go:2448] "Error getting node" err="node "ubuntu" not found"
+Sep 22 19:15:01 ubuntu kubelet[10156]: E0922 19:15:01.172783   10156 kubelet.go:2448] "Error getting node" err="node "ubuntu" not found"
+Sep 22 19:15:01 ubuntu kubelet[10156]: E0922 19:15:01.275082   10156 kubelet.go:2448] "Error getting node" err="node "ubuntu" not found"
 ```
 
 由于之前的问题, 我们知道这是因为 kubelet 请求 apiserver 失败(不过这次已经不再是"connection refused"), 于是查看 apiserver 容器的日志, 看看有什么问题.
