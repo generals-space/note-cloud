@@ -6,13 +6,19 @@
 2. [Kubernetes on CRI-O (CentOS)](https://dev.to/abhivaidya07/kubernetes-on-cri-o-centos-o1m)
     - EN
 
-```
+```bash
 crictl --runtime-endpoint unix:///var/run/containerd/containerd.sock ps -a
 ```
 
 设置默认值
 
-```
+```bash
 echo 'export CONTAINER_RUNTIME_ENDPOINT=unix:///var/run/containerd/containerd.sock' >> ~/.bashrc
 source ~/.bashrc
+```
+
+永久生效
+
+```
+crictl config runtime-endpoint unix:///run/containerd/containerd.sock
 ```

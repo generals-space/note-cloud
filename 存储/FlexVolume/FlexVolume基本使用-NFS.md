@@ -51,7 +51,7 @@ OK, 现在来看一看`FlexVolume`与`CSI`的区别, 同样以NFS共享存储为
 
 在做实验期间, 测试用的`Pod`总是无法正常启动, 一直处于`ContainerCreating`状态, `describe`一下, 有如下输出.
 
-```
+```log
 Events:
   Type     Reason       Age        From                    Message
   ----     ------       ----       ----                    -------
@@ -61,7 +61,7 @@ Events:
 
 实际上`provisioner`的`DaemonSet`Pod并没有报错, 而在测试Pod所在的节点上, 查看`/var/log/message`有报错.
 
-```
+```log
 May 28 13:59:36 k8s-worker-01 kubelet: E0528 13:59:36.729872     731 driver-call.go:267] Failed to unmarshal output for command: init, output: "", error: unexpected end of JSON input
 May 28 13:59:36 k8s-worker-01 kubelet: W0528 13:59:36.729912     731 driver-call.go:150] FlexVolume: driver call failed: executable: /usr/libexec/kubernetes/kubelet-plugins/volume/exec/k8s~dummy/dummy, args: [init], error: fork/exec /usr/libexec/kubernetes/kubelet-plugins/volume/exec/k8s~dummy/dummy: no such file or directory, output: ""
 May 28 13:59:36 k8s-worker-01 kubelet: E0528 13:59:36.729935     731 plugins.go:766] Error dynamically probing plugins: Error creating Flexvolume plugin from directory k8s~dummy, skipping. Error: unexpected end of JSON input

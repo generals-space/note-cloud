@@ -32,7 +32,7 @@ sts, deploy, ds中对于`container.image`字段, 单纯指定了镜像Tag, 并�
 
 如果先尝试在主机上使用`docker rmi centos:v1.0`移除旧的镜像, 可能会出现
 
-```
+```log
 Error response from daemon: conflict: unable to remove repository reference "centos7:v1.0" (must force) - container 5c8987f39338 is using its referenced image 902dead0a02e
 ```
 
@@ -40,7 +40,7 @@ Error response from daemon: conflict: unable to remove repository reference "cen
 
 如果使用`docker rmi -f 902dead0a02e`强删镜像id时, 则会出现如下错误.
 
-```
+```log
 Error response from daemon: conflict: unable to delete 902dead0a02e (cannot be forced) - image is being used by running container bfbf5ba1e22d
 ```
 
