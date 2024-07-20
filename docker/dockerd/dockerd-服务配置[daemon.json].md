@@ -9,12 +9,14 @@
 
 ```json
 {
-    "data-root": "/opt/docker",
     "registry-mirrors": [
         "https://hub-mirror.c.163.com", 
         "https://registry.docker-cn.com", 
         "https://docker.mirrors.ustc.edu.cn"
-    ]
+    ],
+    "dns": ["223.5.5.5", "223.6.6.6"],
+    "max-concurrent-downloads" : 20,
+    "max-concurrent-uploads" : 20
 }
 ```
 

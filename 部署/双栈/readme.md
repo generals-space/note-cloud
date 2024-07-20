@@ -22,9 +22,3 @@
 10. 拷贝上面编写的`kubeadm-config.v1.17.2.yaml`配置到目标 worker 节点;
 11. 在目标 worker 节点上执行`kubeadm upgrade node --config ./kubeadm.v1.17.2.yaml`.
 12. 升级成功后需要重启一下 `kubelet`, 然后将该 worker 恢复调度 `kubectl uncordon $NODE`
-
-```
-## 安装指定版本的组件
-yum install -y kubelet-1.17.2 kubeadm-1.17.2 kubectl-1.17.2
-```
-

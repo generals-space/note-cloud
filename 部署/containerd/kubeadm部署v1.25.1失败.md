@@ -10,7 +10,7 @@
 
 执行`kubeadm init`显示超时失败, 此时kubelet已经启动, 但是日志中显示
 
-```
+```log
 $ kubeadm init --kubernetes-version=v1.25.1 --image-repository=registry.aliyuncs.com/google_containers --ignore-preflight-errors=all
 Sep 20 00:14:40 ubuntu kubelet[36562]: W0920 00:14:40.631878   36562 reflector.go:424] vendor/k8s.io/client-go/informers/factory.go:134: failed to list *v1.Service: Get "https://192.168.128.135:6443/api/v1/services?limit=500&resourceVersion=0": dial tcp 192.168.128.135:6443: connect: connection refused
 Sep 20 00:14:40 ubuntu kubelet[36562]: E0920 00:14:40.633037   36562 reflector.go:140] vendor/k8s.io/client-go/informers/factory.go:134: failed to watch *v1.Service: failed to list *v1Service: Get "https://192.168.128.135:6443/api/v1/services?limit=500&resourceVersion=0": dial tcp 192.168.128.135:6443: connect: connection refused
@@ -51,7 +51,7 @@ pause_image = "k8s.gcr.io/pause:3.2"
 apiVersion: kubeadm.k8s.io/v1beta3
 kind: InitConfiguration
 localAPIEndpoint:
-  advertiseAddress: 192.168.128.135
+  advertiseAddress:
   bindPort: 6443
 nodeRegistration:
   criSocket: unix:///var/run/crio/crio.sock

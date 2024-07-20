@@ -1,0 +1,118 @@
+## kubeadm配置文件示例, 在`Directories`标题下
+## https://godoc.org/k8s.io/kubernetes/cmd/kubeadm/app/apis/kubeadm#pkg-subdirectories
+
+## v1beta1 自 v1.17.0 开始被弃用.
+apiVersion: kubeadm.k8s.io/v1beta2
+kind: ClusterConfiguration
+kubernetesVersion: v1.17.2
+clusterName: kubernetes
+apiServer:
+  timeoutForControlPlane: 4m0s
+  extraArgs:
+    enable-admission-plugins: NodeRestriction
+    authorization-mode: "Node,RBAC"
+    endpoint-reconciler-type: lease
+  ## kubectl 所用的 kubeconfig 中, cluster.server 的地址必须是该列表中的其中一个才能够访问.
+  ## 比如, 在阿里云上创建 kube 集群, 公网IP是会变化的, controlPlaneEndpoint 只能写内网地址,
+  ## 但是在本地开发时, kubeconfig 中如果写公网IP是无法访问集群的, 会被拒绝. 
+  ## 因此这里最好设置一个域名, 本地将该域名与公网IP写入 hosts, IP变化就无法影响了.
+  ## 默认一定会包含 control plane 的 hostname 值.
+  certSANs:
+  - kubernetes
+  - k8s-master-01
+certificatesDir: /etc/kubernetes/pki
+controlPlaneEndpoint: k8s-server-lb:6443
+imageRepository: registry.cn-hangzhou.aliyuncs.com/google_containers
+dns:
+  type: CoreDNS
+etcd:
+  local:
+    dataDir: /var/lib/etcd
+    ## `serverCertSANs`与`PeerCertSANs`可以认为
+    ## 分别是ssl双向认证中的主体CN.
+    ## ta们的默认值都是`control plane`的hostname
+    ## serverCertSANs:
+    ## - "ec2-10-100-0-1.compute-1.amazonaws.com"
+    ## peerCertSANs:
+    ## - "10.100.0.1"
+  ## 外部etcd集群配置
+  ## external:
+  ##   endpoints:
+  ##     - https://192.168.7.14:2379
+  ##     - https://192.168.7.15:2379
+  ##     - https://192.168.7.16:2379
+  ##   caFile: /etc/etcd/ssl/ca.pem
+  ##   certFile: /etc/etcd/ssl/etcd.pem
+  ##   keyFile: /etc/etcd/ssl/etcd-key.pem
+
+networking:
+  ## 这几个都是默认值
+  dnsDomain: cluster.local
+  podSubnet: 10.254.0.0/16
+  serviceSubnet: 10.96.0.0/12
+controllerManager: {}
+scheduler: {}
+
+---
+apiVersion: kubeadm.k8s.io/v1beta2
+kind: InitConfiguration
+localAPIEndpoint:
+  advertiseAddress:
+  bindPort: 6443
+bootstrapTokens:
+- groups:
+  - system:bootstrappers:kubeadm:default-node-token
+  ## 指定固定 token, 以后创建的 kube 集群, 都可以使用该 token 进行访问, 对于调试来说, 很方便.
+  token: abcdef.0123456789abcdef
+  ttl: 24h0m0s
+  usages:
+  - signing
+  - authentication
+nodeRegistration:
+  ## 默认通过 dockershim 与 dockerd 通信, 现在直接指定 containerd 服务, 绕过 dockerd.
+  ## criSocket: /var/run/dockershim.sock
+  criSocket: unix:///var/run/containerd/containerd.sock
+  taints: []
+
+---
+apiVersion: kubeproxy.config.k8s.io/v1alpha1
+kind: KubeProxyConfiguration
+bindAddress: 0.0.0.0
+clientConnection:
+  acceptContentTypes: ""
+  burst: 10
+  contentType: application/vnd.kubernetes.protobuf
+  kubeconfig: /var/lib/kube-proxy/kubeconfig.conf
+  qps: 5
+clusterCIDR: ""
+configSyncPeriod: 15m0s
+conntrack:
+  max: 0
+  maxPerCore: 0
+  min: 0
+  tcpCloseWaitTimeout: 1h0m0s
+  tcpEstablishedTimeout: 24h0m0s
+enableProfiling: false
+healthzBindAddress: 0.0.0.0:10256
+hostnameOverride: ""
+iptables:
+  masqueradeAll: false
+  masqueradeBit: 14
+  minSyncPeriod: 0s
+  syncPeriod: 30s
+ipvs:
+  excludeCIDRs: null
+  minSyncPeriod: 0s
+  scheduler: ""
+  syncPeriod: 30s
+metricsBindAddress: 127.0.0.1:10249
+mode: ""
+nodePortAddresses: null
+oomScoreAdj: -999
+portRange: ""
+resourceContainer: /kube-proxy
+udpIdleTimeout: 250ms
+winkernel:
+  enableDSR: false
+  networkName: ""
+  sourceVip: ""

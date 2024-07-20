@@ -16,7 +16,7 @@
 
 kubelet 启动失败，journalctl -u kubelet 发现报错
 
-```
+```log
 kubelet.go:1380] Failed to start ContainerManager failed to initialize top level QOS containers: failed to update top level Burstable QOS cgroup : failed to set supported cgroup subsystems for cgroup [kubepods burstable]: failed to find subsystem mount for required subsystem: pids
 ```
 
@@ -26,7 +26,7 @@ kubelet.go:1380] Failed to start ContainerManager failed to initialize top level
 
 getSupportedSubsystems 函数是问题的关键点。
 
-```
+```go
 func getSupportedSubsystems() map[subsystem]bool { supportedSubsystems := map[subsystem]bool{ &cgroupfs.MemoryGroup{}: true, &cgroupfs.CpuGroup{}: true, &cgroupfs.PidsGroup{}: false, } // not all hosts support hugetlb cgroup, and in the absent of hugetlb, we will fail silently by reporting no capacity. supportedSubsystems[&cgroupfs.HugetlbGroup{}] = false if utilfeature.DefaultFeatureGate.Enabled(kubefeatures.SupportPodPidsLimit) || utilfeature.DefaultFeatureGate.Enabled(kubefeatures.SupportNodePidsLimit) { supportedSubsystems[&cgroupfs.PidsGroup{}] = true } return supportedSubsystems }
 ```
 
@@ -45,5 +45,5 @@ SupportPodPidsLimit: Enable the support to limiting PIDs in Pods.
 重启 kubelet
 
 ```
-systemctl restart kubelet.service
+systemctl restart kubelet
 ```

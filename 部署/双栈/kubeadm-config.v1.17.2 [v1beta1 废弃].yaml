@@ -1,4 +1,4 @@
-## kubeadm配置文件示例, 在`Directories`标题下, kuber.v1.17时有效的是`v1beta2`子目录
+## kubeadm配置文件示例, 在`Directories`标题下
 ## https://godoc.org/k8s.io/kubernetes/cmd/kubeadm/app/apis/kubeadm#pkg-subdirectories
 
 ## v1beta1 自 v1.17.0 开始被弃用.
@@ -37,7 +37,8 @@ controllerManager:
     service-cluster-ip-range: 10.96.0.0/12,2019:30::/24
 networking:
   ## 这两个其实 IPv4 都是默认值
-  ## 要求开启双栈时需要指定 podSubnet 的 IPv6 的网段, 否则在 kubeadm upgrade plan --config kubeadm-config.yaml 时会出现如下错误
+  ## 要求开启双栈时需要指定 podSubnet 的 IPv6 的网段, 否则在升级时会报错
+  ## $ kubeadm upgrade plan --config kubeadm-config.yaml
   ## podSubnet: Invalid value: "10.254.0.0/16": expected at least one IP from each family (v4 or v6) for dual-stack networking
   ## To see the stack trace of this error execute with --v=5 or higher
   ## 格式为: "IPv4,IPv6", 没有空格.

@@ -11,7 +11,7 @@
 
 初时倒也正常, 但是在某次虚拟机休眠并重启后, 发现两个从节点断掉了, 尝试重新用`kubeadm join`加入集群但总是卡住.
 
-```
+```log
 kubeadm join k8s-server-lb:8443 --token vmiss3.vnakc8bf0gq19ucq     --discovery-token-ca-cert-hash sha256:fa332b427052bfca068567c795f442355fbf37561d54e3fa763992f3cee9a83f
 [preflight] Running pre-flight checks
 	[WARNING IsDockerSystemdCheck]: detected "cgroupfs" as the Docker cgroup driver. The recommended driver is "systemd". Please follow the guide at https://kubernetes.io/docs/setup/cri/
@@ -21,7 +21,7 @@ kubeadm join k8s-server-lb:8443 --token vmiss3.vnakc8bf0gq19ucq     --discovery-
 
 然后加入`--v=5`提高日志级别, 看到有如下输出
 
-```
+```log
 I1130 22:25:16.006053   75102 join.go:433] [preflight] Discovering cluster-info
 I1130 22:25:16.006423   75102 token.go:199] [discovery] Trying to connect to API Server "k8s-server-lb:8443"
 I1130 22:25:16.007115   75102 token.go:74] [discovery] Created cluster-info discovery client, requesting info from "https://k8s-server-lb:8443"

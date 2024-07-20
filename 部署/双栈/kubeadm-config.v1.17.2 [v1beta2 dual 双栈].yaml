@@ -1,22 +1,7 @@
-apiVersion: kubeadm.k8s.io/v1beta2
-bootstrapTokens:
-- groups:
-  - system:bootstrappers:kubeadm:default-node-token
-  token: q8fszx.6razfduu22ouz4x2
-  ttl: 24h0m0s
-  usages:
-  - signing
-  - authentication
-kind: InitConfiguration
-localAPIEndpoint:
-  advertiseAddress: 192.168.80.121
-  bindPort: 6443
-nodeRegistration:
-  criSocket: /var/run/dockershim.sock
-  name: k8s-master-01
-  taints:
-  - effect: NoSchedule
-    key: node-role.kubernetes.io/master
+## kubeadm配置文件示例, 在`Directories`标题下
+## https://godoc.org/k8s.io/kubernetes/cmd/kubeadm/app/apis/kubeadm#pkg-subdirectories
+
+## v1beta1 自 v1.17.0 开始被弃用.
 ---
 apiVersion: kubeadm.k8s.io/v1beta2
 kind: ClusterConfiguration
@@ -66,3 +51,22 @@ networking:
   podSubnet: 10.254.0.0/16,fec0:20::/96
   serviceSubnet: 10.96.0.0/12,fec0:30::/112
 scheduler: {}
+
+---
+apiVersion: kubeadm.k8s.io/v1beta2
+bootstrapTokens:
+- groups:
+  - system:bootstrappers:kubeadm:default-node-token
+  token: abcdef.0123456789abcdef
+  ttl: 24h0m0s
+  usages:
+  - signing
+  - authentication
+kind: InitConfiguration
+localAPIEndpoint:
+  advertiseAddress:
+  bindPort: 6443
+nodeRegistration:
+  criSocket: /var/run/dockershim.sock
+  name: k8s-master-01
+  taints: []
