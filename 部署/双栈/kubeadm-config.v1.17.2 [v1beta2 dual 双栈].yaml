@@ -24,7 +24,7 @@ apiServer:
   - k8s-master-01
   - ${eth0_IP}
 certificatesDir: /etc/kubernetes/pki
-controlPlaneEndpoint: k8s-server-lb:8443
+controlPlaneEndpoint: kube-apiserver.generals.space:8443
 featureGates:
   IPv6DualStack: true
 controllerManager:

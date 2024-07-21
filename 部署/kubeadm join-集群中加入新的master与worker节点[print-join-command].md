@@ -61,7 +61,7 @@ apiVersion: v1
 clusters:
 - cluster:
     certificate-authority: certs.d/kuber.centos7/ca.crt
-    server: https://k8s-server-lb:8443
+    server: https://kube-apiserver.generals.space:8443
   name: kuber
 contexts:
 - context:
@@ -105,7 +105,7 @@ Unable to connect to the server: EOF
 
 ```log
 [root@k8s-master-01 .kube]# kubeadm token list
-failed to list bootstrap tokens: Get https://k8s-server-lb:8443/api/v1/namespaces/kube-system/secrets?fieldSelector=type%3Dbootstrap.kubernetes.io%2Ftoken: EOF
+failed to list bootstrap tokens: Get https://kube-apiserver.generals.space:8443/api/v1/namespaces/kube-system/secrets?fieldSelector=type%3Dbootstrap.kubernetes.io%2Ftoken: EOF
 To see the stack trace of this error execute with --v=5 or higher
 ```
 

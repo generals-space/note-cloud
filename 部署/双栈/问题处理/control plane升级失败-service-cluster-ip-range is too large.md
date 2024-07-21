@@ -30,8 +30,8 @@ To see the stack trace of this error execute with --v=5 or higher
 $ kubeadm upgrade apply --config ./kubeadm-config.v1.17.2.yaml -v 5
 [upgrade/staticpods] This might take a minute or longer depending on the component/version gap (timeout 5m0s)
 Static pod: kube-apiserver-k8s-master-01 hash: 8810a8c8d7f86ec2518c4cae06f33257
-I0605 11:49:15.814611   71811 request.go:848] Got a Retry-After 1s response for attempt 1 to https://k8s-server-lb:8443/api/v1/namespaces/kube-system/pods/kube-apiserver-k8s-master-01?timeout=10s
-I0605 11:49:25.312877   71811 request.go:848] Got a Retry-After 1s response for attempt 1 to https://k8s-server-lb:8443/api/v1/namespaces/kube-system/pods/kube-apiserver-k8s-master-01?timeout=10s
+I0605 11:49:15.814611   71811 request.go:848] Got a Retry-After 1s response for attempt 1 to https://kube-apiserver.generals.space:8443/api/v1/namespaces/kube-system/pods/kube-apiserver-k8s-master-01?timeout=10s
+I0605 11:49:25.312877   71811 request.go:848] Got a Retry-After 1s response for attempt 1 to https://kube-apiserver.generals.space:8443/api/v1/namespaces/kube-system/pods/kube-apiserver-k8s-master-01?timeout=10s
 ...省略 n 次
 timed out waiting for the condition
 couldn't upgrade control plane. kubeadm has tried to recover everything into the earlier state. Errors faced

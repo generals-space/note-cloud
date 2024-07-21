@@ -21,7 +21,7 @@ If you are on a systemd-powered system, you can try to troubleshoot the error wi
 `ps`查看时kubelet的确没启动, 然后去`/var/log/message`查看有如下日志.
 
 ```
-Jan 30 13:45:27 k8s-master-01 kubelet: E0130 13:45:27.704233   38608 reflector.go:153] k8s.io/kubernetes/pkg/kubelet/kubelet.go:458: Failed to list *v1.Node: Get https://k8s-server-lb:8443/api/v1/nodes?fieldSelector=metadata.name%3Dk8s-master-01&limit=500&resourceVersion=0: dial tcp 172.16.91.10:8443: connect: connection refused
+Jan 30 13:45:27 k8s-master-01 kubelet: E0130 13:45:27.704233   38608 reflector.go:153] k8s.io/kubernetes/pkg/kubelet/kubelet.go:458: Failed to list *v1.Node: Get https://kube-apiserver.generals.space:8443/api/v1/nodes?fieldSelector=metadata.name%3Dk8s-master-01&limit=500&resourceVersion=0: dial tcp 172.16.91.10:8443: connect: connection refused
 ```
 
 费了半天劲, 最后发现是`nginx`负载均衡pod没启动, 我只有一个master节点, 但是在nginx配置文件upstream中写了3个后端节点.

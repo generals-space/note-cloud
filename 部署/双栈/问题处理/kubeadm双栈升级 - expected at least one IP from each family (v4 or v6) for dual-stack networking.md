@@ -14,7 +14,7 @@
 kind: ClusterConfiguration
 kubernetesVersion: v1.16.2
 ## 用于生成apiserver匹配的证书及kubelet配置文件的请求入口.
-controlPlaneEndpoint: "k8s-server-lb:8443"
+controlPlaneEndpoint: "kube-apiserver.generals.space:8443"
 featureGates:
   ## 开启 IPv6 双栈
   IPv6DualStack: true

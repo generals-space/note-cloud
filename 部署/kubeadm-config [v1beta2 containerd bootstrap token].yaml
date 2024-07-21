@@ -19,9 +19,9 @@ apiServer:
   ## 默认一定会包含 control plane 的 hostname 值.
   certSANs:
   - kubernetes
-  - k8s-master-01
+  - kube-apiserver.generals.space
 certificatesDir: /etc/kubernetes/pki
-controlPlaneEndpoint: k8s-server-lb:6443
+controlPlaneEndpoint: kube-apiserver.generals.space:6443
 imageRepository: registry.cn-hangzhou.aliyuncs.com/google_containers
 dns:
   type: CoreDNS
@@ -31,10 +31,10 @@ etcd:
     ## `serverCertSANs`与`PeerCertSANs`可以认为
     ## 分别是ssl双向认证中的主体CN.
     ## ta们的默认值都是`control plane`的hostname
-    ## serverCertSANs:
-    ## - "ec2-10-100-0-1.compute-1.amazonaws.com"
-    ## peerCertSANs:
-    ## - "10.100.0.1"
+    serverCertSANs:
+    - "kube-etcd-server.generals.space"
+    peerCertSANs:
+    - "kube-etcd-peer.generals.space"
   ## 外部etcd集群配置
   ## external:
   ##   endpoints:
@@ -77,6 +77,12 @@ nodeRegistration:
 ---
 apiVersion: kubeproxy.config.k8s.io/v1alpha1
 kind: KubeProxyConfiguration
+mode: ipvs
+ipvs:
+  minSyncPeriod: 1s
+  syncPeriod: 10s
+  excludeCIDRs: null
+  scheduler: ""
 bindAddress: 0.0.0.0
 clientConnection:
   acceptContentTypes: ""
@@ -100,13 +106,7 @@ iptables:
   masqueradeBit: 14
   minSyncPeriod: 0s
   syncPeriod: 30s
-ipvs:
-  excludeCIDRs: null
-  minSyncPeriod: 0s
-  scheduler: ""
-  syncPeriod: 30s
 metricsBindAddress: 127.0.0.1:10249
-mode: ""
 nodePortAddresses: null
 oomScoreAdj: -999
 portRange: ""

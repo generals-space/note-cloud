@@ -7,7 +7,7 @@ kind: ClusterConfiguration
 kubernetesVersion: v1.17.2
 imageRepository: registry.cn-hangzhou.aliyuncs.com/google_containers
 ## 用于生成apiserver匹配的证书及kubelet配置文件的请求入口.
-controlPlaneEndpoint: "k8s-server-lb:8443"
+controlPlaneEndpoint: "kube-apiserver.generals.space:8443"
 apiServer:
   timeoutForControlPlane: 4m0s
   extraArgs:

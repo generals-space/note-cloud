@@ -10,7 +10,7 @@
 由于对于访问apiserver需要双向认证, 普通的http客户端工具无法附加ssl证书, 所以才提供了`proxy`这个命令, 通过kubectl进行映射, 实际上就是一个跳过了认证步骤的微服务网关.
 
 ```json
-// curl -k https://k8s-server-lb:6443/api/
+// curl -k https://kube-apiserver.generals.space:6443/api/
 {
   "kind": "Status",
   "apiVersion": "v1",

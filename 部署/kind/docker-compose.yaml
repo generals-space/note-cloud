@@ -1,0 +1,151 @@
+version: '3'
+services:
+  kube-apiserver:
+    hostname: kube-apiserver
+    image: registry.cn-hangzhou.aliyuncs.com/google_containers/kube-apiserver:v1.17.2
+    networks:
+      kube-net:
+        ipv4_address: 172.12.0.2
+        aliases:
+        - kube-apiserver.generals.space
+    volumes:
+    - /etc/kubernetes/pki:/etc/kubernetes/pki
+    - /etc/pki:/etc/pki
+    - /etc/ssl/certs:/etc/ssl/certs
+    command:
+    - kube-apiserver
+    ## - -v=5
+    - --advertise-address=172.12.0.2
+    - --allow-privileged=true
+    - --authorization-mode=Node,RBAC
+    - --client-ca-file=/etc/kubernetes/pki/ca.crt
+    - --enable-admission-plugins=NodeRestriction
+    - --enable-bootstrap-token-auth=true
+    - --endpoint-reconciler-type=lease
+    - --etcd-cafile=/etc/kubernetes/pki/etcd/ca.crt
+    - --etcd-certfile=/etc/kubernetes/pki/apiserver-etcd-client.crt
+    - --etcd-keyfile=/etc/kubernetes/pki/apiserver-etcd-client.key
+    - --etcd-servers=https://kube-etcd-server.generals.space:2379
+    - --insecure-port=0
+    - --kubelet-client-certificate=/etc/kubernetes/pki/apiserver-kubelet-client.crt
+    - --kubelet-client-key=/etc/kubernetes/pki/apiserver-kubelet-client.key
+    - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
+    - --proxy-client-cert-file=/etc/kubernetes/pki/front-proxy-client.crt
+    - --proxy-client-key-file=/etc/kubernetes/pki/front-proxy-client.key
+    - --requestheader-allowed-names=front-proxy-client
+    - --requestheader-client-ca-file=/etc/kubernetes/pki/front-proxy-ca.crt
+    - --requestheader-extra-headers-prefix=X-Remote-Extra-
+    - --requestheader-group-headers=X-Remote-Group
+    - --requestheader-username-headers=X-Remote-User
+    - --secure-port=6443
+    - --service-account-key-file=/etc/kubernetes/pki/sa.pub
+    - --service-cluster-ip-range=10.96.0.0/12
+    - --tls-cert-file=/etc/kubernetes/pki/apiserver.crt
+    - --tls-private-key-file=/etc/kubernetes/pki/apiserver.key
+
+  kube-scheduler:
+    hostname: kube-scheduler
+    image: registry.cn-hangzhou.aliyuncs.com/google_containers/kube-scheduler:v1.17.2
+    networks:
+      kube-net:
+        ipv4_address: 172.12.0.3
+    volumes:
+    - /etc/kubernetes/scheduler.conf:/etc/kubernetes/scheduler.conf
+    command:
+    - kube-scheduler
+    - --authentication-kubeconfig=/etc/kubernetes/scheduler.conf
+    - --authorization-kubeconfig=/etc/kubernetes/scheduler.conf
+    - --bind-address=127.0.0.1
+    - --kubeconfig=/etc/kubernetes/scheduler.conf
+    - --leader-elect=true
+
+  kube-controller-manager:
+    hostname: kube-controller-manager
+    image: registry.cn-hangzhou.aliyuncs.com/google_containers/kube-controller-manager:v1.17.2
+    networks:
+      kube-net:
+        ipv4_address: 172.12.0.4
+    volumes:
+    - /etc/kubernetes/controller-manager.conf:/etc/kubernetes/controller-manager.conf
+    - /usr/libexec/kubernetes/kubelet-plugins/volume/exec:/usr/libexec/kubernetes/kubelet-plugins/volume/exec
+    - /etc/kubernetes/pki:/etc/kubernetes/pki
+    - /etc/pki:/etc/pki
+    - /etc/ssl/certs:/etc/ssl/certs
+    command:
+    - kube-controller-manager
+    - --allocate-node-cidrs=true
+    - --authentication-kubeconfig=/etc/kubernetes/controller-manager.conf
+    - --authorization-kubeconfig=/etc/kubernetes/controller-manager.conf
+    - --bind-address=127.0.0.1
+    - --client-ca-file=/etc/kubernetes/pki/ca.crt
+    - --cluster-cidr=10.254.0.0/16
+    - --cluster-signing-cert-file=/etc/kubernetes/pki/ca.crt
+    - --cluster-signing-key-file=/etc/kubernetes/pki/ca.key
+    - --controllers=*,bootstrapsigner,tokencleaner
+    - --kubeconfig=/etc/kubernetes/controller-manager.conf
+    - --leader-elect=true
+    - --node-cidr-mask-size=24
+    - --requestheader-client-ca-file=/etc/kubernetes/pki/front-proxy-ca.crt
+    - --root-ca-file=/etc/kubernetes/pki/ca.crt
+    - --service-account-private-key-file=/etc/kubernetes/pki/sa.key
+    - --service-cluster-ip-range=10.96.0.0/12
+    - --use-service-account-credentials=true
+
+  kube-node-01:
+    hostname: kube-node-01
+    image: registry.cn-hangzhou.aliyuncs.com/generals-space/centos7-systemd
+    privileged: true
+    networks:
+      kube-net:
+        ipv4_address: 172.12.0.11
+    volumes:
+    ## - /etc/kubernetes/pki:/etc/kubernetes/pki
+    - /boot:/boot
+    - /sys/fs/cgroup:/sys/fs/cgroup
+    - /var/log/pods:/var/log/pods
+    - /var/lib/kubelet/pods:/var/lib/kubelet/pods
+    - /var/lib/containerd:/var/lib/containerd
+    - /var/run/containerd:/var/run/containerd
+    command:
+    - sleep
+    - "36000"
+
+  etcd:
+    hostname: etcd
+    image: registry.cn-hangzhou.aliyuncs.com/google_containers/etcd:3.4.3-0
+    networks:
+      kube-net:
+        ipv4_address: 172.12.0.100
+        aliases:
+        - kube-etcd-server.generals.space
+        - kube-etcd-peer.generals.space
+    volumes:
+    - /var/lib/etcd:/var/lib/etcd
+    - /etc/kubernetes/pki/etcd:/etc/kubernetes/pki/etcd
+    command:
+    - etcd
+    - --advertise-client-urls=https://kube-etcd-server.generals.space:2379
+    - --cert-file=/etc/kubernetes/pki/etcd/server.crt
+    - --client-cert-auth=true
+    - --data-dir=/var/lib/etcd
+    - --initial-advertise-peer-urls=https://172.12.0.100:2380
+    - --initial-cluster=k8s-master-01=https://172.12.0.100:2380
+    - --key-file=/etc/kubernetes/pki/etcd/server.key
+    - --listen-client-urls=https://127.0.0.1:2379,https://172.12.0.100:2379
+    - --listen-metrics-urls=http://127.0.0.1:2381
+    - --listen-peer-urls=https://172.12.0.100:2380
+    - --name=k8s-master-01
+    - --peer-cert-file=/etc/kubernetes/pki/etcd/peer.crt
+    - --peer-client-cert-auth=true
+    - --peer-key-file=/etc/kubernetes/pki/etcd/peer.key
+    - --peer-trusted-ca-file=/etc/kubernetes/pki/etcd/ca.crt
+    - --snapshot-count=10000
+    - --trusted-ca-file=/etc/kubernetes/pki/etcd/ca.crt
+networks:
+  kube-net:
+    driver: bridge
+    ipam:
+      config:
+      - subnet: 172.12.0.0/24
+        ## 参考文章1中的配置有 gateway , 但是在实践时该字段会报错.
+        ## gateway: 172.12.0.1

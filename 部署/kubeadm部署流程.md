@@ -27,7 +27,7 @@ hostnamectl set-hostname --static k8s-master-01
 
 #### 修改hosts(如果节点结构与下面的不同, 最好现在就修改, 同时修改nginx.conf, 否则nginx无法正常运行, 各组件就无法与apiserver通信)
 cat <<EOF >> /etc/hosts
-127.0.0.1 k8s-server-lb
+127.0.0.1 kube-apiserver.generals.space
 
 192.168.0.101 k8s-master-01
 192.168.0.102 k8s-master-02
@@ -121,13 +121,13 @@ yum install -y kubelet-1.16.2 kubeadm-1.16.2 kubectl-1.16.2
 ~~在所有master节点执行如下命令.~~ 不对, 应该是在所有节点都要部署nginx, 因为在worker节点上, kubelet服务也需要连接api server进行通信.
 
 ```bash
-docker run -d --name k8s-server-lb \
+docker run -d --name kube-apiserver.generals.space \
 --restart always --net host \
 -v /etc/kubernetes/k8s-nginx-lb.conf:/etc/nginx/nginx.conf \
 nginx:latest
 ```
 
-> nginx 容器使用的是宿主机网络, 监听的端口是 8443, 这里为了与 api server 监听的 6443 区分开. 并且由于写在 kubeadm-config.yaml 文件中, 最终生成的 kubectl 配置文件 `/etc/kubernetes/admin.conf`, 及各节点的 kubelet 的通信地址, 都将是 `k8s-server-lb:8443`.
+> nginx 容器使用的是宿主机网络, 监听的端口是 8443, 这里为了与 api server 监听的 6443 区分开. 并且由于写在 kubeadm-config.yaml 文件中, 最终生成的 kubectl 配置文件 `/etc/kubernetes/admin.conf`, 及各节点的 kubelet 的通信地址, 都将是 `kube-apiserver.generals.space:8443`.
 
 ## 3. 创建初始master节点
 

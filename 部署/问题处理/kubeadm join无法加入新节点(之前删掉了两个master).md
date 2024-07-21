@@ -12,7 +12,7 @@
 初时倒也正常, 但是在某次虚拟机休眠并重启后, 发现两个从节点断掉了, 尝试重新用`kubeadm join`加入集群但总是卡住.
 
 ```log
-kubeadm join k8s-server-lb:8443 --token vmiss3.vnakc8bf0gq19ucq     --discovery-token-ca-cert-hash sha256:fa332b427052bfca068567c795f442355fbf37561d54e3fa763992f3cee9a83f
+kubeadm join kube-apiserver.generals.space:8443 --token vmiss3.vnakc8bf0gq19ucq     --discovery-token-ca-cert-hash sha256:fa332b427052bfca068567c795f442355fbf37561d54e3fa763992f3cee9a83f
 [preflight] Running pre-flight checks
 	[WARNING IsDockerSystemdCheck]: detected "cgroupfs" as the Docker cgroup driver. The recommended driver is "systemd". Please follow the guide at https://kubernetes.io/docs/setup/cri/
 	[WARNING SystemVerification]: this Docker version is not on the list of validated versions: 19.03.4. Latest validated version: 18.09
@@ -23,8 +23,8 @@ kubeadm join k8s-server-lb:8443 --token vmiss3.vnakc8bf0gq19ucq     --discovery-
 
 ```log
 I1130 22:25:16.006053   75102 join.go:433] [preflight] Discovering cluster-info
-I1130 22:25:16.006423   75102 token.go:199] [discovery] Trying to connect to API Server "k8s-server-lb:8443"
-I1130 22:25:16.007115   75102 token.go:74] [discovery] Created cluster-info discovery client, requesting info from "https://k8s-server-lb:8443"
+I1130 22:25:16.006423   75102 token.go:199] [discovery] Trying to connect to API Server "kube-apiserver.generals.space:8443"
+I1130 22:25:16.007115   75102 token.go:74] [discovery] Created cluster-info discovery client, requesting info from "https://kube-apiserver.generals.space:8443"
 I1130 22:25:21.018293   75102 token.go:82] [discovery] Failed to request cluster info, will try again: [configmaps "cluster-info" is forbidden: User "system:anonymous" cannot get resource "configmaps" in API group "" in the namespace "kube-public"]
 ...省略
 I1130 22:25:26.019083   75102 token.go:82] [discovery] Failed to request cluster info, will try again: [configmaps "cluster-info" is forbidden: User "system:anonymous" cannot get resource "configmaps" in API group "" in the namespace "kube-public"]

@@ -81,7 +81,7 @@ clusters:
 - cluster:
     ## 这个字段与 pki 目录下的 ca.crt 内容是相同的.
     certificate-authority-data: base64(/etc/kubernetes/pki/ca.crt)
-    server: https://k8s-server-lb:8443
+    server: https://kube-apiserver.generals.space:8443
   name: kubernetes
 kind: Config
 users:
