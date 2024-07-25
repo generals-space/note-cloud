@@ -3,15 +3,14 @@
 参考文章
 
 1. [Kubernetes中的nodePort，targetPort，port的区别和意义](https://blog.csdn.net/u013760355/article/details/70162242)
-
 2. [从外部访问Kubernetes中的Pod](https://jimmysong.io/posts/accessing-kubernetes-pods-from-outside-of-the-cluster/)
-
 3. [hostPort不生效](http://liupeng0518.github.io/2018/12/29/k8s/Network/%E5%BC%82%E5%B8%B8%E6%8E%92%E9%94%99/)
     - hostPort不生效的原因分析, 及使用iptables手动映射的解决方法
 
 - `targetPort`: 表示该service要映射的源端口, 比如一个容器里监听的是80端口, 那`targetPort`就是80. 
 - `port`: 是service监听的端口, pod中的服务相互访问时, 就是访问的其他pod绑定的service的端口.
 - `nodePort`: kuber集群负责的, 开放给集群外部访问的端口, 范围在30000-32767. 由`kube-proxy`服务处理, 由于实际上集群中每个节点(包括master和worker)都运行着这个服务, 所以在每个节点上访问这个端口, 都能访问到ta对应的pod中的服务. 
+    - nodePort不一定真正创建, 工作在在iptables模式的kube-proxy服务使用转发链完成此操作, 用netstat/ss是看不到listening状态的端口的.
 
 kube-proxy服务工作在iptables模式下时, 节点上并没有真正监听nodePort(用netstat/ss是查不到的), 应该是使用iptables的转发链完成的. 至于ipvs模式下是否有监听, 还没有实验过.
 
@@ -50,6 +49,6 @@ spec:
 
 由于容器直接使用宿主机网络, 此时`containerPort`与`hostPort`必须是一致的, 否则会出现如下错误.
 
-```
+```log
 The Pod "mypod" is invalid: spec.containers[0].ports[0].containerPort: Invalid value: 80: must match `hostPort` when `hostNetwork` is true
 ```

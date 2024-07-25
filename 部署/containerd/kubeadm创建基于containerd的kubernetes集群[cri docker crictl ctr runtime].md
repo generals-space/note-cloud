@@ -103,7 +103,7 @@ f0a1eacd820ff    303ce5db0e90d    23 minutes ago    Running    etcd             
 用如下命令长久设置 endpoint
 
 ```
-crictl config runtime-endpoint /run/containerd/containerd.sock
+crictl config runtime-endpoint unix:///run/containerd/containerd.sock
 ```
 
 ## F&Q

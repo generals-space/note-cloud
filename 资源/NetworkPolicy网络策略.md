@@ -138,7 +138,7 @@ spec:
 
 由于多条件求并集, 所以如下规则会导致, `default`下的所有容器都能访问`nginx:80`, 而不是只有`default`下的`app=centos`才可以访问.
 
-```
+```yaml
     - podSelector:
         matchLabels:
           app: centos
