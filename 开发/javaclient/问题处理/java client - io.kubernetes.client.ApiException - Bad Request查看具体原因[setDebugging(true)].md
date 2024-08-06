@@ -23,13 +23,13 @@
 
 出问题的行是"readNamespacedPersistentVolumeClaimWithHttpInfo()"函数的所在行, 异常被 catch 语句捕获, 如下
 
-```
+```log
 io.kubernetes.client.ApiException: Bad Request
         at io.kubernetes.client.ApiClient.handleResponse(ApiClient.java:886)
         at io.kubernetes.client.ApiClient.execute(ApiClient.java:802)
         at io.kubernetes.client.apis.CoreV1Api.readNamespacedPersistentVolumeClaimWithHttpInfo(CoreV1Api.java:24668)
-        at com.cmos.k8s.middleware.client.impl.PersistentVolumeClaimApisImpl.getPersistentVolumeClaimByNameAndNamespaces(PersistentVolumeClaimApisImpl.java:71)
-        at com.cmos.k8s.middleware.service.es.impl.ElasticSearchServiceImpl.updateElasticsearchLocalStorage(ElasticSearchServiceImpl.java:394)
+        at com.com.k8s.middleware.client.impl.PersistentVolumeClaimApisImpl.getPersistentVolumeClaimByNameAndNamespaces(PersistentVolumeClaimApisImpl.java:71)
+        at com.com.k8s.middleware.service.es.impl.ElasticSearchServiceImpl.updateElasticsearchLocalStorage(ElasticSearchServiceImpl.java:394)
 ```
 
 ...但是这个报错完全看不出问题嘛, "readNamespacedPersistentVolumeClaimWithHttpInfo()"是 jar 包里的函数, apiResponse 变量也得不到就直接被 catch 了.
@@ -54,7 +54,7 @@ io.kubernetes.client.ApiException: Bad Request
 
 然后就可以打印出请求 apiserver 的参数, 请求体, 以及响应体信息了.
 
-```
+```log
 --> GET https://172.22.248.183:6443/api/v1/namespaces/zjjpt-es/persistentvolumeclaims/general-es-0524-01--claim?exact=true&export=true HTTP/1.1
 authorization: Bearer 证书信息
 Accept: application/json
@@ -74,13 +74,13 @@ OkHttp-Received-Millis: 1653448290279
 {"kind":"Status","apiVersion":"v1","metadata":{},"status":"Failure","message":"the export parameter, deprecated since v1.14, is no longer supported","reason":"BadRequest","code":400}
 
 <-- END HTTP (183-byte body)
-2022-05-25 11:11:30,280 ERROR http-nio-0.0.0.0-18080-exec-2 (com.cmos.k8s.middleware.client.impl.PersistentVolumeClaimApisImpl:76) - get pvc failed  + Bad Request
+2022-05-25 11:11:30,280 ERROR http-nio-0.0.0.0-18080-exec-2 (com.com.k8s.middleware.client.impl.PersistentVolumeClaimApisImpl:76) - get pvc failed  + Bad Request
 io.kubernetes.client.ApiException: Bad Request
         at io.kubernetes.client.ApiClient.handleResponse(ApiClient.java:886)
         at io.kubernetes.client.ApiClient.execute(ApiClient.java:802)
         at io.kubernetes.client.apis.CoreV1Api.readNamespacedPersistentVolumeClaimWithHttpInfo(CoreV1Api.java:24668)
-        at com.cmos.k8s.middleware.client.impl.PersistentVolumeClaimApisImpl.getPersistentVolumeClaimByNameAndNamespaces(PersistentVolumeClaimApisImpl.java:71)
-        at com.cmos.k8s.middleware.service.es.impl.ElasticSearchServiceImpl.updateElasticsearchLocalStorage(ElasticSearchServiceImpl.java:394)
+        at com.com.k8s.middleware.client.impl.PersistentVolumeClaimApisImpl.getPersistentVolumeClaimByNameAndNamespaces(PersistentVolumeClaimApisImpl.java:71)
+        at com.com.k8s.middleware.service.es.impl.ElasticSearchServiceImpl.updateElasticsearchLocalStorage(ElasticSearchServiceImpl.java:394)
 ```
 
 可以看到, 是因为 kubernetes 在 1.23.4 版本已经不再接受 exporter 参数了, 所以在调用"readNamespacedPersistentVolumeClaimWithHttpInfo()"时, 需要将`exporter`参数置为 null.

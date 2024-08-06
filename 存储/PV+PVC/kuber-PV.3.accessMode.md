@@ -77,7 +77,7 @@ spec:
 
 一对一的pv与pvc情况下, 两者都可以创建成功. 但是创建ds时, 生成的pod却都无法启动, 都处于`ContainerCreating`状态. 对ta们`describe`一下, 发现有如下输出
 
-```
+```log
 Events:
   Type     Reason       Age               From                    Message
   ----     ------       ----              ----                    -------
