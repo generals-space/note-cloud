@@ -1,4 +1,4 @@
-# Docker网络-静态IP
+# Docker网络模式-bridge网桥配置静态IP[static]
 
 参考文章
 

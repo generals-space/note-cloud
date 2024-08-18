@@ -13,20 +13,20 @@ Linux对普通用户能够获取的资源进行了诸多限制, 比如能够启�
 
 ```log
 [root@localhost ~]# ulimit -a
-core file size          (blocks, -c) 0                      ## 程序能够产生的内存转储文件大小(一般只有进程意外崩溃时才会产生)
-data seg size           (kbytes, -d) unlimited              ## 进程数据段大小(貌似是限制代码中的局部变量<???>, 结构体变量太多会不会被限制...)
-scheduling priority             (-e) 0                      ## 调度优先级
-file size               (blocks, -f) unlimited              ## 用户能拥有的文件大小不能超过这个值
-pending signals                 (-i) 15209                  ## <???>
+core file size          (blocks, -c) 0            ## 程序能够产生的内存转储文件大小(一般只有进程意外崩溃时才会产生)
+data seg size           (kbytes, -d) unlimited    ## 进程数据段大小(貌似是限制代码中的局部变量<???>, 结构体变量太多会不会被限制...)
+scheduling priority             (-e) 0            ## 调度优先级
+file size               (blocks, -f) unlimited    ## 用户能拥有的文件大小不能超过这个值
+pending signals                 (-i) 15209        ## <???>
 max locked memory       (kbytes, -l) 64
-max memory size         (kbytes, -m) unlimited              ## 内存的最大使用量
-open files                      (-n) 1024                   ## 能够打开的最大文件数
+max memory size         (kbytes, -m) unlimited    ## 内存的最大使用量
+open files                      (-n) 1024         ## 能够打开的最大文件数
 pipe size            (512 bytes, -p) 8
 POSIX message queues     (bytes, -q) 819200
 real-time priority              (-r) 0
 stack size              (kbytes, -s) 10240
 cpu time               (seconds, -t) unlimited
-max user processes              (-u) 15209                  ## 用户能够启动的最大进程数, 可以防止`fork bombs`(fork炸弹)
+max user processes              (-u) 15209        ## 用户能够启动的最大进程数, 可以防止`fork bombs`(fork炸弹)
 virtual memory          (kbytes, -v) unlimited 
 file locks                      (-x) unlimited 
 ```

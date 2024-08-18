@@ -23,7 +23,14 @@
 
 ## 1. docker 中设置 sysctl
 
-正常运行的docker容器中, 是不能修改任何sysctl内核参数的. 因为`/proc/sys`是以只读方式挂载到容器里面的. 在容器中执行如下命令
+正常运行的docker容器中, 是不能修改任何sysctl内核参数的. 因为`/proc/sys`是以只读方式挂载到容器里面的.
+
+```log
+$ sysctl -w fs.file-max=524287
+sysctl: setting key "fs.file-max": Read-only file system
+```
+
+在容器中执行如下命令
 
 ```log
 $ mount | grep proc
@@ -75,7 +82,7 @@ net.ipv4.ip_default_ttl = 63
 1. 只有`namespaced`参数才可以, 否则会报错”invalid argument…”
 2. 这种方式只是在容器初始化过程中完成内核参数的修改, 容器运行起来以后, `/proc/sys`仍然是以只读方式挂载的, 在容器中不能再次修改`sysctl`内核参数. 
 
-## 2. kuber 中设置 sysctl
+## 2. kube 中设置 sysctl
 
 ### 2.1 通过`sysctls`和`unsafe-sysctls`注解
 

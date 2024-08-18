@@ -5,8 +5,13 @@
 3. [nestybox/sysbox](https://github.com/nestybox/sysbox)
     - 与 runc、gVisor 同级的 runtime, 可以被 docker/kubernetes 使用.
 
-容器云是以云的概念看容器, 有些对象的称谓是不同的.
-
-如在kubernetes中, 存在pv和pvc, 而在容器云中对应的概念是: 存储卷, 存储声明和存储类.
-
-而且容器云平台上一般不会允许用户直接通过kubectl -> apiserver对集群进行控制.
+1. [Docker背后的内核知识（一）](https://www.cnblogs.com/beiluowuzheng/p/10004132.html)
+    - namespace的API包括`clone()`, `setns()`以及`unshare()`, 还有`/proc`下的部分文件.
+    - 很多示例代码
+2. [Docker背后的内核知识（二）](https://www.cnblogs.com/beiluowuzheng/p/10015177.html)
+    - 主要是cgroup相关的知识
+3. [Docker安全](https://www.bookstack.cn/read/dockerdocs/Articles-security.md)
+    - 类似于引言一样的文章, 不涉及技术细节.
+4. [docker基础知识之mount namespace](http://kuring.me/post/namespace_mount/)
+    - c语言代码
+5. [linux和docker的capabilities介绍](https://www.cnblogs.com/charlieroro/p/10108577.html)

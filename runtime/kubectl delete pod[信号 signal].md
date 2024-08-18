@@ -16,7 +16,6 @@
 
 `kubectl delete pod`就是对pod中启动的 pid 1 进程发送 TERM 信号, 30s后无响应则发 KILL 信号强制退出.
 
-
 我们知道, 在`dockerfile`中使用`cmd/entrypoint` 中指定一个脚本, 然后由该脚本启动一个服务时, pid 为 1 的进程将是那个脚本.
 
 > 注意: 虽然`cmd/entrypoint`是通过`sh -c 'xxx'`的方式运行的指令, 但 pid 为 1 的进程的确是 xxx 而不是`sh`(很像`fork`, 把原来的进程直接替换掉了)
@@ -34,4 +33,3 @@ time k delete pod xxx
 按照参考文章3中所说, 当向 pid 1 进程发送 SIGTERM 信号过了30s后, pod 仍旧没有停止, kubelet 就会向 pod 中所有进程发送 SIGKILL 信号.
 
 不过由于 SIGKILL 信号没有办法被进程捕获到, 所以没有办法做个实验验证一下. 只能有机会去查看 runc 底层的代码了.
-
