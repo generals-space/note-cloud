@@ -20,4 +20,11 @@
     - 参考文章5的原文, 评论很有意思
 
 7. [基于KVM的SRIOV直通配置及性能测试](https://cloud.tencent.com/developer/article/2060167)
+8. [GPU直通、GPU共享及GPU虚拟化比较](https://blog.csdn.net/hbuxiaofei/article/details/106757002)
+
+9. [盘点来自工业界的 GPU 共享方案](https://www.cvmart.net/community/detail/5370)
+    - 来源: https://zhuanlan.zhihu.com/p/398369404
+10. [GPUManager虚拟化方案](https://cloud.tencent.com/developer/article/1685122)
+11. [腾讯云徐蓓：通过云原生管理Kubernetes GPU资源](https://mp.weixin.qq.com/s/W-Ntu2xdjypFgs5EPMVjkg)
+12. [论文笔记《GaiaGPU：Sharing GPUs in Container Clouds》](https://pokerfacesad.github.io/2020/02/07/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%E3%80%8AGaiaGPU%20Sharing%20GPUs%20in%20Container%20Clouds%E3%80%8B/)
 
