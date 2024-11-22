@@ -1,3 +1,6 @@
+参考文章
+
+[在 Kubernetes 中运行 Kubernetes](https://www.qikqiak.com/post/k8s-in-k8s/)
 
 d cp /etc/yum.repos.d/kubernetes.repo root-kube-node-01-1:/etc/yum.repos.d/
 yum install -y kubeadm-1.17.2 kubelet-1.17.2 kubectl-1.17.2
