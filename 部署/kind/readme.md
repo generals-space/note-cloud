@@ -52,3 +52,28 @@ unpacking linux/amd64 sha256:9a2940bd7718e1b7060b96bb33b0af44ebb4e3de0a0f80b1e6f
 INFO[0000] apply failure, attempting cleanup             error="failed to extract layer sha256:682fbb19de80799fed8b83bd8172050774c83294f952bdd8013d9cce2ab2f2a6: failed to convert whiteout file \"usr/lib/x86_64-linux-gnu/xtables/.wh..wh..opq\": operation not supported: unknown" key="extract-763670182-suGC sha256:561eaf129957ad575ddb973e7455175c1b74ed4bbaa925ff79080483c621087e"
 ctr: failed to extract layer sha256:682fbb19de80799fed8b83bd8172050774c83294f952bdd8013d9cce2ab2f2a6: failed to convert whiteout file "usr/lib/x86_64-linux-gnu/xtables/.wh..wh..opq": operation not supported: unknown
 ```
+
+docker run -d --name k8s-master-02 --hostname k8s-master-02 --privileged=true --add-host kube-apiserver.generals.space:10.0.2.20 --add-host k8s-master-02:172.17.0.2 -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v /lib/modules:/lib/modules registry.cn-hangzhou.aliyuncs.com/generals-space/centos7-systemd
+
+ctr -n k8s.io images import --no-unpack ./kube-proxy.tar
+
+## 修改 containerd snapshotter 为 native
+
+[failed to create ship task: failed to mount rootfs component: invalid argument: unknown](https://github.com/containerd/containerd/issues/9260)
+[failed to create shim task: failed to mount rootfs component: invalid argument: unknown](https://github.com/containerd/containerd/discussions/9667)
+[Failed to mount rootfs component with overlay filesystem](https://github.com/k3s-io/k3s/issues/2755)
+[Error: "failed to create ship task: failed to mount rootfs component: invalid argument: unknown" when executing keadm join.](https://github.com/kubeedge/kubeedge/issues/5088)
+
+```log
+$ dmesg -T
+[Fri Nov 29 15:49:23 2024] overlayfs: filesystem on '/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/135/fs' not supported as upperdir
+```
+
+
+crictl config runtime-endpoint unix:///run/containerd/containerd.sock
+
+
+        - /usr/local/bin/kube-proxy
+        - --config=/var/lib/kube-proxy/config.conf
+        - --hostname-override=$(NODE_NAME)
+        - --v=10
