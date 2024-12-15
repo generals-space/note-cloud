@@ -7,4 +7,4 @@
 2. [centos7 使用cgroup进行资源限制](https://blog.csdn.net/lanyang123456/article/details/81610779)
 3. [centos7上为什么不使用libcgroup进行资源限制](https://blog.csdn.net/lanyang123456/article/details/82319731)
 4. [centos7 如何在用户级对资源进行限制](https://blog.csdn.net/lanyang123456/article/details/82318978)
-
+5. [2.3. 修改 cgroup](https://docs.redhat.com/zh-cn/documentation/red_hat_enterprise_linux/7/html/resource_management_guide/sec-modifying_control_groups)

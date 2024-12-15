@@ -2,34 +2,10 @@
 
 [在 Kubernetes 中运行 Kubernetes](https://www.qikqiak.com/post/k8s-in-k8s/)
 
-docker run -d --name k8s-master-02 --hostname k8s-master-02 --privileged=true -v /sys/fs/cgroup:/sys/fs/cgroup:ro registry.cn-hangzhou.aliyuncs.com/generals-space/centos7-systemd
-
-d cp /etc/yum.repos.d/kubernetes.repo root-kube-node-01-1:/etc/yum.repos.d/
-yum install -y kubeadm-1.17.2 kubelet-1.17.2 kubectl-1.17.2
 
 kubeadm join kube-apiserver.generals.space:6443 --token abcdef.0123456789abcdef --discovery-token-ca-cert-hash sha256:b969766a8c9d9dfc3615dff8767c5bd6b8aa7930bdd699d6bb2213c434904c61 --ignore-preflight-errors=all
 
 /usr/bin/kubelet --bootstrap-kubeconfig=/etc/kubernetes/bootstrap-kubelet.conf --kubeconfig=/etc/kubernetes/kubelet.conf --config=/var/lib/kubelet/config.yaml --container-runtime=remote --container-runtime-endpoint=unix:///var/run/containerd/containerd.sock
-
-kubelet 对 /var/lib/kubelet 目录做了 remount, 因此容器内运行 kubelet 无法与宿主机共享此目录.
-
-```log
-[preflight] Running pre-flight checks
-[preflight] The system verification failed. Printing the output from the verification:
-KERNEL_VERSION: 3.10.0-1062.el7.x86_64
-OS: Linux
-CGROUPS_CPU: enabled
-CGROUPS_CPUACCT: enabled
-CGROUPS_CPUSET: enabled
-CGROUPS_DEVICES: enabled
-CGROUPS_FREEZER: enabled
-CGROUPS_MEMORY: enabled
-error execution phase preflight: [preflight] Some fatal errors occurred:
-        [ERROR FileContent--proc-sys-net-bridge-bridge-nf-call-iptables]: /proc/sys/net/bridge/bridge-nf-call-iptables does not exist
-        [ERROR SystemVerification]: failed to parse kernel config: unable to load kernel module: "configs", output: "", err: exit status 1
-[preflight] If you know what you are doing, you can make a check non-fatal with `--ignore-preflight-errors=...`
-To see the stack trace of this error execute with --v=5 or higher
-```
 
 
 ------
@@ -53,7 +29,26 @@ INFO[0000] apply failure, attempting cleanup             error="failed to extrac
 ctr: failed to extract layer sha256:682fbb19de80799fed8b83bd8172050774c83294f952bdd8013d9cce2ab2f2a6: failed to convert whiteout file "usr/lib/x86_64-linux-gnu/xtables/.wh..wh..opq": operation not supported: unknown
 ```
 
-docker run -d --name k8s-master-02 --hostname k8s-master-02 --privileged=true --add-host kube-apiserver.generals.space:10.0.2.20 --add-host k8s-master-02:172.17.0.2 -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v /lib/modules:/lib/modules registry.cn-hangzhou.aliyuncs.com/generals-space/centos7-systemd
+docker run -d --name k8s-master-03 --hostname k8s-master-03 --privileged=true \
+--add-host kube-apiserver.generals.space:10.0.2.20 \
+-e http_proxy=${http_proxy} -e https_proxy=${https_proxy} -e no_proxy=${no_proxy} \
+-v /root:/root -v /etc/yum.repos.d:/etc/yum.repos.d \
+registry.cn-hangzhou.aliyuncs.com/generals-space/centos-systemd:7
+
+yum install -y kubeadm-1.17.2 kubelet-1.17.2 kubectl-1.17.2
+
+yum install -y containerd
+
+chmod 755 ./bin/*
+d cp ./bin/containerd k8s-master-03:/usr/bin/
+d cp ./bin/containerd-shim k8s-master-03:/usr/bin/
+d cp ./bin/containerd-shim-runc-v2 k8s-master-03:/usr/bin/
+
+containerd config default > /etc/containerd/config.toml
+
+d cp ./crictl k8s-master-02:/usr/bin/
+crictl config runtime-endpoint unix:///run/containerd/containerd.sock
+
 
 ctr -n k8s.io images import --no-unpack ./kube-proxy.tar
 
@@ -69,11 +64,13 @@ $ dmesg -T
 [Fri Nov 29 15:49:23 2024] overlayfs: filesystem on '/var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/135/fs' not supported as upperdir
 ```
 
+./nerdctl -n=k8s.io --snapshotter=native ps -a
+./nerdctl --snapshotter=native ps -a
+./nerdctl --snapshotter=native rm 
+./nerdctl --snapshotter=native run -d --name testpause --network host registry.cn-hangzhou.aliyuncs.com/google_containers/pause:3.6
 
-crictl config runtime-endpoint unix:///run/containerd/containerd.sock
 
-
-        - /usr/local/bin/kube-proxy
-        - --config=/var/lib/kube-proxy/config.conf
-        - --hostname-override=$(NODE_NAME)
-        - --v=10
+chmod 755 ./bin/*
+d cp ./bin/containerd k8s-master-02:/usr/bin/
+d cp ./bin/containerd-shim k8s-master-02:/usr/bin/
+d cp ./bin/containerd-shim-runc-v2 k8s-master-02:/usr/bin/
