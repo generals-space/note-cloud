@@ -32,7 +32,7 @@
 
 `locale -a`: 查看所有可用语言.
 
-```
+```ini
 [root@db481110976d ~]# locale 
 LANG=
 LC_CTYPE="POSIX"

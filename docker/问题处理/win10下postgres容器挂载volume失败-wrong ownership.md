@@ -56,7 +56,7 @@ services:
       - testing-pgdata:/var/lib/postgresql/data
 ```
 
-```
+```log
 $ docker-compose up -d 
 ERROR: Named volume "testing-pgdata:/var/lib/postgresql/data:rw" is used in service "postgres-svc" but no declaration was found in the volumes section.
 ```
@@ -80,7 +80,7 @@ volumes:
 
 这样在启动compose时就会自动创建挂载卷.
 
-```
+```log
 $ docker-compose up -d postgres-svc
 Creating volume "bootstrapmb-downloader-pyasync_testing-pgdata" with default driver
 Creating bootstrapmb-downloader-pyasync_postgres-svc_1 ... done

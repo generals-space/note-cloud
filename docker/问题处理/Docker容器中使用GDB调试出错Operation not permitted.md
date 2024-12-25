@@ -12,7 +12,7 @@ go build -gcflags '-N -l' hello.go
 
 使用list查看内容, 以及使用breakpoint打断点都是没问题的, 但是在使用r开始执行程序时就出问题了.
 
-```
+```log
 (gdb) b 17
 Breakpoint 1 at 0x489431: file /root/hello.go, line 17.
 (gdb) r
@@ -24,7 +24,7 @@ During startup program exited with code 127.
 
 使用lldb也是相同的情况
 
-```
+```log
 (lldb) r
 error: process launch failed: Child ptrace failed.
 ```

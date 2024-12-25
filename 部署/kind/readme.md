@@ -40,6 +40,7 @@ yum install -y kubeadm-1.17.2 kubelet-1.17.2 kubectl-1.17.2
 yum install -y containerd
 
 chmod 755 ./bin/*
+d cp ./bin/ctr k8s-master-03:/usr/bin/
 d cp ./bin/containerd k8s-master-03:/usr/bin/
 d cp ./bin/containerd-shim k8s-master-03:/usr/bin/
 d cp ./bin/containerd-shim-runc-v2 k8s-master-03:/usr/bin/

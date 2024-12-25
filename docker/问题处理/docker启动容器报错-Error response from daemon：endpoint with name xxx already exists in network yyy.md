@@ -18,7 +18,7 @@ docker: Error response from daemon: endpoint with name task-server already exist
 
 容器用的是自定义的网络, 名为`cpo`, 网段是`172.18`. 不过这和自定义网络应该没什么关系, 按照参考文章1中的说法, 应该是容器上次停止时返回码不正确, 导致网络中并没有真正移除它. 所以容器虽然不在了, 但是cpo网络中依然保留着这个容器所占用的IP, 不能被分配. 
 
-```
+```json
 $ docker network inspect cpo
 [
     {

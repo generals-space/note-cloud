@@ -16,8 +16,6 @@ Sep 20 00:14:40 ubuntu kubelet[36562]: W0920 00:14:40.631878   36562 reflector.g
 Sep 20 00:14:40 ubuntu kubelet[36562]: E0920 00:14:40.633037   36562 reflector.go:140] vendor/k8s.io/client-go/informers/factory.go:134: failed to watch *v1.Service: failed to list *v1Service: Get "https://192.168.128.135:6443/api/v1/services?limit=500&resourceVersion=0": dial tcp 192.168.128.135:6443: connect: connection refused
 Sep 20 00:14:40 ubuntu kubelet[36562]: E0920 00:14:40.663165   36562 kubelet.go:2448] "Error getting node" err="node \"ubuntu\" not found"
 Sep 20 00:14:40 ubuntu kubelet[36562]: E0920 00:14:40.663165   36562 kubelet.go:2448] "Error getting node" err="node \"ubuntu\" not found"
-Sep 20 00:14:40 ubuntu kubelet[36562]: E0920 00:14:40.663165   36562 kubelet.go:2448] "Error getting node" err="node \"ubuntu\" not found"
-Sep 20 00:14:40 ubuntu kubelet[36562]: E0920 00:14:40.663165   36562 kubelet.go:2448] "Error getting node" err="node \"ubuntu\" not found"
 ...省略
 ```
 

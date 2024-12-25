@@ -20,6 +20,7 @@ apiServer:
   certSANs:
   - kubernetes
   - kube-apiserver.generals.space
+  - kube-node-01
 certificatesDir: /etc/kubernetes/pki
 controlPlaneEndpoint: kube-apiserver.generals.space:6443
 imageRepository: registry.cn-hangzhou.aliyuncs.com/google_containers
@@ -32,9 +33,11 @@ etcd:
     ## 分别是ssl双向认证中的主体CN.
     ## ta们的默认值都是`control plane`的hostname
     serverCertSANs:
-    - "kube-etcd-server.generals.space"
+    - kube-etcd-server.generals.space
+    - kube-node-01
     peerCertSANs:
-    - "kube-etcd-peer.generals.space"
+    - kube-etcd-peer.generals.space
+    - kube-node-01
   ## 外部etcd集群配置
   ## external:
   ##   endpoints:
