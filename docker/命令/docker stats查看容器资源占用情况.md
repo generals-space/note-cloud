@@ -14,12 +14,12 @@
 
 ```log
 # 启动一个容器
-$ docker run -d redis                                                                        
+$ docker run -d redis
 c98c9831ee73e9b71719b404f5ecf3b408de0b69aec0f781e42d815575d28ada
 # 查看其所占用资源的情况
-$ docker stats --no-stream $(docker ps -ql)                                                 
-CONTAINER ID        NAME                CPU %               MEM USAGE / LIMIT     MEM %               NET I/O             BLOCK I/O           PIDS
-c98c9831ee73        amazing_torvalds    0.08%               2.613MiB / 15.56GiB   0.02%               3.66kB / 0B         0B / 0B             4
+$ docker stats --no-stream $(docker ps -ql)
+CONTAINER ID        NAME                CPU %    MEM USAGE / LIMIT     MEM %    NET I/O        BLOCK I/O    PIDS
+c98c9831ee73        amazing_torvalds    0.08%    2.613MiB / 15.56GiB   0.02%    3.66kB / 0B    0B / 0B      4
 ```
 
 - `Container ID`:       容器的 ID, 也是一个容器生命周期内不会变更的信息.
@@ -39,7 +39,7 @@ c98c9831ee73        amazing_torvalds    0.08%               2.613MiB / 15.56GiB 
 
 `--cpus`: 可以是小数, 小数点后精度为2位, 值不可超过宿主机CPU核心数, 否则会出现如下错误(如下示例为4核宿主机).
 
-```
+```log
 Error response from daemon: Range of CPUs is from 0.01 to 4.00, as there are only 4 CPUs available
 ```
 
