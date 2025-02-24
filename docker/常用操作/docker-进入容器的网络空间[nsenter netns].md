@@ -46,8 +46,6 @@ ns01
 ```log
 $ docker inspect ad7a7a5952fd | grep Pid
             "Pid": 1843,
-            "PidMode": "",
-            "PidsLimit": null,
 ```
 
 然后可以使用如下命令建立一个软链接再进行访问.
