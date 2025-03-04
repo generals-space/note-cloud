@@ -3,6 +3,8 @@
 参考文章
 
 1. [资源调度](https://jimmysong.io/kubernetes-handbook/concepts/scheduling.html)
+2. [解决 K8s 调度不均衡问题](https://www.cnblogs.com/fengjian2016/p/16408738.html)
+    - 官方策略`BalancedResourceAllocation`多节点资源均衡调度, 是根据Pod requests 资源进行评分的, 而不是按 Node 当前资源水位进行调度.
 
 向集群中新增worker节点时, 正在运行的pod不会自动调度到新节点上, 所以一开始新节点上会是空闲的.
 

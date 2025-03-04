@@ -13,9 +13,9 @@ kubernetes版本: 1.15.10
 
 ## drain驱散
 
-- kubectl drain node名
 - kubectl cordon node名
 - kubectl uncordon node名
+- kubectl drain node名
 
 cordon/uncordon 只修改node状态(`SchedulingDisabled`不可调度), 不涉及pod操作.
 

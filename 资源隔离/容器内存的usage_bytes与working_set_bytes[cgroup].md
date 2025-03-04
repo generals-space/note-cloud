@@ -28,8 +28,8 @@
 
 container_memory_max_usage_bytes(最大可用内存) >
 container_memory_usage_bytes(已经申请的内存+工作集使用的内存) >
-container_memory_working_set_bytes(工作集内存) >
-container_memory_rss(常驻内存集)
+container_memory_rss(常驻内存集) >
+container_memory_working_set_bytes(工作集内存)
 
 ## 记录
 
