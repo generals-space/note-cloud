@@ -51,3 +51,5 @@ curl -k --max-time 3600 -H 'Content-Type:application/json' --cacert /etc/kuberne
 ```
 
 > `object`字段包含该 Pod 对象的所有信息.
+
+`--max-time`在watch行为中, 表示长连接持续的时间, 比如`--max-time=3`就会在3秒后自动断开, 需要重新连接并watch.

@@ -24,7 +24,8 @@
 
 `container_memory_usage_bytes`包含了 cache, 如 filesystem cache, 当存在 mem pressure 的时候, `cache`能够被回收.
 
-`container_memory_working_set_bytes`更能体现出 mem usage, oom killer 也是根据 container_memory_working_set_bytes 来决定是否oom kill的. 
+~~`container_memory_working_set_bytes`更能体现出 mem usage, oom killer 也是根据 container_memory_working_set_bytes 来决定是否oom kill的. ~~
+`container_memory_rss`更能体现出 mem usage, oom killer 也是根据 container_memory_rss 来决定是否oom kill的. 
 
 container_memory_max_usage_bytes(最大可用内存) >
 container_memory_usage_bytes(已经申请的内存+工作集使用的内存) >
