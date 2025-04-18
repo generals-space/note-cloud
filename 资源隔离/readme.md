@@ -17,6 +17,8 @@
 [Java 10发布后，Docker容器管理能力得到显著增强](http://www.dockone.io/article/5931)
 [kubernetes的资源管理](http://bazingafeng.com/2017/12/04/the-management-of-resource-in-kubernetes/)
 
+[docker资源限制使用和性能压测](https://zhuanlan.zhihu.com/p/641334756)
+
 CGroup: Control Group
 
 `/sys/fs/cgroup`目录应该是安装`libcgroup`工具后出现的, 其下有各种控制器subsystem(cpu, memory, blk等). 
