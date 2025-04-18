@@ -9,6 +9,8 @@
 3. [kubernetes入门：使用kubeadm搭建单机master，亲测无异常，建议收藏](https://bbs.huaweicloud.com/blogs/306548)
     - 与1是同一篇文章
 
+flannel: 0.11.0
+
 ```log
 $ kwd pod
 NAME                                    READY   STATUS              RESTARTS   AGE   IP               NODE            NOMINATED NODE   READINESS GATES
