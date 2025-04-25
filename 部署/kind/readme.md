@@ -1,15 +1,3 @@
-参考文章
-
-[在 Kubernetes 中运行 Kubernetes](https://www.qikqiak.com/post/k8s-in-k8s/)
-
-
-kubeadm join kube-apiserver.generals.space:6443 --token abcdef.0123456789abcdef --discovery-token-ca-cert-hash sha256:b969766a8c9d9dfc3615dff8767c5bd6b8aa7930bdd699d6bb2213c434904c61 --ignore-preflight-errors=all
-
-/usr/bin/kubelet --bootstrap-kubeconfig=/etc/kubernetes/bootstrap-kubelet.conf --kubeconfig=/etc/kubernetes/kubelet.conf --config=/var/lib/kubelet/config.yaml --container-runtime=remote --container-runtime-endpoint=unix:///var/run/containerd/containerd.sock
-
-
-------
-
 [failed to pull image k8s.gcr.io/kube-apiserver:v1.22.4 failed to convert whiteout file \"usr/local/.wh..wh..opq\": operation not supported: unknown" #2608](https://github.com/kubernetes/kubeadm/issues/2608)
 [[NFS] failed to pull image; failed to convert; operation not supported: unknown #6273](https://github.com/containerd/containerd/issues/6273)
 [kinder: the latest etcd image cannot be pulled in the containerd base image #2223](https://github.com/kubernetes/kubeadm/issues/2223)
@@ -29,28 +17,6 @@ INFO[0000] apply failure, attempting cleanup             error="failed to extrac
 ctr: failed to extract layer sha256:682fbb19de80799fed8b83bd8172050774c83294f952bdd8013d9cce2ab2f2a6: failed to convert whiteout file "usr/lib/x86_64-linux-gnu/xtables/.wh..wh..opq": operation not supported: unknown
 ```
 
-docker run -d --name k8s-master-03 --hostname k8s-master-03 --privileged=true \
---add-host kube-apiserver.generals.space:10.0.2.20 \
--e http_proxy=${http_proxy} -e https_proxy=${https_proxy} -e no_proxy=${no_proxy} \
--v /root:/root -v /etc/yum.repos.d:/etc/yum.repos.d \
-registry.cn-hangzhou.aliyuncs.com/generals-space/centos-systemd:7
-
-yum install -y kubeadm-1.17.2 kubelet-1.17.2 kubectl-1.17.2
-
-yum install -y containerd
-
-chmod 755 ./bin/*
-d cp ./bin/ctr k8s-master-03:/usr/bin/
-d cp ./bin/containerd k8s-master-03:/usr/bin/
-d cp ./bin/containerd-shim k8s-master-03:/usr/bin/
-d cp ./bin/containerd-shim-runc-v2 k8s-master-03:/usr/bin/
-
-containerd config default > /etc/containerd/config.toml
-
-d cp ./crictl k8s-master-02:/usr/bin/
-crictl config runtime-endpoint unix:///run/containerd/containerd.sock
-
-
 ctr -n k8s.io images import --no-unpack ./kube-proxy.tar
 
 ## 修改 containerd snapshotter 为 native
@@ -69,9 +35,3 @@ $ dmesg -T
 ./nerdctl --snapshotter=native ps -a
 ./nerdctl --snapshotter=native rm 
 ./nerdctl --snapshotter=native run -d --name testpause --network host registry.cn-hangzhou.aliyuncs.com/google_containers/pause:3.6
-
-
-chmod 755 ./bin/*
-d cp ./bin/containerd k8s-master-02:/usr/bin/
-d cp ./bin/containerd-shim k8s-master-02:/usr/bin/
-d cp ./bin/containerd-shim-runc-v2 k8s-master-02:/usr/bin/
