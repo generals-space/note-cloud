@@ -4,7 +4,7 @@ kuber版本: 1.17.2
 
 本文中说的问题, 并非是类似如下这种, 由于 kubectl 中的密钥未正确配置导致与 apiserver 认证失败的问题.
 
-```
+```log
 Unable to connect to the server: x509: certificate signed by unknown authority (possibly because of "crypto/rsa: verification error" while trying to verify candidate au
 thority certificate "kubernetes")
 ```
@@ -12,7 +12,7 @@ thority certificate "kubernetes")
 我能确定 setup 集群完毕后, 安装好了 flannel 插件, 理论上此时 coredns 应该可以正常启动了, 但是使用 kubectl 查看时仍是处于`ContainerCreating`状态, describe 了一下, 有如下输出
 
 
-```
+```log
 Events:
   Type     Reason                  Age                 From                    Message
   ----     ------                  ----                ----                    -------
@@ -30,7 +30,7 @@ ate "kubernetes")]
 
 `/var/log/message`中也有 kubelet 的相关日志.
 
-```
+```log
 Jun 20 23:59:19 k8s-master-01 kubelet: E0620 23:59:19.340896  105799 kuberuntime_manager.go:898] Failed to stop sandbox {"docker" "4ab054e3be9f5b3c6b1f440ee8d0e7e1370b2
 28b198573a5b69b071e90707b65"}
 Jun 20 23:59:19 k8s-master-01 kubelet: E0620 23:59:19.340936  105799 kuberuntime_manager.go:676] killPodWithSyncResult failed: failed to "KillPodSandbox" for "90811698-

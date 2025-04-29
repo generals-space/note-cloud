@@ -69,8 +69,6 @@ Allocated resources:
   hugepages-2Mi      0 (0%)       0 (0%)
 ```
 
-
-
 ```log
 $ kubectl proxy
 Starting to serve on 127.0.0.1:8001
@@ -85,4 +83,3 @@ Starting to serve on 127.0.0.1:8001
       "nodefs.inodesFree": "5%"
     },
 ```
-

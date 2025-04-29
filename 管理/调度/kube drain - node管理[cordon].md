@@ -25,9 +25,9 @@ cordon/uncordon 只修改node状态(`SchedulingDisabled`不可调度), 不涉及
 
 一般执行drain操作后就可以使用`kubectl delete node node名`删除node节点了.
 
-`delete node`会将目标node节点上的kuber组件全部停止并删除, 不过貌似iptables和ipvsadm没有清空???, 还是手动执行一下`kubeadm reset`吧.
+`delete node`会将目标node节点上的kube组件全部停止并删除, 不过貌似iptables和ipvsadm没有清空???, 还是手动执行一下`kubeadm reset`吧.
 
-`delete node`可以删除master节点, 不过目标节点的kuber组件并未停止, 同样需要手动`kubeadm reset`.
+`delete node`可以删除master节点, 不过目标节点的kube组件并未停止, 同样需要手动`kubeadm reset`.
 
 ## FAQ
 
@@ -47,11 +47,11 @@ cannot delete DaemonSet-managed Pods (use --ignore-daemonsets to ignore): kube-s
 按照参考文章3, drain操作失败有3种可能
 
 1. there are pods not managed by a ReplicationController, ReplicaSet, Job, DaemonSet or StatefulSet
-    - 有一些pod没有被上述对象管理, 没有可能再被调度到其他node上. 比如**单纯的pod资源(没有使用deployment方式部署), 删除就直接删了, kuber无法在其他node重新创建**. kuber希望管理员自行处理这类pod的删除逻辑, 加上`--force`选项可强制删除此类pod.
+    - 有一些pod没有被上述对象管理, 没有可能再被调度到其他node上. 比如**单纯的pod资源(没有使用deployment方式部署), 删除就直接删了, kube无法在其他node重新创建**. kube希望管理员自行处理这类pod的删除逻辑, 加上`--force`选项可强制删除此类pod.
 2. there are DaemonSet-managed pods
     - drain默认不会对被`DaemonSet`对象管理的pod做任何操作, 使用`--ignore-daemonsets`忽略此类pod.
 3. there are pods using emptyDir
-    - 如果有pod使用`emptyDir`存储本地数据, `emptyDir`中的数据会随着pod的移除而删除. 与第一种情况一样, kuber希望管理员能明确指定, 使用`--delete-local-data`强制删除(可能管理员需要自行备份数据).
+    - 如果有pod使用`emptyDir`存储本地数据, `emptyDir`中的数据会随着pod的移除而删除. 与第一种情况一样, kube希望管理员能明确指定, 使用`--delete-local-data`强制删除(可能管理员需要自行备份数据).
 
 注意: 即使drain失败, 也只是某些pod没有被删除, 但是该节点还是被修改为不可调度的状态.
 
