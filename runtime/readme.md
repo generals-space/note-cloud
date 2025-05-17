@@ -15,3 +15,5 @@
 4. [docker基础知识之mount namespace](http://kuring.me/post/namespace_mount/)
     - c语言代码
 5. [linux和docker的capabilities介绍](https://www.cnblogs.com/charlieroro/p/10108577.html)
+
+cri-o 是与 containerd, docker+dockershim 同级的东西, 不过还是 runc 的上层, 目前没有学习的动力.
