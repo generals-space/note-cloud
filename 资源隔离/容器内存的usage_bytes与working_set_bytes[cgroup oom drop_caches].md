@@ -29,7 +29,7 @@ container_memory_rss
 
 以一个比较典型的内存泄露场景为例, [k8snetworkplumbingwg/multus-cni v4.1.0](https://github.com/k8snetworkplumbingwg/multus-cni/tree/v4.1.0), 每创建一个 Pod, 就会调用一次该 cni 服务, 同时增长一点内存. 当某个 Pod 因为 crash 重复启动, 该服务的内存就会呈现一种比较平滑的上升趋势.
 
-![](https://gitee.com/generals-space/gitimg/raw/master/fe347855776aa5b94edcaa8615d73eca.png)
+![](https://gitee.com/generals-space/gitimg/raw/master/2025/fe347855776aa5b94edcaa8615d73eca.png)
 
 > memory limit 值为 1G.
 
@@ -46,7 +46,7 @@ container_memory_rss
 
 下图可以作为`container_memory_usage_bytes` = `container_memory_working_set_bytes` + `container_memory_cache`的证明, 两者相差不大.
 
-![](https://gitee.com/generals-space/gitimg/raw/master/888a0f1b235693e3aee9ba072cbeead1.png)
+![](https://gitee.com/generals-space/gitimg/raw/master/2025/888a0f1b235693e3aee9ba072cbeead1.png)
 
 `container_memory_usage_bytes`更能体现出 mem usage, cgroup 的 oom killer 也是根据 container_memory_usage_bytes 来决定是否oom kill的, 在 cache 被回收到极致, 仍然无法满足 working_set 的申请需求时, 就会被 OOM(不过这个论点还没有合适的监控图表支撑).
 
