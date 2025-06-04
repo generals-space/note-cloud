@@ -33,10 +33,10 @@ Docker 提供两种模式来将日志消息从容器发送到日志驱动程序:
 
 非阻塞消息传送模式可防止应用程序因记录的压力(logging back pressure)而被阻塞. 当 STDERR 或 STDOUT 流阻塞时, 应用程序可能会以意想不到的方式失败.
 
-> 警告：当缓冲区已满且新消息排入队列时，内存中最早的消息将被丢弃. 丢弃消息通常首选阻止应用程序的日志写入过程. (Dropping messages is often preferred to blocking the log-writing process of an application.)
+> 警告：当缓冲区已满且新消息排入队列时, 内存中最早的消息将被丢弃. 丢弃消息通常首选阻止应用程序的日志写入过程. (Dropping messages is often preferred to blocking the log-writing process of an application.)
 
 - `mode`: 这个日志选项用于控制使用阻塞还是非阻塞哪个消息发送方式. 
-- `max-buffer-size`: 这个日志选项用于控制非阻塞方式下用作中间消息存储的环形缓冲区大小，默认是 1MB. 
+- `max-buffer-size`: 这个日志选项用于控制非阻塞方式下用作中间消息存储的环形缓冲区大小, 默认是 1MB. 
 
 ```
 docker run -it --log-opt mode=non-blocking --log-opt max-buffer-size=4m alpine ping 127.0.0.1
